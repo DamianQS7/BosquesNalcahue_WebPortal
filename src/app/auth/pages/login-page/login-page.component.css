@@ -1,0 +1,131 @@
+.wrapper {
+    background-image: url('/assets/img/login-page-background.jpg');
+    background-size: cover;
+
+    @apply
+    flex
+    justify-center
+    items-center
+    w-[100vw]
+    h-[100vh]
+}
+
+.form-wrapper {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8),
+                                rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    
+    @apply
+    flex
+    flex-col
+    p-6
+    rounded-xl
+    justify-evenly
+
+    /* Mobile */
+    w-[250px]
+    h-[450px]
+
+    /* Normal */
+    sm:w-[380px]
+    sm:h-[600px]
+    /* Larger */
+    2xl:w-[450px]
+    2xl:h-[650px]
+}
+
+.input-wrapper {
+    border-bottom: 2px solid white;
+
+    @apply
+    flex
+    justify-between
+    relative
+
+    /* Mobile */
+    w-[80%]
+    my-1
+
+    /* Normal */
+    sm:my-3
+
+    /* Larger */
+    xl:text-xl
+    xl:my-6
+}
+
+input {
+    background: transparent;
+    position: absolute;
+    width: 80%;
+    @apply
+    absolute
+    border-none
+    outline-none
+    text-slate-800
+    
+    /* Mobile */
+    text-sm
+
+    /* Normal */
+    sm:text-lg
+
+    /* Large */
+    2xl:text-xl
+
+}
+
+.input-wrapper label {
+    transition: .3s;
+    
+    @apply
+    mb-1
+    /* Mobile */
+    text-sm
+
+    /* Normal */
+    sm:text-lg
+
+    /* Large */
+    2xl:text-xl
+}
+
+h1 {
+    @apply
+    text-lg
+    sm:text-2xl
+    sm:mb-4
+    font-semibold
+}
+
+
+.input-wrapper input:focus ~ label,
+.input-wrapper input:valid ~ label {
+
+    @apply
+    translate-y-[-25px]
+    sm:translate-y-[-35px]
+}
+
+.btn-submit {
+    @apply
+    font-semibold
+    w-[50%]
+    p-3
+    bg-teal-100
+    rounded-2xl
+
+    /* Mobile */
+    text-sm
+    /* Normal */
+    sm:text-lg
+    /* Larger */
+    2xl:text-xl
+}
+
+img {
+    @apply
+    w-[50%]
+}
