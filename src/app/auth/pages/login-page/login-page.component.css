@@ -116,6 +116,9 @@ h1 {
     p-3
     bg-teal-100
     rounded-2xl
+    flex
+    items-center
+    justify-evenly
 
     /* Mobile */
     text-sm
@@ -123,6 +126,19 @@ h1 {
     sm:text-lg
     /* Larger */
     2xl:text-xl
+}
+
+.icons {
+    @apply
+    /* Mobile */
+    w-5
+    h-5
+    /* Normal */
+    sm:w-6
+    sm:h-6
+    /* Large */
+    2xl:w-7
+    2xl:h-7
 }
 
 img {
