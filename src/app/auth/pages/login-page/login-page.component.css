@@ -2,12 +2,9 @@
     background-image: url('/assets/img/login-page-background.jpg');
     background-size: cover;
 
-    @apply
-    flex
-    justify-center
-    items-center
-    w-[100vw]
-    h-[100vh]
+    @apply 
+    flex justify-center items-center
+    w-[100vw] h-[100vh]
 }
 
 .form-wrapper {
@@ -17,89 +14,44 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     
-    @apply
-    flex
-    flex-col
-    p-6
-    rounded-xl
-    justify-evenly
-
-    /* Mobile */
-    w-[250px]
-    h-[450px]
-
-    /* Normal */
-    sm:w-[380px]
-    sm:h-[600px]
-    /* Larger */
-    2xl:w-[450px]
-    2xl:h-[650px]
+    @apply flex flex-col p-6 rounded-xl justify-evenly items-center gap-3
+    /* Mobile => */ w-[250px] h-[450px]
+    /* Normal => */ sm:w-[380px] sm:h-[600px]
+    /* Larger => */ 2xl:w-[450px] 2xl:h-[650px]
 }
 
 .input-wrapper {
     border-bottom: 2px solid white;
 
-    @apply
-    flex
-    justify-between
-    relative
-
-    /* Mobile */
-    w-[80%]
-    my-1
-
-    /* Normal */
-    sm:my-3
-
-    /* Larger */
-    xl:text-xl
-    xl:my-6
+    @apply flex justify-between relative
+    /* Mobile */ w-[80%] my-1
+    /* Normal */ sm:my-3
+    /* Larger */ xl:text-xl xl:my-6
 }
 
 input {
     background: transparent;
-    position: absolute;
-    width: 80%;
-    @apply
-    absolute
-    border-none
-    outline-none
-    text-slate-800
-    
-    /* Mobile */
-    text-sm
-
-    /* Normal */
-    sm:text-lg
-
-    /* Large */
-    2xl:text-xl
+    @apply w-[80%] absolute border-none outline-none text-slate-800
+    /* Mobile => */ text-sm
+    /* Normal => */ sm:text-lg
+    /* Large => */  2xl:text-xl
 
 }
 
 .input-wrapper label {
     transition: .3s;
     
-    @apply
-    mb-1
-    /* Mobile */
-    text-sm
-
-    /* Normal */
-    sm:text-lg
-
-    /* Large */
-    2xl:text-xl
+    @apply  mb-1
+    /* Mobile => */ text-sm
+    /* Normal => */ sm:text-lg
+    /* Large  => */ 2xl:text-xl
 }
 
 h1 {
-    @apply
-    text-lg
-    sm:text-2xl
-    sm:mb-4
-    font-semibold
+    @apply font-semibold 
+    /* Mobile => */ text-lg 
+    /* Normal => */ sm:text-2xl sm:mb-4
 }
-
 
 .input-wrapper input:focus ~ label,
 .input-wrapper input:valid ~ label {
@@ -110,38 +62,19 @@ h1 {
 }
 
 .btn-submit {
-    @apply
-    font-semibold
-    w-[50%]
-    p-3
-    bg-teal-100
-    rounded-2xl
-    flex
-    items-center
-    justify-evenly
-
-    /* Mobile */
-    text-sm
-    /* Normal */
-    sm:text-lg
-    /* Larger */
-    2xl:text-xl
+    @apply font-semibold w-[50%] p-3 bg-teal-100 rounded-2xl flex items-center justify-center gap-2
+    /* Mobile => */ text-sm
+    /* Normal => */ sm:text-lg
+    /* Larger => */ 2xl:text-xl
 }
 
 .icons {
     @apply
-    /* Mobile */
-    w-5
-    h-5
-    /* Normal */
-    sm:w-6
-    sm:h-6
-    /* Large */
-    2xl:w-7
-    2xl:h-7
+    /* Mobile */ w-5 h-5
+    /* Normal */ sm:w-6 sm:h-6
+    /* Large */ 2xl:w-7 2xl:h-7
 }
 
 img {
-    @apply
-    w-[50%]
+    @apply w-[50%]
 }
