@@ -1,5 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
+import { icons } from '../../../../assets/icons/svg-icons';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IconsService } from '../../../services/icons.service';
 
 @Component({
   standalone: true,
@@ -10,4 +13,5 @@ import { FormBuilder, FormsModule } from '@angular/forms';
 export class LoginPageComponent {
 
   private fb: FormBuilder = inject(FormBuilder);
+  public iconService: IconsService = inject(IconsService);
 }
