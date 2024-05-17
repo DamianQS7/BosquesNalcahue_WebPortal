@@ -68,13 +68,6 @@ h1 {
     /* Larger => */ 2xl:text-xl
 }
 
-.icons {
-    @apply
-    /* Mobile */ w-5 h-5
-    /* Normal */ sm:w-6 sm:h-6
-    /* Large */ 2xl:w-7 2xl:h-7
-}
-
 img {
     @apply w-[50%]
 }

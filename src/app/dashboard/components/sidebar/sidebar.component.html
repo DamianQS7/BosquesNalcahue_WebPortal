@@ -1,35 +1,38 @@
-<aside class="h-screen w-56">
-    <nav class="h-full flex flex-col bg-gray-100">
-        <div class="p-4 pb-2 flex justify-between items-center border-b">
-            <img src="..." alt="Logo" class="w-32">
-            <button class="p-1.5 rounded-lg bg-gray-200 hover:bg-gray-300">
-                <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m17 16-4-4 4-4m-6 8-4-4 4-4"/>
-                </svg>                  
-            </button>
+<button type="button" class="hamburguer-btn" (click)="showMenu">
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+    </svg>
+</button>
+ 
+<aside aria-label="Sidebar">
+    <div class="sidebar-background">
+        <div class="sidebar-header">
+            <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo" class="w-20">
         </div>
 
-        <div class="flex-1 px-3 py-1 mt-2">
-            <h4 class="text-sm text-slate-500">Menu Principal</h4>
-            <ul>
+        <span class="separator menu-subtitle">Reportes</span>
+        <ul class="list">
+            @for (item of mainMenuItems; track $index) {
+                <li>
+                    <a [routerLink]="item.route" routerLinkActive="active" class="link group">
+                        <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                        <span class="ms-3">{{item.title}}</span>
+                     </a>
+                </li>
+            }
+        </ul>
 
-            </ul>
-        </div>
-
-        <div class="border-t flex p-3">
-            <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
-            </svg> 
-            
-            <div class="flex justify-between items-center  ml-3">
-                <div class="leading-4">
-                    <h4 class="font-semibold"> First and Last Name</h4>
-                    <span class="text-xs">user#gmail.com</span>
-                </div>
-                <svg class="w-6 h-6 text-gray-800 cursor-pointer rounded-full hover:bg-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6h.01M12 12h.01M12 18h.01"/>
-                </svg>                  
-            </div>
-        </div>
-    </nav>
+        <span class="separator menu-subtitle">Administración</span>
+        <ul class="list">
+            @for (item of settingsMenuItems; track $index) {
+                <li>
+                    <a [routerLink]="item.route" class="link group">
+                        <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                        <span class="ms-3">{{item.title}}</span>
+                     </a>
+                </li>
+            }
+        </ul>
+    </div>
 </aside>
+ 
