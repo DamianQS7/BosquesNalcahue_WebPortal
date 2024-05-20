@@ -3,7 +3,7 @@ aside {
 }
 
 .sidebar-background {
-    @apply flex flex-col h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800
+    @apply flex flex-col h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-slate-800
 }
 
 .list {
@@ -23,7 +23,7 @@ aside {
 }
 
 .sidebar-header {
-    @apply flex justify-center items-center bg-gray-300 rounded-lg
+    @apply flex justify-center items-center bg-slate-300 rounded-lg
 }
 
 .active {

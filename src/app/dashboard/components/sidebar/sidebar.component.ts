@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { MenuItem } from '../../../interfaces/menu-item.interface';
 import { IconsService } from '../../../services/icons.service';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'dashboard-sidebar',
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './sidebar.component.html',

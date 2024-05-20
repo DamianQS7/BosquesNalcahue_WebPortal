@@ -1,0 +1,7 @@
+.wrapper {
+    @apply w-full h-full rounded-lg bg-gradient-to-r from-slate-700 to-slate-600 p-1 shadow-lg z-50
+}
+
+.page-header {
+    @apply w-full bg-gray-200 h-64 rounded-lg
+}
