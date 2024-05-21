@@ -1,0 +1,23 @@
+.btn {
+    @apply w-44 inline-flex justify-between items-center font-medium rounded-lg shadow-2xl text-gray-500 bg-white border border-gray-300 text-sm px-3 py-1.5 
+        dark:bg-slate-800 dark:text-white dark:border-gray-600
+    /* Focus => */ focus:outline-none 
+    /* Hover => */ hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-teal-300 
+}
+
+.options-wrapper {
+    @apply z-10 w-44 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-xl dark:bg-slate-700 dark:divide-gray-600 absolute 
+    /* Gradient => */ from-slate-800 via-slate-700 to-teal-200 bg-gradient-to-br from-40% 
+}
+
+.options-list {
+    @apply p-1 space-y-1 text-gray-700 dark:text-gray-200
+}
+
+.option-wrapper {
+    @apply flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-slate-500 cursor-pointer
+}
+
+.option {
+    @apply w-full ms-2 text-sm font-normal text-gray-900 rounded dark:text-gray-200
+}
