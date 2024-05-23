@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { IconsService } from '../../../services/icons.service';
 import { DropdownComponent } from '../dropdown/dropdown.component';
+import { ColumnTitles } from '../../../interfaces/column-titles.interface';
 
 @Component({
   selector: 'dashboard-data-table',
@@ -13,4 +14,12 @@ import { DropdownComponent } from '../dropdown/dropdown.component';
 export class DataTableComponent {
 
   public iconsService: IconsService = inject(IconsService);
+
+  @Input()
+  public columnTitles: ColumnTitles[] = [
+    { title: 'Product Name', sortable: false },
+    { title: 'Color', sortable: true },
+    { title: 'Category', sortable: true },
+    { title: 'Price', sortable: true },
+  ];
 }
