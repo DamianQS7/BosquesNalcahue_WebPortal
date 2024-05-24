@@ -1,11 +1,11 @@
 <div clickOutside (notifyClickOutside)="clickedOutside()" >
     <button class="btn group" type="button" (click)="toggleDropdown()">
         <div [innerHTML]="iconsService.getIcon('clock')"></div>
-        {{ selectedOption }}
+        {{ selectedOption() }}
         <div [innerHTML]="iconsService.getIcon('arrow_down')"></div>
     </button>
     <!-- Dropdown menu -->
-    <div class="options-wrapper" [ngClass]="{'hidden': dropdownOpened === false}">
+    <div class="options-wrapper" [ngClass]="{'hidden': dropdownOpened() === false}">
         <ul class="options-list">
             @for (option of dropdownOptions; track $index) {
                 <li>

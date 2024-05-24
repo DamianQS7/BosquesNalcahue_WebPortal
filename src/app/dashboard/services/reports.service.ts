@@ -3,63 +3,48 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { ReportsResponse } from '../../interfaces/reports-response.interface';
 import { Observable } from 'rxjs';
+import { DateTimeService } from './date-time.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportsService {
 
+  // Services
   private http: HttpClient = inject(HttpClient);
+  private dateTime: DateTimeService = inject(DateTimeService);
 
+  // Properties
   private readonly baseUrl: string = environment.baseUrl;
   private readonly endpoint: string = `${this.baseUrl}/reports`;
 
-  public getAllReports(filter: string = 'Filtrar'): Observable<ReportsResponse> {
+  // Methods
+  public getAllReports(filter: string): Observable<ReportsResponse> {
 
-    let url: string = this.endpoint;
-    const currentDate = this.formatDate(new Date());
-  
-    switch (filter) {
-      case 'Hoy':
-        url = `${url}?startDate=${currentDate}&endDate=${currentDate}`;
-        break;
-      case 'Semana pasada':
-        url = `${url}?startDate=${this.getLastWeekStartDate()}&endDate=${currentDate}`;
-        break;
-      case 'Mes pasado':
-        url = `${url}?startDate=${this.getLastMonthStartDate()}&endDate=${currentDate}`;
-        break;
-      case 'Últimos 6 meses':
-        url = `${url}?startDate=${this.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
-        break;
-    }
-  
+    const url = this.applyFilter(filter);
+    console.log('Reports Service, new url: ', url);
+    
     return this.http.get<ReportsResponse>(url);
   }
 
-  private formatDate(date: Date): string {
-    const year = date.getUTCFullYear();
-    const month = date.getUTCMonth() + 1; // getMonth() starts at 0 for January, so we need to add 1
-    const day = date.getUTCDate();
+  private applyFilter(filter: string): string {
+    let url: string           = this.endpoint;
+    const currentDate: string = this.dateTime.formatDate(new Date());
   
-    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    switch (filter) {
+      case 'Sin filtrar':
+        return url;
+      case 'Hoy':
+        return url = `${url}?startDate=${currentDate + this.dateTime.startTime}&endDate=${currentDate + this.dateTime.endTime}`;
+      case 'Semana Pasada':
+        return url = `${url}?startDate=${this.dateTime.getLastWeekStartDate()}&endDate=${currentDate}`;
+      case 'Mes Pasado':
+        return url = `${url}?startDate=${this.dateTime.getLastMonthStartDate()}&endDate=${currentDate}`;
+      case 'Últimos 6 Meses':
+        return url = `${url}?startDate=${this.dateTime.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
+      default:
+        return url;
+    }
   }
 
-  private getLastWeekStartDate(): string {
-    let date = new Date();
-    date.setDate(date.getDate() - 7);
-    return this.formatDate(date);
-  }
-  
-  private getLastMonthStartDate(): string {
-    let date = new Date();
-    date.setMonth(date.getMonth() - 1);
-    return this.formatDate(date);
-  }
-  
-  private getLastSixMonthsStartDate(): string {
-    let date = new Date();
-    date.setMonth(date.getMonth() - 6);
-    return this.formatDate(date);
-  }
 }

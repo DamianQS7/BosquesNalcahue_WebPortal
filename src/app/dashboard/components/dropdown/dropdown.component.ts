@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { IconsService } from '../../../services/icons.service';
 import { DropdownOption } from '../../../interfaces/dropdown-option.interface';
 import { CommonModule } from '@angular/common';
@@ -16,13 +16,15 @@ export class DropdownComponent {
   public iconsService: IconsService = inject(IconsService);
   
   // Properties
-  public dropdownOpened: boolean = false;
+  public dropdownOpened = signal<boolean>(false);
+  public selectedOption = signal<string>('Sin filtrar');
 
-  @Input()
-  public selectedOption: string = 'Filtrar';
+  @Output()
+  public optionChanged: EventEmitter<string> = new EventEmitter(); 
 
   @Input()
   public dropdownOptions: DropdownOption[] = [
+    { title: 'Sin filtrar' },
     { title: 'Hoy' },
     { title: 'Semana Pasada' },
     { title: 'Mes Pasado' },
@@ -31,19 +33,16 @@ export class DropdownComponent {
   
   // Methods
   public toggleDropdown(): void {
-    this.dropdownOpened = !this.dropdownOpened;
+    this.dropdownOpened.update(value => !value)
   }
 
   public selectOption(option: string): void {
-    this.selectedOption = option;
-    this.dropdownOpened = false;
+    this.selectedOption.set(option);
+    this.optionChanged.emit(option);
+    this.dropdownOpened.set(false);
   }
 
   public clickedOutside(): void {
-    this.dropdownOpened = false;
-  }
-
-  public check() {
-    console.log('clicked');
+    this.dropdownOpened.set(false);
   }
 }

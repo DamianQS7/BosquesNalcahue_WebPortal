@@ -7,7 +7,7 @@ import { ColumnTitles } from '../../../interfaces/column-titles.interface';
 @Component({
   selector: 'dashboard-data-table',
   standalone: true,
-  imports: [CommonModule, DropdownComponent],
+  imports: [CommonModule],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.css'
 })
