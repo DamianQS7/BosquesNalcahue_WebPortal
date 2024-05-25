@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
+
 import { IconsService } from '../../../services/icons.service';
-import { DropdownComponent } from '../dropdown/dropdown.component';
-import { ColumnTitles } from '../../../interfaces/column-titles.interface';
+import { ColumnTitles, ReportsTableRow } from '../../../interfaces';
 
 @Component({
   selector: 'dashboard-data-table',
@@ -17,9 +17,13 @@ export class DataTableComponent {
 
   @Input()
   public columnTitles: ColumnTitles[] = [
-    { title: 'Product Name', sortable: false },
-    { title: 'Color', sortable: true },
-    { title: 'Category', sortable: true },
-    { title: 'Price', sortable: true },
+    { title: 'Fecha', sortable: true },
+    { title: 'Tipo de Producto', sortable: true },
+    { title: 'Nombre del Cliente', sortable: true },
+    { title: 'Empresa Transportista', sortable: true },
+    { title: 'Productos', sortable: true },
   ];
+
+  @Input()
+  public data: ReportsTableRow[] = [];
 }
