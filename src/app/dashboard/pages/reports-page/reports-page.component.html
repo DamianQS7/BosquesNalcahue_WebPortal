@@ -16,5 +16,9 @@
         </div>
     </div>
     <dashboard-data-table [data]="tableReports()"/>
+
+    <dashboard-pagination-nav [hasNextPage]="paginationInfo()?.hasNextPage!"
+                              [pageSize]="paginationInfo()?.pageSize!" 
+                              [totalItems]="paginationInfo()?.totalCount!"/>
 </div>
 

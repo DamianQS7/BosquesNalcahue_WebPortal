@@ -1,13 +1,15 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { map, tap } from 'rxjs';
+
 import { ReportsService } from '../../services/reports.service';
+import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { DropdownComponent } from '../../components/dropdown/dropdown.component';
 import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '../../../interfaces';
-import { map, tap } from 'rxjs';
+import { PaginationNavComponent } from '../../components/pagination-nav/pagination-nav.component';
 
 @Component({
   standalone: true,
-  imports: [DataTableComponent, DropdownComponent],
+  imports: [DataTableComponent, DropdownComponent, PaginationNavComponent],
   templateUrl: './reports-page.component.html',
   styleUrl: './reports-page.component.css'
 })
@@ -17,7 +19,7 @@ export class ReportsPageComponent implements OnInit {
 
   public currentFilter = signal<string>('Sin filtrar');
   public tableReports = signal<ReportsTableRow[]>([]);
-  public paginationInfo?: PaginationInfo;
+  public paginationInfo = signal<PaginationInfo | undefined>(undefined);
 
   ngOnInit(): void {
     this.getAllReports();
@@ -27,13 +29,13 @@ export class ReportsPageComponent implements OnInit {
     this.reportsService.getAllReports(this.currentFilter())
       .pipe(
         tap<ReportsResponse>(
-          ({items, ...paginationData }) => this.paginationInfo = paginationData
+          ({items, ...paginationData }) => this.paginationInfo.set(paginationData)
         ),
         map<ReportsResponse, ReportsTableRow[]>(
           ({ items }) => this.mapReportsToRows(items)
         ),
       )
-      .subscribe((data) => this.tableReports.set(data));
+      .subscribe((data) => {this.tableReports.set(data); console.log(this.paginationInfo())});
   }
 
   private mapReportsToRows(items: Report[]): ReportsTableRow[] {

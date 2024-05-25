@@ -19,18 +19,6 @@ table-wrapper {
     @apply px-6 py-4
 }
 
-.pagination-wrapper {
-    @apply flex items-center flex-col flex-wrap sm:flex-row justify-between pt-4 px-2 pb-2
-}
-
-.pagination-info {
-    @apply text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 sm:mb-0 block w-full sm:inline sm:w-auto
-}
-
-.pagination-info-span {
-    @apply font-semibold text-gray-900 dark:text-white
-}
-
-.pagination-list {
-    @apply inline-flex -space-x-px rtl:space-x-reverse text-sm h-8
+.action-column-link {
+    @apply font-medium text-teal-500 dark:text-teal-200 hover:underline
 }

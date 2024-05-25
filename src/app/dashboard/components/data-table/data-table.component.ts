@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, computed, inject, input, Input, InputSignal, signal } from '@angular/core';
 
 import { IconsService } from '../../../services/icons.service';
 import { ColumnTitles, ReportsTableRow } from '../../../interfaces';
@@ -25,5 +25,5 @@ export class DataTableComponent {
   ];
 
   @Input()
-  public data: ReportsTableRow[] = [];
+  public data: ReportsTableRow[] = []; 
 }
