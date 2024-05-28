@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input, Input, InputSignal, signal } from '@angular/core';
+import { Component, computed, EventEmitter, inject, input, Input, InputSignal, Output, signal } from '@angular/core';
 
 import { IconsService } from '../../../services/icons.service';
 import { ColumnTitles, ReportsTableRow } from '../../../interfaces';
+import { FormatSpeciesPipe } from '../../../pipes/format-species.pipe';
 
 @Component({
   selector: 'dashboard-data-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormatSpeciesPipe],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.css'
 })
@@ -18,12 +19,19 @@ export class DataTableComponent {
   @Input()
   public columnTitles: ColumnTitles[] = [
     { title: 'Fecha', sortable: true },
-    { title: 'Tipo de Producto', sortable: true },
-    { title: 'Nombre del Cliente', sortable: true },
-    { title: 'Empresa Transportista', sortable: true },
-    { title: 'Productos', sortable: true },
+    { title: 'Tipo de Producto', sortable: false },
+    { title: 'Nombre del Cliente', sortable: false },
+    { title: 'Empresa Transportista', sortable: false },
+    { title: 'Productos', sortable: false },
   ];
 
   @Input()
   public data: ReportsTableRow[] = []; 
+
+  @Output()
+  public onSortColumn: EventEmitter<string> = new EventEmitter();
+
+  public sortColumnEvent(sort: string): void {
+    this.onSortColumn.emit(sort);
+  }
 }

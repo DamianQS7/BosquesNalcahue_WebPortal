@@ -16,7 +16,7 @@ table-wrapper {
 }
 
 .data-table-td {
-    @apply px-6 py-4
+    @apply px-6 py-4 text-slate-300
 }
 
 .action-column-link {

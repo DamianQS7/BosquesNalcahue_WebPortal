@@ -19,31 +19,29 @@ export class ReportsService {
   private readonly endpoint: string = `${this.baseUrl}/reports`;
 
   // Methods
-  public getAllReports(filter: string): Observable<ReportsResponse> {
+  public getAllReports(filter: string, page: number, sortBy: string): Observable<ReportsResponse> {
 
-    const url = this.applyFilter(filter);
-    console.log('Reports Service, new url: ', url);
-    
-    return this.http.get<ReportsResponse>(url);
+    const filterQuery = this.generateFilter(filter);
+    const requestUrl = `${this.endpoint}?page=${page}&${filterQuery}&SortBy=${sortBy}`
+    return this.http.get<ReportsResponse>(requestUrl);
   }
 
-  private applyFilter(filter: string): string {
-    let url: string           = this.endpoint;
+  private generateFilter(filter: string): string {
     const currentDate: string = this.dateTime.formatDate(new Date());
   
     switch (filter) {
       case 'Sin filtrar':
-        return url;
+        return '';
       case 'Hoy':
-        return url = `${url}?startDate=${currentDate + this.dateTime.startTime}&endDate=${currentDate + this.dateTime.endTime}`;
+        return `startDate=${currentDate + this.dateTime.startTime}&endDate=${currentDate + this.dateTime.endTime}`;
       case 'Semana Pasada':
-        return url = `${url}?startDate=${this.dateTime.getLastWeekStartDate()}&endDate=${currentDate}`;
+        return `startDate=${this.dateTime.getLastWeekStartDate()}&endDate=${currentDate}`;
       case 'Mes Pasado':
-        return url = `${url}?startDate=${this.dateTime.getLastMonthStartDate()}&endDate=${currentDate}`;
+        return `startDate=${this.dateTime.getLastMonthStartDate()}&endDate=${currentDate}`;
       case 'Últimos 6 Meses':
-        return url = `${url}?startDate=${this.dateTime.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
+        return `startDate=${this.dateTime.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
       default:
-        return url;
+        return '';
     }
   }
 

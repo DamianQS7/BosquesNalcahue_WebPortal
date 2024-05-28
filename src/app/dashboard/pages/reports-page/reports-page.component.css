@@ -1,5 +1,6 @@
 .wrapper {
-    @apply w-full h-full rounded-lg bg-gradient-to-r from-slate-700 to-slate-600 p-1 shadow-lg z-50
+    @apply w-full h-full rounded-lg shadow-lg z-50
+     /* Gradient => */ bg-gradient-to-r from-slate-700 to-slate-600 p-1  
 }
 
 .page-header {
@@ -8,4 +9,12 @@
 
 .filter-and-search-wrapper {
     @apply flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between py-4 px-1
+}
+
+.spinner-wrapper {
+    @apply flex flex-col justify-center items-center h-80 gap-3
+}
+
+.spinner {
+    @apply w-10 h-10 text-gray-200 animate-spin dark:text-slate-500 fill-teal-300
 }
