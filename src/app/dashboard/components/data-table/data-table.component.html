@@ -33,13 +33,13 @@
                             {{ row.date | date:'short' }}
                         </th>
                         <td class="data-table-td">
+                            {{ row.folio }}
+                        </td>
+                        <td class="data-table-td">
                             {{ row.productType }}
                         </td>
                         <td class="data-table-td">
                             {{ row.clientName }}
-                        </td>
-                        <td class="data-table-td">
-                            {{ row.truckCompany }}
                         </td>
                         <td class="data-table-td">
                             {{ row.species! | formatSpecies}}

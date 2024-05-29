@@ -19,9 +19,9 @@ export class DataTableComponent {
   @Input()
   public columnTitles: ColumnTitles[] = [
     { title: 'Fecha', sortable: true },
+    { title: 'Folio', sortable: false },
     { title: 'Tipo de Producto', sortable: false },
     { title: 'Nombre del Cliente', sortable: false },
-    { title: 'Empresa Transportista', sortable: false },
     { title: 'Productos', sortable: false },
   ];
 

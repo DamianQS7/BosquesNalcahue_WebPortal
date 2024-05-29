@@ -1,7 +1,7 @@
 <div clickOutside (notifyClickOutside)="clickedOutside()" >
     <button class="btn group" type="button" (click)="toggleDropdown()">
-        <div [innerHTML]="iconsService.getIcon('clock')"></div>
-        {{ selectedOption() }}
+        <div [innerHTML]="iconsService.getIcon(iconName)"></div>
+        <span class="mx-3"> {{ selectedOption() }} </span>
         <div [innerHTML]="iconsService.getIcon('arrow_down')"></div>
     </button>
     <!-- Dropdown menu -->

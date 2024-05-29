@@ -10,9 +10,9 @@
 .form-wrapper {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8),
                                 rgba(255, 255, 255, 0));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    border: 1px solid rgba(255, 255, 255, 0.814);
     
     @apply flex flex-col p-6 rounded-xl justify-evenly items-center gap-3
     /* Mobile => */ w-[250px] h-[450px]

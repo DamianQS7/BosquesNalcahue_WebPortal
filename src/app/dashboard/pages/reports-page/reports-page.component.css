@@ -4,7 +4,7 @@
 }
 
 .page-header {
-    @apply w-full bg-gray-200 h-64 rounded-lg
+    @apply w-full h-60
 }
 
 .filter-and-search-wrapper {
@@ -17,4 +17,18 @@
 
 .spinner {
     @apply w-10 h-10 text-gray-200 animate-spin dark:text-slate-500 fill-teal-300
+}
+
+.blurred-bg {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(1px);
+    @apply   bg-gradient-to-br from-slate-800/65 to-slate-500/40 border-teal-300/30 border 
+}
+
+.page-title {
+    @apply p-2 rounded-lg text-xl font-semibold m-2 absolute text-slate-100
+}
+
+.page-date {
+    @apply p-2 rounded-lg text-lg font-semibold m-2 absolute right-8 flex gap-2 items-center text-slate-100
 }
