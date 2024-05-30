@@ -1,5 +1,5 @@
 aside {
-    @apply w-56 h-screen transition-transform -translate-x-full sm:translate-x-0
+    @apply w-56 h-screen transition-transform -translate-x-full sm:translate-x-0 fixed
 }
 
 .sidebar-background {

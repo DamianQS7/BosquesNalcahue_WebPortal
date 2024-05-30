@@ -14,7 +14,10 @@
         <ul class="list">
             @for (item of mainMenuItems; track $index) {
                 <li>
-                    <a [routerLink]="item.route" routerLinkActive="active" class="link group">
+                    <a [routerLink]="item.route"
+                       [routerLinkActiveOptions]="{exact: true}" 
+                       routerLinkActive="active" 
+                       class="link group">
                         <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
                         <span class="ms-3">{{item.title}}</span>
                      </a>

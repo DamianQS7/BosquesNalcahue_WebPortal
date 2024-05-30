@@ -8,11 +8,15 @@ export const routes: Routes = [
         component: DashboardLayoutComponent,
         children: [
             { 
-                path: '', 
+                path: 'reportes', 
                 loadComponent: () => import('./dashboard/pages/reports-page/reports-page.component').then(c => c.ReportsPageComponent),
-            }
+            },
+            { 
+                path: 'estadisticas', 
+                loadComponent: () => import('./dashboard/pages/charts-page/charts-page.component').then(c => c.ChartsPageComponent),
+            },
         ]
     },
     { path: 'login', component: LoginPageComponent },
-    { path: '**', redirectTo: 'dashboard'}
+    { path: '**', redirectTo: 'dashboard/reportes'}
 ];

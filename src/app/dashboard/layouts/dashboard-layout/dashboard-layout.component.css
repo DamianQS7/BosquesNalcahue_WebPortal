@@ -3,5 +3,5 @@
 }
 
 .main-content {
-    @apply w-full p-4 h-full overflow-auto
+    @apply w-full p-4 ml-56 h-full dark:bg-slate-800
 }

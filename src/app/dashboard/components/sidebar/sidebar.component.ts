@@ -17,10 +17,9 @@ export class SidebarComponent {
   public iconService: IconsService = inject(IconsService);
 
   public mainMenuItems: MenuItem[] = [
-    { route: '/dashboard', icon: 'dashboard', title: 'General'},
-    { route: '/dashboard/lena', icon: 'dashboard', title: 'Leña'},
-    { route: '/dashboard/metro-ruma', icon: 'dashboard', title: 'Metro Ruma'},
-    { route: '/dashboard/trozo-aserrable', icon: 'dashboard', title: 'Trozo Aserrable'}
+    { route: '/dashboard/reportes', icon: 'pdf_file', title: 'Listado'},
+    { route: '/dashboard/estadisticas', icon: 'chart', title: 'Estadísticas'},
+    { route: '/dashboard/metro-ruma', icon: 'dashboard', title: 'Leña'}
   ];
 
   public settingsMenuItems: MenuItem[] = [
