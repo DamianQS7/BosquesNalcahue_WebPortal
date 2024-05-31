@@ -5,3 +5,4 @@ export * from './menu-item.interface';
 export * from './reports-response.interface';
 export * from './reports-table-row.interface';
 export * from './pagination-info.interface';
+export * from './chart-datasets.interface';
