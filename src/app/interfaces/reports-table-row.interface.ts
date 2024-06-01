@@ -1,6 +1,7 @@
 import { ProductType } from "./reports-response.interface";
 
 export interface ReportsTableRow {
+    id:          string;
     date:        Date;
     folio:       string | null;
     productType: ProductType;

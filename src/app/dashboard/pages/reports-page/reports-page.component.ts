@@ -112,8 +112,8 @@ export class ReportsPageComponent implements OnInit {
   }
 
   private mapReportsToRows(items: Report[]): ReportsTableRow[] {
-    return items.map(({date, folio, productType, clientName, species}) => 
-      ({date, folio, productType, clientName, species})
+    return items.map(({id, date, folio, productType, clientName, species}) => 
+      ({id, date, folio, productType, clientName, species})
     );
   }
 }

@@ -1,0 +1,38 @@
+.wrapper {
+    @apply w-full h-full rounded-lg shadow-xl z-50 shadow-slate-950 flex justify-between p-2
+     /* Gradient => */ bg-gradient-to-r from-slate-600 to-slate-500   
+}
+
+.page-header {
+    @apply w-full h-60
+}
+
+.blurred-bg {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(1px);
+    @apply   bg-gradient-to-br from-slate-800/65 to-slate-500/40 border-teal-300/30 border 
+}
+
+.page-title {
+    @apply p-2 rounded-lg text-xl font-semibold m-2 absolute text-slate-100
+}
+
+.page-date {
+    @apply p-2 rounded-lg text-lg font-semibold m-2 absolute right-8 flex gap-2 items-center text-slate-100
+}
+
+
+.form-label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-slate-100
+}
+
+.text-input {
+    @apply border text-sm rounded-lg block w-full p-2.5 
+    /* Light => */ bg-gray-50 border-gray-300 text-gray-900 
+    /* Dark => */ dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white
+}
+
+.form-btn {
+    @apply inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white rounded-lg
+     /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-teal-300
+}

@@ -15,6 +15,10 @@ export const routes: Routes = [
                 path: 'estadisticas', 
                 loadComponent: () => import('./dashboard/pages/charts-page/charts-page.component').then(c => c.ChartsPageComponent),
             },
+            { 
+                path: 'editar-reporte/:id', 
+                loadComponent: () => import('./dashboard/pages/edit-report-page/edit-report-page.component').then(c => c.EditReportPageComponent),
+            },
         ]
     },
     { path: 'login', component: LoginPageComponent },

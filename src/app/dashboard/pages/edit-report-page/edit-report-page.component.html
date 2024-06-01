@@ -1,0 +1,63 @@
+<div class="wrapper">
+    <div class="p-4 mr-4 ml-2 w-[65%]">
+        <h1 class="form-label text-lg">Editar Reporte</h1>
+        <form action="#">
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 2xl:gap-8">
+
+                <!-- Client's Data -->
+                <h3 class="mt-2 text-md font-medium text-gray-900 dark:text-teal-100 sm:col-span-2">Datos del Cliente</h3>
+                <hr class="sm:col-span-2 w-full">
+                <div class="w-full">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="text-input" placeholder="Nombre Cliente">
+                </div>
+                <div class="w-full">
+                    <label for="rut" class="form-label">Rut</label>
+                    <input type="text" class="text-input" placeholder="Rut Cliente">
+                </div>
+
+                <!-- Truck's Data -->
+                <h3 class="mt-2 text-md font-medium text-gray-900 dark:text-teal-100 sm:col-span-2">Datos del Camion</h3>
+                <hr class="sm:col-span-2 w-full ">
+                <div class="w-full">
+                    <label class="form-label">Empresa de Transporte</label>
+                    <input type="text" class="text-input" placeholder="Nombre Empresa">
+                </div>
+                <div class="w-full">
+                    <label class="form-label">Chofer</label>
+                    <input type="text" class="text-input" placeholder="Nombre Chofer">
+                </div>
+                <div class="w-full">
+                    <label class="form-label">RUT</label>
+                    <input type="text" class="text-input" placeholder="RUT Chofer">
+                </div>
+                <div class="w-full">
+                    <label class="form-label">Patentes</label>
+                    <input type="text" class="text-input" placeholder="Patentes">
+                </div>
+
+                <!-- Products Information -->
+                <h3 class="mt-2 text-md font-medium text-gray-900 dark:text-teal-100 sm:col-span-2">Detalles del Despacho</h3>
+                <hr class="sm:col-span-2 w-full">
+
+                @if (true) {
+                    <div class="w-full">
+                        <label class="form-label">Producto</label>
+                        <input type="text" class="text-input" placeholder="Tipo de Leña / Metro Ruma">
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">Unidad de Origen</label>
+                        <input type="text" class="text-input" placeholder="Origen">
+                    </div>
+                }
+            </div>
+            <button type="submit" class="form-btn">
+                Add product
+            </button>
+        </form>
+    </div>
+
+    <div class="w-[35%]">
+        <img src="assets/img/listado-reportes-bg.jpg" alt="" class="object-cover w-full h-full rounded-md">
+    </div>
+</div>

@@ -45,7 +45,7 @@
                             {{ row.species! | formatSpecies}}
                         </td>
                         <td class="data-table-td text-right">
-                            <a href="#" class="action-column-link">Editar</a>
+                            <a [routerLink]="['/dashboard/editar-reporte/', row.id]" class="action-column-link">Editar</a>
                             | <a href="#" class="action-column-link">Ver PDF</a>
                         </td>
                     </tr>
