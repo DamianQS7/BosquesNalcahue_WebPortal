@@ -7,4 +7,5 @@ export interface ReportsTableRow {
     productType: ProductType;
     clientName:  string | null;
     species:     string[] | null;
+    productName: string | null;
 }

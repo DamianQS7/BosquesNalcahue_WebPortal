@@ -1,13 +1,13 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { map, Subscription, tap } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { DropdownComponent } from '../../components/dropdown/dropdown.component';
 import { PaginationNavComponent } from '../../components/pagination-nav/pagination-nav.component';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
-import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '../../../interfaces';
-import { CommonModule } from '@angular/common';
+import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '@interfaces/index';
 
 @Component({
   standalone: true,
@@ -15,10 +15,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './reports-page.component.html',
   styleUrl: './reports-page.component.css'
 })
-export class ReportsPageComponent implements OnInit {
+export class ReportsPageComponent implements OnInit, OnDestroy {
 
   private reportsService: ReportsService = inject(ReportsService);
 
+  private getAllSubs?: Subscription;
+  private getByFolioSubs?: Subscription;
   public pageDate: Date = new Date();
   public currentProductTypeFilter = signal<string>('Sin filtrar'); // Unfiltered by default
   public currentDateFilter = signal<string>('Sin filtrar'); // Unfiltered by default
@@ -32,8 +34,14 @@ export class ReportsPageComponent implements OnInit {
     this.getAllReports();
   }
 
+  ngOnDestroy(): void {
+    this.getAllSubs?.unsubscribe();
+    this.getByFolioSubs?.unsubscribe();
+  }
+
   public getAllReports(): void {
-    this.reportsService.getAllReports(this.currentDateFilter(), this.currentProductTypeFilter(), this.currentPage(), this.sortBy())
+    this.contentLoaded.set(false);
+    this.getAllSubs = this.reportsService.getAllReports(this.currentDateFilter(), this.currentProductTypeFilter(), this.currentPage(), this.sortBy())
       .pipe(
         tap<ReportsResponse>(
           ({items, ...paginationData }) => this.paginationInfo.set(paginationData)
@@ -96,7 +104,8 @@ export class ReportsPageComponent implements OnInit {
   }
 
   private getReportByFolio(folio: string): void {
-    this.reportsService.getReportsByFolio(folio)
+    this.contentLoaded.set(false);
+    this.getByFolioSubs = this.reportsService.getReportsByFolio(folio)
       .pipe(
         tap<ReportsResponse>(
           ({items, ...paginationData }) => this.paginationInfo.set(paginationData)
@@ -112,8 +121,8 @@ export class ReportsPageComponent implements OnInit {
   }
 
   private mapReportsToRows(items: Report[]): ReportsTableRow[] {
-    return items.map(({id, date, folio, productType, clientName, species}) => 
-      ({id, date, folio, productType, clientName, species})
+    return items.map(({id, date, folio, productType, clientName, species, productName}) => 
+      ({id, date, folio, productType, clientName, species, productName})
     );
   }
 }

@@ -14,7 +14,11 @@
 }
 
 .page-title {
-    @apply p-2 rounded-lg text-xl font-semibold m-2 absolute text-slate-100
+    @apply rounded-lg text-xl font-semibold mt-2 text-slate-100
+}
+
+.page-subtitle {
+    @apply mt-8 text-[1rem] font-medium text-gray-900 dark:text-teal-100 sm:col-span-2
 }
 
 .page-date {
@@ -23,7 +27,7 @@
 
 
 .form-label {
-    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-slate-100
+    @apply block my-2 text-sm font-medium text-gray-900 dark:text-slate-100
 }
 
 .text-input {
@@ -33,6 +37,6 @@
 }
 
 .form-btn {
-    @apply inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white rounded-lg
+    @apply inline-flex items-center px-5 py-2.5 mt-4 sm:mt-8 text-sm font-medium text-center text-white rounded-lg
      /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-teal-300
 }

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { ReportsResponse } from '../../interfaces/reports-response.interface';
+import { Report, ReportsResponse } from '../../interfaces/reports-response.interface';
 import { Observable } from 'rxjs';
 import { DateTimeService } from './date-time.service';
+import { UpdateReportDto } from '../../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +28,23 @@ export class ReportsService {
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
+  public getReportsById(id: string): Observable<Report> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.get<Report>(requestUrl);
+  }
+
   public getReportsByFolio(folio: string): Observable<ReportsResponse> {
     const queryParam: string = `folio=${folio}`;
     const requestUrl: string = `${this.endpoint}?${queryParam}`;
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
+  public updateReport(id: string, report: UpdateReportDto): Observable<Report> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.put<Report>(requestUrl, report);
+  }
+
+  // Helpers
   private generateDateFilter(filter: string): string {
     const currentDate: string = this.dateTime.formatDate(new Date());
   
