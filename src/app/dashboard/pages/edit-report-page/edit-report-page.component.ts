@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
@@ -6,10 +6,11 @@ import { Subscription } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
 import { Report, EditableReport } from '@interfaces/index';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 @Component({
   standalone: true,
-  imports: [ ReactiveFormsModule, ],
+  imports: [ ReactiveFormsModule, ToastComponent ],
   templateUrl: './edit-report-page.component.html',
   styleUrl: './edit-report-page.component.css'
 })
@@ -24,6 +25,8 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private getReportSubs?: Subscription;
   private updateReportSubs?: Subscription;
   public reportToSubmit?: Report;
+  public toastVisible = signal<boolean>(false);
+  public toastType = signal<'success' | 'failure'>('failure');
 
   public form: FormGroup = this.fb.group({
     folio:         ['', [Validators.required]],
@@ -57,12 +60,23 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
       // Call the update method from the service
       console.log('Submiting report to Update')
       const {id, ...report} = this.reportToSubmit;
-      this.updateReportSubs = this.reportsService.updateReport(id, report)
-                                .subscribe( console.log );
+      this.updateReportSubs = this.reportsService
+        .updateReport(id, report)
+        .subscribe((report) => {
+           console.log(report);
+           
+        });
 
-      // Navigate back to the table
       
     }
+  }
+
+  public ShowAndHideToast(showToast: boolean): void {
+    this.toastVisible.set(showToast);
+  }
+
+  public showToast(show: boolean): void {
+    this.ShowAndHideToast(show);
   }
 
   private getReportToEdit(id: string): void {

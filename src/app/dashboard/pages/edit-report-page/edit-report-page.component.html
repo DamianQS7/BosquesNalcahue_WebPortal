@@ -5,6 +5,9 @@
         </h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
+            <dashboard-toast [isVisible]="toastVisible()"
+                             [toastType]="toastType()" 
+                             (toastTimedOut)="ShowAndHideToast($event)" />
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-3 2xl:gap-8">
 
                 <!-- Datos del Documento -->
@@ -102,6 +105,9 @@
                 Confirmar Edicion
             </button>
         </form>
+        <button type="button" class="form-btn" (click)="showToast(true)">
+            Confirmar Edicion
+        </button>
     </div>
 
     <div class="w-[35%]">
