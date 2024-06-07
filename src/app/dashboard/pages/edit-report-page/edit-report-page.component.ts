@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,6 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private reportsService: ReportsService = inject(ReportsService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private fb: FormBuilder = inject(FormBuilder);
-  private router: Router = inject(Router);
 
   // Properties
   private getReportSubs?: Subscription;
@@ -52,6 +51,10 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
     this.updateReportSubs?.unsubscribe();
   }
 
+  public get products(): FormArray {
+    return this.form.get('products') as FormArray;  
+  }
+
   public onSubmit() {
     if(this.reportToSubmit) {      
       // Map the values in the form to the reportToSubmit property
@@ -63,20 +66,19 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
       this.updateReportSubs = this.reportsService
         .updateReport(id, report)
         .subscribe((report) => {
-           console.log(report);
-           
+          if(report !== undefined) {
+            this.ShowAndHideToast(true);
+            this.toastType.set('success');
+           } else {
+            this.ShowAndHideToast(false);
+            this.toastType.set('failure');
+           }
         });
-
-      
     }
   }
 
   public ShowAndHideToast(showToast: boolean): void {
     this.toastVisible.set(showToast);
-  }
-
-  public showToast(show: boolean): void {
-    this.ShowAndHideToast(show);
   }
 
   private getReportToEdit(id: string): void {
@@ -112,7 +114,7 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
       truckCompany: report.truckCompany ?? '',
       truckDriver: report.truckDriver ?? '',
       truckDriverId: report.truckDriverId ?? '',
-      truckPlate: report.truckPlate ?? '',
+      truckPlate: report.truckPlate ?? ''
     });
   }
 
@@ -129,7 +131,8 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
       truckDriverId: report.truckDriverId,
       truckPlate: report.truckPlate,
       productName: report.productName,
-      origin: report.origin
+      origin: report.origin,
+      products: report.products
     };
   }
 

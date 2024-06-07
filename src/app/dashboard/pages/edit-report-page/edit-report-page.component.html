@@ -81,10 +81,10 @@
                 </div>
 
                 <!-- Products Information -->
-                <h3 class="page-subtitle">Detalles del Despacho</h3>
+                <!-- <h3 class="page-subtitle">Detalles del Despacho</h3>
                 <hr class="sm:col-span-2 w-full">
 
-                @if (true) {
+                @if (reportToSubmit?.productType !== 'Trozo Aserrable') {
                     <div class="w-full">
                         <label class="form-label">Producto</label>
                         <input type="text" 
@@ -99,15 +99,28 @@
                                placeholder="Origen"
                                formControlName="origin">
                     </div>
-                }
+                } @else {
+                    @for(product of reportToSubmit?.products; track $index) {
+                        <div class="w-full">
+                            <label class="form-label">Producto {{$index + 1}}</label>
+                            <input type="text" 
+                                   class="text-input" 
+                                   placeholder="Tipo de Trozo Aserrable">
+                        </div>
+                    }
+                    <div class="w-full">
+                        <label class="form-label">Unidad de Origen</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Origen"
+                               formControlName="origin">
+                    </div>
+                } -->
             </div>
             <button type="submit" class="form-btn">
-                Confirmar Edicion
+                Guardar
             </button>
         </form>
-        <button type="button" class="form-btn" (click)="showToast(true)">
-            Confirmar Edicion
-        </button>
     </div>
 
     <div class="w-[35%]">
