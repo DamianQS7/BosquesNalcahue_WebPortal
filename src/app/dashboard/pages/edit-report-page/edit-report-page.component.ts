@@ -51,17 +51,26 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
     this.updateReportSubs?.unsubscribe();
   }
 
-  public get products(): FormArray {
-    return this.form.get('products') as FormArray;  
+  public deleteReport(): void {
+    const id: string | undefined = this.reportToSubmit?.id;
+    if (!id) return
+    this.reportsService.deleteById(id)
+      .subscribe(isDeleted => {
+        if(!isDeleted) {
+          console.error('Error deleting the report');
+        } else {
+          console.log('Report deleted successfully');
+        }
+      });
   }
-
+  
   public onSubmit() {
+    
     if(this.reportToSubmit) {      
       // Map the values in the form to the reportToSubmit property
       Object.assign(this.reportToSubmit, this.form.value);
       
       // Call the update method from the service
-      console.log('Submiting report to Update')
       const {id, ...report} = this.reportToSubmit;
       this.updateReportSubs = this.reportsService
         .updateReport(id, report)

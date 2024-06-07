@@ -17,4 +17,4 @@
 * Module-less Angular App
 * Lazy Loading with Standalone Components
 * Deferrable Views
-* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil
+* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError

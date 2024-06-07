@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Report, ReportsResponse } from '../../interfaces/reports-response.interface';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { DateTimeService } from './date-time.service';
 import { UpdateReportDto } from '../../interfaces';
 
@@ -20,6 +20,17 @@ export class ReportsService {
   private readonly endpoint: string = `${this.baseUrl}/reports`;
 
   // Methods
+  public deleteById(id: string): Observable<boolean> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.delete<boolean>(requestUrl).pipe(
+      map(() => true),
+      catchError(error => {
+        console.log('Error deleting the report', error);
+        return of(false);
+      })
+    );
+  }
+
   public getAllReports(dateFilter: string, productFilter: string, page: number, sortBy: string): Observable<ReportsResponse> {
 
     const dateFilterQuery:    string = this.generateDateFilter(dateFilter);

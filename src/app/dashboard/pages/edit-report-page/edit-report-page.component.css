@@ -37,6 +37,13 @@
 }
 
 .form-btn {
-    @apply inline-flex items-center px-5 py-2.5 mt-4 sm:mt-8 text-sm font-medium text-center text-white rounded-lg
-     /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-teal-300
+    @apply inline-flex items-center px-5 py-2.5  sm:mt-8 text-sm font-medium text-center text-white rounded-lg w-44 justify-center
+}
+
+.btn-confirm {
+    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 via-slate-600 to-teal-300
+}
+
+.btn-delete {
+    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-red-500  via-slate-600
 }
