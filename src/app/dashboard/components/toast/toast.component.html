@@ -1,8 +1,15 @@
 <div class="toast-wrapper flex"
-     [ngClass]="{'hidden': !isVisible(), 'wrapper-success': toastType() === 'success', 'wrapper-failure': toastType() === 'failure'}">
+     [ngClass]="{
+        'show': isVisible(), 
+        'wrapper-success': toastType() === 'success', 
+        'wrapper-failure': toastType() === 'failure'
+        }">
 
     <div class="icon-wrapper"
-         [ngClass]="{'icon-success': toastType() === 'success', 'icon-failure': toastType() === 'failure'}">
+         [ngClass]="{
+            'icon-success': toastType() === 'success', 
+            'icon-failure': toastType() === 'failure'
+            }">
          <div [innerHTML]="this.iconsService.getIcon(toastType() === 'success' ? 'success' : 'failure')"></div>
     </div>
     <div class="message">{{toastType() === 'success' ? successMessage : failureMessage}}</div>

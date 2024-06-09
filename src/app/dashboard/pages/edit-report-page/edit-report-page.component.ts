@@ -7,10 +7,11 @@ import { Subscription } from 'rxjs';
 import { ReportsService } from '../../services/reports.service';
 import { Report, EditableReport } from '@interfaces/index';
 import { ToastComponent } from '../../components/toast/toast.component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   standalone: true,
-  imports: [ ReactiveFormsModule, ToastComponent ],
+  imports: [ ReactiveFormsModule, ToastComponent, ModalComponent ],
   templateUrl: './edit-report-page.component.html',
   styleUrl: './edit-report-page.component.css'
 })
@@ -24,6 +25,9 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private getReportSubs?: Subscription;
   private updateReportSubs?: Subscription;
   public reportToSubmit?: Report;
+  public modalVisible = signal<boolean>(false);
+  public toastSuccessMessage = signal<string>('');
+  public toastFailureMessage = signal<string>('');
   public toastVisible = signal<boolean>(false);
   public toastType = signal<'success' | 'failure'>('failure');
 
@@ -51,21 +55,27 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
     this.updateReportSubs?.unsubscribe();
   }
 
-  public deleteReport(): void {
+  public deleteReport(confirm: boolean): void {
     const id: string | undefined = this.reportToSubmit?.id;
     if (!id) return
-    this.reportsService.deleteById(id)
-      .subscribe(isDeleted => {
-        if(!isDeleted) {
-          console.error('Error deleting the report');
-        } else {
-          console.log('Report deleted successfully');
-        }
-      });
+
+    if(confirm){
+      this.reportsService.deleteById(id)
+        .subscribe(isDeleted => {
+          if(isDeleted === false) {
+            this.setToastType('failure', 'Hubo un error al eliminar el reporte.');
+            this.ShowAndHideToast(true);
+          } else {
+            this.setToastType('success', 'Reporte eliminado con exito.');
+            this.ShowAndHideToast(true);
+          }
+        });
+    }
   }
   
   public onSubmit() {
     
+    if(!this.form.dirty) return;
     if(this.reportToSubmit) {      
       // Map the values in the form to the reportToSubmit property
       Object.assign(this.reportToSubmit, this.form.value);
@@ -77,17 +87,36 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
         .subscribe((report) => {
           if(report !== undefined) {
             this.ShowAndHideToast(true);
-            this.toastType.set('success');
+            this.setToastType('success', 'Reporte actualizado con exito.')
+            this.form.markAsPristine();
            } else {
             this.ShowAndHideToast(false);
-            this.toastType.set('failure');
+            this.setToastType('failure', 'No se pudo actualizar el reporte.')
            }
         });
     }
   }
 
+  public setToastType(type: 'success' | 'failure', message: string): void {
+    this.toastType.set(type);
+
+    if (type === 'success') {
+      this.toastSuccessMessage.set(message);
+    } else {
+      this.toastFailureMessage.set(message);
+    }
+  }
+
   public ShowAndHideToast(showToast: boolean): void {
     this.toastVisible.set(showToast);
+  }
+
+  public showModal(): void {
+    this.modalVisible.set(true);
+  }
+
+  public hideModal(): void {
+    this.modalVisible.set(false);
   }
 
   private getReportToEdit(id: string): void {
