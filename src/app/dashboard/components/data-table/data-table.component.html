@@ -1,6 +1,8 @@
 <section class="table-wrapper">
     @if (data.length === 0) {
-        <h2 class="text-2xl text-white text-center">No hay reportes para mostrar.</h2>
+        <div class=" my-4 p-4 bg-gradient-to-br from-slate-700 to-teal-300 via-slate-600 from-40% to-85% w-[50%] m-auto rounded-lg shadow-xl shadow-slate-800">
+            <h2 class="2xl:text-2xl text-xl text-white text-center">No hay reportes para mostrar.</h2>
+        </div>
     } @else {
         <table class="data-table">
             <thead class="data-table-head">
@@ -41,11 +43,17 @@
                         <td class="data-table-td">
                             {{ row.clientName }}
                         </td>
-                        <td class="data-table-td">
-                            {{ row.species! | formatSpecies}}
-                        </td>
+                        @if (row.productType === 'Trozo Aserrable') {
+                            <td class="data-table-td">
+                                {{ row.species! | formatSpecies}}
+                            </td>
+                        } @else {
+                            <td class="data-table-td">
+                                {{ row.productName }}
+                            </td>
+                        }
                         <td class="data-table-td text-right">
-                            <a href="#" class="action-column-link">Editar</a>
+                            <a [routerLink]="['/dashboard/editar-reporte/', row.id]" class="action-column-link">Editar</a>
                             | <a href="#" class="action-column-link">Ver PDF</a>
                         </td>
                     </tr>

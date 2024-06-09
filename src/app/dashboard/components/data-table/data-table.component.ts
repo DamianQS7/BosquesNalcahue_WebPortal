@@ -4,11 +4,12 @@ import { Component, computed, EventEmitter, inject, input, Input, InputSignal, O
 import { IconsService } from '../../../services/icons.service';
 import { ColumnTitles, ReportsTableRow } from '../../../interfaces';
 import { FormatSpeciesPipe } from '../../../pipes/format-species.pipe';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'dashboard-data-table',
   standalone: true,
-  imports: [CommonModule, FormatSpeciesPipe],
+  imports: [CommonModule, FormatSpeciesPipe, RouterModule],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.css'
 })

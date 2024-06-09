@@ -1,13 +1,13 @@
 # BosquesNalcahue WebPortal
 
 ## Technologies
-* Angular 17
+* Angular 18
 * Tailwind CSS
 * Flowbite Icons
-* No external component libraries were used; Everything was created from scratch.
+* No external component libraries were used; All the components were created from scratch.
 
 ## Concepts Applied
-* Parent-Child Component Communication (Inputs & Outputs)
+* Parent-Child Component Communication => Inputs & Outputs
 * Observables
 * HTTP requests
 * Signals => signal, computed, input
@@ -17,3 +17,4 @@
 * Module-less Angular App
 * Lazy Loading with Standalone Components
 * Deferrable Views
+* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError

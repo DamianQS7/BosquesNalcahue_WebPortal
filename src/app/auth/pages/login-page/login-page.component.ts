@@ -19,6 +19,6 @@ export class LoginPageComponent {
   public iconService: IconsService = inject(IconsService);
 
   public login(): void {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/dashboard/reports');
   }
 }

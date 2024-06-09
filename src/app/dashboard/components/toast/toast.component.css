@@ -1,0 +1,47 @@
+.toast-wrapper {
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: opacity 1s, transform 1s;
+    @apply items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow fixed bottom-5 right-5 z-[500]
+    /* Light => */text-gray-500 bg-white
+    /* Dark => */ dark:text-gray-300 dark:bg-gray-800
+}
+
+.icon-wrapper {
+    @apply inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg
+    /* Light => */ text-slate-800 bg-green-100
+    /* Dark => */  dark:bg-teal-200 dark:text-slate-700
+}
+
+.message {
+    @apply ms-3 text-sm font-medium
+}
+
+.btn {
+    @apply ms-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8
+    /* Light => */bg-white text-gray-400 hover:text-gray-900 hover:bg-gray-100
+    /* Dark => */ dark:text-gray-500 dark:hover:text-slate-800 dark:bg-gray-800 dark:hover:bg-slate-300
+}
+
+/* Success styles */
+.wrapper-success {
+    @apply border-t-4 border-teal-200
+}
+
+.icon-success {
+    @apply dark:bg-teal-200 dark:text-slate-700
+}
+
+/* Failure styles */
+.wrapper-failure {
+    @apply border-t-4 border-red-400
+}
+
+.icon-failure {
+    @apply dark:bg-red-400 dark:text-slate-700
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}

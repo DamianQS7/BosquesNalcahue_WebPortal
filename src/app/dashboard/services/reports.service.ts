@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { ReportsResponse } from '../../interfaces/reports-response.interface';
-import { Observable } from 'rxjs';
+import { Report, ReportsResponse } from '../../interfaces/reports-response.interface';
+import { catchError, map, Observable, of } from 'rxjs';
 import { DateTimeService } from './date-time.service';
+import { UpdateReportDto } from '../../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,17 @@ export class ReportsService {
   private readonly endpoint: string = `${this.baseUrl}/reports`;
 
   // Methods
+  public deleteById(id: string): Observable<boolean> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.delete<boolean>(requestUrl).pipe(
+      map(() => true),
+      catchError(error => {
+        console.log('Error deleting the report', error);
+        return of(false);
+      })
+    );
+  }
+
   public getAllReports(dateFilter: string, productFilter: string, page: number, sortBy: string): Observable<ReportsResponse> {
 
     const dateFilterQuery:    string = this.generateDateFilter(dateFilter);
@@ -27,12 +39,23 @@ export class ReportsService {
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
+  public getReportsById(id: string): Observable<Report> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.get<Report>(requestUrl);
+  }
+
   public getReportsByFolio(folio: string): Observable<ReportsResponse> {
     const queryParam: string = `folio=${folio}`;
     const requestUrl: string = `${this.endpoint}?${queryParam}`;
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
+  public updateReport(id: string, report: UpdateReportDto): Observable<Report> {
+    const requestUrl: string = `${this.endpoint}/${id}`;
+    return this.http.put<Report>(requestUrl, report);
+  }
+
+  // Helpers
   private generateDateFilter(filter: string): string {
     const currentDate: string = this.dateTime.formatDate(new Date());
   
