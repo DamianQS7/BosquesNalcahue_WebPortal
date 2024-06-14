@@ -19,15 +19,15 @@ export class DynamicChartComponent {
   public barChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
-        tension: 0.1,
+        tension: 1,
       },
     },
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {},
       y: {
-        min: 10,
-        max: 100
+        min: 0,
+        max: 10
       },
     },
     plugins: {
@@ -35,32 +35,25 @@ export class DynamicChartComponent {
     },
   };
 
-  // Input signal here
-  public barChartLabels = input<string[]>([
-    '2006',
-    '2007',
-    '2008',
-    '2009',
-    '2010',
-    '2011',
-    '2012',
-  ]);
+  // Input signal
+  public barChartLabels = input<string[]>(['No data to display']);
   
-  // Input signal here
+  // Input signal
   public barChartDatasets = input<SimpleChartDataset[]>([
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A', },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Lena', },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Metro Ruma' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Trozo Aserrable' },
   ]);
 
-  public barChartType: ChartType = 'bar';
-
-  // This will be a computed signal
+  // Computed signal
   public barChartData = computed<ChartData<'bar'>>(() => {
     return {
       labels: this.barChartLabels(),
       datasets: this.barChartDatasets(),
     };
   })
+
+  public barChartType: ChartType = 'bar';
 
   // events
   public chartClicked({
@@ -70,7 +63,7 @@ export class DynamicChartComponent {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -80,7 +73,7 @@ export class DynamicChartComponent {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public changeChartType(): void {

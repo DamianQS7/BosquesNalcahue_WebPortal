@@ -8,3 +8,5 @@ export * from './reports-table-row.interface';
 export * from './pagination-info.interface';
 export * from './chart-datasets.interface';
 export * from './update-report-dto.interface';
+export * from './monthly-breakdown-response.interface';
+export * from './reports-count-response.interface';

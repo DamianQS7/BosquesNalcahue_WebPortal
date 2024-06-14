@@ -1,5 +1,8 @@
 <p>charts-page works!</p>
 
-<div class="bg-gradient-to-br from-slate-700 to-teal-100 w-[90%] p-3">
-<charts-dynamic-chart chartType="dynamic" [barChartLabels]="['2000', '2005']"/>
+<div class="bg-slate-700 p-3">
+    <charts-dynamic-chart 
+        chartType="dynamic" 
+        [barChartLabels]="monthlyBreakdownChartLabels"
+        [barChartDatasets]="monthlyBreakdownChartDataset()"/>
 </div>
