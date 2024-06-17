@@ -16,24 +16,7 @@ export class DynamicChartComponent {
   @ViewChild(BaseChartDirective) 
   public chart: BaseChartDirective | undefined;
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    elements: {
-      line: {
-        tension: 1,
-      },
-    },
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 0,
-        max: 10
-      },
-    },
-    plugins: {
-      legend: { display: true },
-    },
-  };
+  public barChartOptions = input<ChartConfiguration['options']>();
 
   // Input signal
   public barChartLabels = input<string[]>(['No data to display']);
