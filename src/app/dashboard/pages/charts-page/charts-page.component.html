@@ -1,9 +1,18 @@
-<p>charts-page works!</p>
-
-<div class="bg-slate-700 p-3">
-    <charts-dynamic-chart 
-        chartType="dynamic" 
-        [barChartLabels]="monthlyBreakdownChartLabels"
-        [barChartDatasets]="monthlyBreakdownChartDataset()"
-        [barChartOptions]="monthlyBreakdownChartOptions"/>
+<div class="flex flex-col gap-4">
+    <div class="wrapper w-full p-2">
+        Title, Date, and Daily count here
+    </div>
+    
+    <section class="flex gap-3">
+        <div class="wrapper w-[65%] p-4">
+            <charts-dynamic-chart 
+                chartType="dynamic" 
+                [barChartLabels]="monthlyBreakdownChartLabels"
+                [barChartDatasets]="monthlyBreakdownChartDataset()"
+                [barChartOptions]="monthlyBreakdownChartOptions"/>
+        </div>
+        <div class="wrapper w-[34%]">
+            <span>Donut chart</span>
+        </div>
+    </section>
 </div>

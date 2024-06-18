@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input, ViewChild } from '@angular/core';
+import { Component, computed, input, viewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { SimpleChartDataset } from '../../../../interfaces';
@@ -13,8 +13,7 @@ import { SimpleChartDataset } from '../../../../interfaces';
 })
 export class DynamicChartComponent {
 
-  @ViewChild(BaseChartDirective) 
-  public chart: BaseChartDirective | undefined;
+  public chart = viewChild(BaseChartDirective);
 
   public barChartOptions = input<ChartConfiguration['options']>();
 
@@ -23,7 +22,7 @@ export class DynamicChartComponent {
   
   // Input signal
   public barChartDatasets = input<SimpleChartDataset[]>([
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Lena', },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Lena' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Metro Ruma' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Trozo Aserrable' },
   ]);
