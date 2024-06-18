@@ -6,10 +6,11 @@ import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dyn
 import { ChartsService } from '../../services/charts.service';
 import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
 import { CommonModule } from '@angular/common';
+import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 
 @Component({
   standalone: true,
-  imports: [ DynamicChartComponent, CommonModule ],
+  imports: [ DynamicChartComponent, CommonModule, PolarChartComponent ],
   templateUrl: './charts-page.component.html',
   styleUrl: './charts-page.component.css'
 })
@@ -19,11 +20,13 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
   private chartsService: ChartsService = inject(ChartsService);
 
   // Properties
-  public pageDate: Date = new Date();
   public monthlyBreakdownChartLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   public monthlyBreakdownChartDataset = signal<SimpleChartDataset[]>([]);
   public monthlyBreakdownChartMaxY = signal<number>(10);
   public monthlyBreakdownChartOptions: ChartConfiguration['options'];
+
+  public totalReportsChartLabels: string[] = ['Leña', 'Metro Ruma', 'Trozo Aserrable'];
+  //public totalReportsChartDataset = signal<SimpleChartDataset>();
 
   // --> Repetir las dos propiedades de arriba por cada chart
 
@@ -72,5 +75,7 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
         this.monthlyBreakdownChartDataset.set(response); 
         this.monthlyBreakdownChartMaxY.set(this.chartsService.setMaxY(this.monthlyBreakdownChartDataset()));
       });
+
+    this.chartsService.getTotalCountByYear().subscribe(console.log);
   }
 }

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { MonthlyBreakdownResponse } from '@interfaces/monthly-breakdown-response.interface';
 import { environment } from '../../../environments/environment.development';
-import { Observable } from 'rxjs';
 import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
 
 @Injectable({
@@ -14,11 +15,15 @@ export class ChartsService {
   private http: HttpClient = inject(HttpClient);
 
   // Properties
-  public chartFontColor:   string = 'rgba(255,255,255,0.9)';
-  public chartGridColor:   string = 'rgba(255,255,255,0.15)';
-  public chartColorGreen:  string = '#99f6e4';
-  public chartColorIndigo: string = '#a5b4fc';
-  public chartColorSky:    string = '#7dd3fc';
+  public chartFontColor:              string = 'rgba(255,255,255,0.9)';
+  public chartGridColor:              string = 'rgba(255,255,255,0.15)';
+  public chartColorGreen:             string = '#99f6e4';
+  public chartColorIndigo:            string = '#a5b4fc';
+  public chartColorSky:               string = '#7dd3fc';
+  public chartTranslucentColorIndigo: string = 'rgba(165, 180, 252, 0.6)';
+  public chartTranslucentColorGreen:  string = 'rgba(153, 246, 228, 0.7)';
+  public chartTranslucentColorSky:    string = 'rgba(125, 211, 252, 0.7)';
+
   private baseUrl: string = environment.baseUrl;
   private endpoint: string = `${this.baseUrl}/analytics`;
 
@@ -26,6 +31,14 @@ export class ChartsService {
   public getMonthlyBreakdown(): Observable<MonthlyBreakdownResponse> {
     const requestUrl: string = `${this.endpoint}/monthly-breakdown`;
     return this.http.get<MonthlyBreakdownResponse>(requestUrl)
+  }
+
+  public getTotalCountByYear() {
+    const currentYear = new Date().getFullYear();
+    const queryParam = `startDate=${currentYear}/01/01&endDate=${currentYear}/12/31`;
+  
+    const requestUrl: string = `${this.endpoint}/reports-count-period?${queryParam}`;
+    return this.http.get(requestUrl);
   }
 
   public mapToChartDataset(response: MonthlyBreakdownResponse ): SimpleChartDataset[] {

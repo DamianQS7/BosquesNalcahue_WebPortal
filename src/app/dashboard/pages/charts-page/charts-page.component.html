@@ -5,14 +5,17 @@
     
     <section class="flex gap-3">
         <div class="wrapper w-[65%] p-4">
+            <h1 class="text-white font-medium mx-1 mt-1 mb-4 italic">Total de reportes por mes en 2024</h1>
             <charts-dynamic-chart 
                 chartType="dynamic" 
                 [barChartLabels]="monthlyBreakdownChartLabels"
                 [barChartDatasets]="monthlyBreakdownChartDataset()"
                 [barChartOptions]="monthlyBreakdownChartOptions"/>
         </div>
-        <div class="wrapper w-[34%]">
-            <span>Donut chart</span>
+        <div class="wrapper w-[34%] py-4 px-1">
+            <h1 class="text-white font-medium mx-3 mt-1 mb-4 italic">Total de reportes en 2024</h1>
+            <charts-polar-chart 
+                [polarAreaChartLabels]="totalReportsChartLabels"/>
         </div>
     </section>
 </div>

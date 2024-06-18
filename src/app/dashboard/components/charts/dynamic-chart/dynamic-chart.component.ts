@@ -9,15 +9,13 @@ import { SimpleChartDataset } from '../../../../interfaces';
   standalone: true,
   imports: [CommonModule, BaseChartDirective],
   templateUrl: './dynamic-chart.component.html',
-  styleUrl: './dynamic-chart.component.css'
+  styles: ``
 })
 export class DynamicChartComponent {
 
   public chart = viewChild(BaseChartDirective);
 
   public barChartOptions = input<ChartConfiguration['options']>();
-
-  // Input signal
   public barChartLabels = input<string[]>(['No data to display']);
   
   // Input signal
