@@ -7,6 +7,7 @@ import { ChartsService } from '../../services/charts.service';
 import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
 import { CommonModule } from '@angular/common';
 import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
+import { ReportsCountResponse } from '@interfaces/reports-count-response.interface';
 
 @Component({
   standalone: true,
@@ -26,7 +27,7 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
   public monthlyBreakdownChartOptions: ChartConfiguration['options'];
 
   public totalReportsChartLabels: string[] = ['Leña', 'Metro Ruma', 'Trozo Aserrable'];
-  //public totalReportsChartDataset = signal<SimpleChartDataset>();
+  public totalReportsChartDataset = signal<SimpleChartDataset>({data: [], label: ''});
 
   // --> Repetir las dos propiedades de arriba por cada chart
 
@@ -66,7 +67,8 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
   }
 
   private initializeCharts(): void {
-    // Call chartsService to populate properties that are the input for the chart
+
+    // Monthly Breakdown Chart
     this.chartsService.getMonthlyBreakdown()
       .pipe(
         map(response => this.chartsService.mapToChartDataset(response))
@@ -76,6 +78,21 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
         this.monthlyBreakdownChartMaxY.set(this.chartsService.setMaxY(this.monthlyBreakdownChartDataset()));
       });
 
-    this.chartsService.getTotalCountByYear().subscribe(console.log);
+    // Total Reports per Year Chart
+    this.chartsService.getTotalCountByYear()
+      .pipe(
+        map<ReportsCountResponse, SimpleChartDataset>(({lena, metroRuma, trozoAserrable}) => {
+          return { 
+            data: [lena, metroRuma, trozoAserrable], 
+            label: '', 
+            backgroundColor: [
+              this.chartsService.chartTranslucentColorGreen,
+              this.chartsService.chartTranslucentColorIndigo,
+              this.chartsService.chartTranslucentColorSky
+            ] 
+          }
+        })
+      )
+      .subscribe(dataset => this.totalReportsChartDataset.set(dataset));
   }
 }

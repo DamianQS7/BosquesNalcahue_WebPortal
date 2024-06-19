@@ -26,10 +26,10 @@ export class PolarChartComponent {
     scales: {
       r: {
         grid: { color: 'rgba(255,255,255,0.15)' },
-        ticks: { color: 'white', backdropColor: '#334155', z: 100}
+        ticks: { color: 'white', backdropColor: '#334155', z: 100},
       },
     },
-    borderColor: '',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     plugins: {
       legend: { 
         display: true, 

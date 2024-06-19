@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MonthlyBreakdownResponse } from '@interfaces/monthly-breakdown-response.interface';
 import { environment } from '../../../environments/environment.development';
 import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
+import { ReportsCountResponse } from '@interfaces/reports-count-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +34,12 @@ export class ChartsService {
     return this.http.get<MonthlyBreakdownResponse>(requestUrl)
   }
 
-  public getTotalCountByYear() {
+  public getTotalCountByYear(): Observable<ReportsCountResponse> {
     const currentYear = new Date().getFullYear();
     const queryParam = `startDate=${currentYear}/01/01&endDate=${currentYear}/12/31`;
   
     const requestUrl: string = `${this.endpoint}/reports-count-period?${queryParam}`;
-    return this.http.get(requestUrl);
+    return this.http.get<ReportsCountResponse>(requestUrl);
   }
 
   public mapToChartDataset(response: MonthlyBreakdownResponse ): SimpleChartDataset[] {
