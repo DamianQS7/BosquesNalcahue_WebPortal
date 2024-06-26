@@ -1,14 +1,20 @@
-import { AfterContentChecked, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { 
+  AfterContentChecked, 
+  Component, 
+  computed, 
+  inject, 
+  OnDestroy, 
+  OnInit, 
+  signal } from '@angular/core';
 import { map, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { ChartConfiguration } from 'chart.js';
 import { ChartsService } from '../../services/charts.service';
-import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
-import { ReportsCountResponse } from '@interfaces/reports-count-response.interface';
 import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dynamic-chart.component';
 import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 import { MonthlyPercentCardComponent } from '../../components/monthly-percent-card/monthly-percent-card.component';
+import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '@interfaces/index'
 
 @Component({
   standalone: true,
@@ -30,8 +36,28 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
   public totalReportsChartLabels: string[] = ['Leña', 'Metro Ruma', 'Trozo Aserrable'];
   public totalReportsChartDataset = signal<SimpleChartDataset>({data: [], label: ''});
 
+  public monthlyPercent = computed(() => {
+    const monthlyCount: ReportsCountResponse = {
+      lena: this.monthlyBreakdownChartDataset()[0].data[this.currentDate.getMonth()],
+      metroRuma: this.monthlyBreakdownChartDataset()[1].data[this.currentDate.getMonth()],
+      trozoAserrable: this.monthlyBreakdownChartDataset()[2].data[this.currentDate.getMonth()],
+    }
+
+    const monthlyTotal: number = monthlyCount.lena + monthlyCount.metroRuma + monthlyCount.trozoAserrable
+
+    const percentages: MonthlyPercentages = {
+      lena: (monthlyCount.lena / monthlyTotal) * 100,
+      metroRuma: (monthlyCount.metroRuma / monthlyTotal) * 100,
+      trozoAserrable: (monthlyCount.trozoAserrable / monthlyTotal) * 100,
+    }
+    
+    return percentages;
+  });
+
   private monthlyBreakdownChartSubs?: Subscription = new Subscription();
   private totalReportsChartSubs?: Subscription;
+  private currentDate: Date = new Date();
+
 
   // Methods
   ngOnInit(): void {
@@ -83,6 +109,8 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
       .subscribe( response => {
         this.monthlyBreakdownChartDataset.set(response); 
         this.monthlyBreakdownChartMaxY.set(this.chartsService.setMaxY(this.monthlyBreakdownChartDataset()));
+        console.log(response);
+        
       });
 
     // Total Reports per Year Chart

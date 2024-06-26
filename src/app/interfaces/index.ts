@@ -10,3 +10,4 @@ export * from './chart-datasets.interface';
 export * from './update-report-dto.interface';
 export * from './monthly-breakdown-response.interface';
 export * from './reports-count-response.interface';
+export * from './monthly-percentages.interface';

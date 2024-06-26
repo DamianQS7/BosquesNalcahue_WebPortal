@@ -2,9 +2,9 @@
     <section class="wrapper w-full p-2 flex flex-col">
         <h1 class="pl-4 py-2 text-white font-medium  text-3xl">Analisis Estadistico</h1>
         <div class="flex justify-between mx-5 my-3">
-            <dashboard-monthly-percent-card title="Leña"/>
-            <dashboard-monthly-percent-card title="Metro Ruma" />
-            <dashboard-monthly-percent-card title="Trozo Aserrable" />
+            <dashboard-monthly-percent-card title="Leña" [percent]="monthlyPercent().lena"/>
+            <dashboard-monthly-percent-card title="Metro Ruma" [percent]="monthlyPercent().metroRuma"/>
+            <dashboard-monthly-percent-card title="Trozo Aserrable" [percent]="monthlyPercent().trozoAserrable"/>
         </div>
     </section>
     
