@@ -1,0 +1,23 @@
+.card-wrapper {
+    @apply flex gap-6 p-4 bg-slate-700 rounded-lg border-slate-700 border shadow-md shadow-slate-800 z-10
+}
+
+.card-title {
+    @apply text-lg font-bold mb-4
+}
+
+.card-subtitle {
+    @apply text-sm font-thin text-slate-100
+}
+
+.card-percent {
+    @apply text-2xl font-bold self-center
+}
+
+.card-percent-wrapper {
+    @apply relative h-20 w-20 bg-slate-500 rounded-full flex items-center justify-center
+}
+
+.teal {
+    @apply text-teal-200
+}

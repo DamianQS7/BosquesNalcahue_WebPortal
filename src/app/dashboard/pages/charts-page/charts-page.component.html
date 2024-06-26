@@ -1,14 +1,16 @@
 <div class="flex flex-col gap-4">
     <section class="wrapper w-full p-2 flex flex-col">
-        <div>Title and Date</div>
-        <div>
-            Charts x 3
+        <h1 class="pl-4 py-2 text-white font-medium  text-3xl">Analisis Estadistico</h1>
+        <div class="flex justify-between mx-5 my-3">
+            <dashboard-monthly-percent-card title="Leña"/>
+            <dashboard-monthly-percent-card title="Metro Ruma" />
+            <dashboard-monthly-percent-card title="Trozo Aserrable" />
         </div>
     </section>
     
     <section class="flex gap-3">
         <div class="wrapper w-[65%] p-4">
-            <h1 class="text-white font-medium mx-1 mt-1 mb-4 italic">Total de reportes por mes en 2024</h1>
+            <h1 class="text-white font-medium mx-1 mt-1 mb-4 text-xl ">Reportes por mes en el presente año</h1>
             <charts-dynamic-chart 
                 chartType="dynamic" 
                 [barChartLabels]="monthlyBreakdownChartLabels"
@@ -16,7 +18,7 @@
                 [barChartOptions]="monthlyBreakdownChartOptions"/>
         </div>
         <div class="wrapper w-[34%] py-4 px-1">
-            <h1 class="text-white font-medium mx-3 mt-1 mb-4 italic">Total de reportes en 2024</h1>
+            <h1 class="text-white font-medium mx-3 mt-1 mb-4 text-xl ">Total de reportes en el presente año</h1>
             <charts-polar-chart 
                 [polarAreaChartLabels]="totalReportsChartLabels"
                 [polarChartDatasets]="totalReportsChartDataset()"/>

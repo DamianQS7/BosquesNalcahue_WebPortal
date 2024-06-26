@@ -1,0 +1,25 @@
+<div class="card-wrapper">
+    <div class="w-52">
+        <h3 class="card-title" 
+            [ngClass]="{
+                'text-teal-200': title() === 'Leña',
+                'text-indigo-200': title() === 'Metro Ruma',
+                'text-sky-200': title() === 'Trozo Aserrable',
+            }"
+        >
+            {{title()}}
+        </h3>
+        <span class="card-subtitle">{{subtitle()}}</span>
+    </div>
+    <div class="card-percent-wrapper">
+        <span class="card-percent"
+              [ngClass]="{
+                'text-teal-200': title() === 'Leña',
+                'text-indigo-200': title() === 'Metro Ruma',
+                'text-sky-200': title() === 'Trozo Aserrable',
+                }"
+        >
+            {{percent()}}%
+        </span>
+    </div>
+</div>

@@ -1,21 +1,22 @@
-import { AfterContentChecked, Component, inject, OnInit, signal } from '@angular/core';
-import { map } from 'rxjs';
+import { AfterContentChecked, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { map, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 import { ChartConfiguration } from 'chart.js';
-import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dynamic-chart.component';
 import { ChartsService } from '../../services/charts.service';
 import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
-import { CommonModule } from '@angular/common';
-import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 import { ReportsCountResponse } from '@interfaces/reports-count-response.interface';
+import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dynamic-chart.component';
+import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
+import { MonthlyPercentCardComponent } from '../../components/monthly-percent-card/monthly-percent-card.component';
 
 @Component({
   standalone: true,
-  imports: [ DynamicChartComponent, CommonModule, PolarChartComponent ],
+  imports: [ DynamicChartComponent, CommonModule, PolarChartComponent, MonthlyPercentCardComponent ],
   templateUrl: './charts-page.component.html',
   styleUrl: './charts-page.component.css'
 })
-export class ChartsPageComponent implements OnInit, AfterContentChecked {
+export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestroy {
   
   // Services
   private chartsService: ChartsService = inject(ChartsService);
@@ -29,7 +30,8 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
   public totalReportsChartLabels: string[] = ['Leña', 'Metro Ruma', 'Trozo Aserrable'];
   public totalReportsChartDataset = signal<SimpleChartDataset>({data: [], label: ''});
 
-  // --> Repetir las dos propiedades de arriba por cada chart
+  private monthlyBreakdownChartSubs?: Subscription = new Subscription();
+  private totalReportsChartSubs?: Subscription;
 
   // Methods
   ngOnInit(): void {
@@ -66,10 +68,15 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
     };
   }
 
+  ngOnDestroy(): void {
+    this.monthlyBreakdownChartSubs?.unsubscribe();
+    this.totalReportsChartSubs?.unsubscribe();
+  }
+
   private initializeCharts(): void {
 
     // Monthly Breakdown Chart
-    this.chartsService.getMonthlyBreakdown()
+    this.monthlyBreakdownChartSubs = this.chartsService.getMonthlyBreakdown()
       .pipe(
         map(response => this.chartsService.mapToChartDataset(response))
       )
@@ -79,7 +86,7 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked {
       });
 
     // Total Reports per Year Chart
-    this.chartsService.getTotalCountByYear()
+    this.totalReportsChartSubs = this.chartsService.getTotalCountByYear()
       .pipe(
         map<ReportsCountResponse, SimpleChartDataset>(({lena, metroRuma, trozoAserrable}) => {
           return { 
