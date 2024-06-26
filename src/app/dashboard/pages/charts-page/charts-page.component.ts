@@ -37,14 +37,17 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
   public totalReportsChartDataset = signal<SimpleChartDataset>({data: [], label: ''});
 
   public monthlyPercent = computed(() => {
+    // Get the monthlyCount from the monthlyBreakdownChartDataset signal
     const monthlyCount: ReportsCountResponse = {
       lena: this.monthlyBreakdownChartDataset()[0].data[this.currentDate.getMonth()],
       metroRuma: this.monthlyBreakdownChartDataset()[1].data[this.currentDate.getMonth()],
       trozoAserrable: this.monthlyBreakdownChartDataset()[2].data[this.currentDate.getMonth()],
     }
 
+    // Calculate the monthly total
     const monthlyTotal: number = monthlyCount.lena + monthlyCount.metroRuma + monthlyCount.trozoAserrable
 
+    // Calculate the monthlyPercentages
     const percentages: MonthlyPercentages = {
       lena: (monthlyCount.lena / monthlyTotal) * 100,
       metroRuma: (monthlyCount.metroRuma / monthlyTotal) * 100,
@@ -53,10 +56,10 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
     
     return percentages;
   });
-
+  
+  public currentDate: Date = new Date();
   private monthlyBreakdownChartSubs?: Subscription = new Subscription();
   private totalReportsChartSubs?: Subscription;
-  private currentDate: Date = new Date();
 
 
   // Methods
@@ -109,8 +112,6 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
       .subscribe( response => {
         this.monthlyBreakdownChartDataset.set(response); 
         this.monthlyBreakdownChartMaxY.set(this.chartsService.setMaxY(this.monthlyBreakdownChartDataset()));
-        console.log(response);
-        
       });
 
     // Total Reports per Year Chart

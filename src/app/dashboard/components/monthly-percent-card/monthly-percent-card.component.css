@@ -1,5 +1,5 @@
 .card-wrapper {
-    @apply flex gap-6 p-4 bg-slate-700 rounded-lg border-slate-700 border shadow-md shadow-slate-800 z-10
+    @apply flex md:gap-6 p-4 bg-slate-700 rounded-lg border-slate-700 border shadow-md shadow-slate-800 z-10
 }
 
 .card-title {
