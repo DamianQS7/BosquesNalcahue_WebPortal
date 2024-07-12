@@ -14,7 +14,7 @@ import { ChartsService } from '../../services/charts.service';
 import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dynamic-chart.component';
 import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 import { MonthlyPercentCardComponent } from '../../components/monthly-percent-card/monthly-percent-card.component';
-import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '@interfaces/index'
+import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '../../interfaces/index'
 
 @Component({
   standalone: true,

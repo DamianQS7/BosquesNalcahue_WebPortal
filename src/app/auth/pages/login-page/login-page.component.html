@@ -1,18 +1,27 @@
 <div class="wrapper">
-    <form class="form-wrapper" (ngSubmit)="login()">
-        <!-- <h1 class="mb-4 text-3xl">Bosques Nalcahue</h1> -->
+    <form 
+        class="form-wrapper" 
+        (ngSubmit)="login()" 
+        [formGroup]="form">
+        
         <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo">
         <h1>Iniciar Sesion</h1>
         
         <div class="input-wrapper">
-            <input type="text" required >
-            <label>Usuario</label>
+            <input 
+                type="text" 
+                required 
+                formControlName="email">
+            <label>Email de usuario</label>
             <div [innerHTML]="this.iconService.getIcon('user')"></div>
            
         </div>
 
         <div class="input-wrapper">
-            <input type="password" required >
+            <input 
+                type="password" 
+                required 
+                formControlName="password">
             <label>Contrasena</label>
             <div [innerHTML]="this.iconService.getIcon('lock')"></div>  
         </div>

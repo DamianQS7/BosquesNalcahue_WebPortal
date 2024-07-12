@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input, viewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { SimpleChartDataset } from '../../../../interfaces';
+import { SimpleChartDataset } from '../../../interfaces';
 
 @Component({
   selector: 'charts-dynamic-chart',

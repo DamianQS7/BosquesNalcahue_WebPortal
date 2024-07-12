@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { MenuItem } from '../../../interfaces/menu-item.interface';
+import { MenuItem } from '../../interfaces/menu-item.interface';
 import { IconsService } from '../../../services/icons.service';
 
 @Component({

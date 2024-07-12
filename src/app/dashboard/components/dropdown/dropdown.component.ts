@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { IconsService } from '../../../services/icons.service';
-import { DropdownOption } from '../../../interfaces/dropdown-option.interface';
+import { DropdownOption } from '../../interfaces/dropdown-option.interface';
 import { CommonModule } from '@angular/common';
 import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
 

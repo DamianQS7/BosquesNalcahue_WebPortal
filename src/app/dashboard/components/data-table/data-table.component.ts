@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, inject, input, Input, InputSignal, Output, signal } from '@angular/core';
 
 import { IconsService } from '../../../services/icons.service';
-import { ColumnTitles, ReportsTableRow } from '../../../interfaces';
+import { ColumnTitles, ReportsTableRow } from '../../interfaces';
 import { FormatSpeciesPipe } from '../../../pipes/format-species.pipe';
 import { RouterModule } from '@angular/router';
 

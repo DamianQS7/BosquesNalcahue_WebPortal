@@ -2,9 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "paths": {
-      "@interfaces/*": ["./src/app/interfaces/*"]
-    },
+    "paths": {},
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,

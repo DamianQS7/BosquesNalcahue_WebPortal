@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { Report, ReportsResponse } from '../../interfaces/reports-response.interface';
+import { Report, ReportsResponse } from '../interfaces/reports-response.interface';
 import { catchError, map, Observable, of } from 'rxjs';
 import { DateTimeService } from './date-time.service';
-import { UpdateReportDto } from '../../interfaces';
+import { UpdateReportDto } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'

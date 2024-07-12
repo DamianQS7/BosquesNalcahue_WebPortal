@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
-import { Report, EditableReport } from '@interfaces/index';
+import { Report, EditableReport } from '../../interfaces/index';
 import { ToastComponent } from '../../components/toast/toast.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 

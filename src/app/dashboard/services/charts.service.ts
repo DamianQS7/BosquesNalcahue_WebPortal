@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MonthlyBreakdownResponse } from '@interfaces/monthly-breakdown-response.interface';
+import { MonthlyBreakdownResponse } from '../interfaces/monthly-breakdown-response.interface';
 import { environment } from '../../../environments/environment.development';
-import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
-import { ReportsCountResponse } from '@interfaces/reports-count-response.interface';
+import { SimpleChartDataset } from '../interfaces/chart-datasets.interface';
+import { ReportsCountResponse } from '../interfaces/reports-count-response.interface';
 
 @Injectable({
   providedIn: 'root'

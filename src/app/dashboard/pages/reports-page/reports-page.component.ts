@@ -7,7 +7,7 @@ import { DataTableComponent } from '../../components/data-table/data-table.compo
 import { DropdownComponent } from '../../components/dropdown/dropdown.component';
 import { PaginationNavComponent } from '../../components/pagination-nav/pagination-nav.component';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
-import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '@interfaces/index';
+import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '../../interfaces/index';
 
 @Component({
   standalone: true,

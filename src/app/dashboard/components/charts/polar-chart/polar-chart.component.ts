@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input } from '@angular/core';
-import { SimpleChartDataset } from '@interfaces/chart-datasets.interface';
+import { SimpleChartDataset } from '../../../interfaces/chart-datasets.interface';
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
