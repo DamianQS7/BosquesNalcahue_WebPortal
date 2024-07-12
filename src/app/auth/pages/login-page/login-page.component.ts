@@ -4,6 +4,7 @@ import { IconsService } from '../../../services/icons.service';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastComponent } from '../../../dashboard/components/toast/toast.component';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   standalone: true,
@@ -13,16 +14,13 @@ import { ToastComponent } from '../../../dashboard/components/toast/toast.compon
 })
 export class LoginPageComponent {
   // Services
-  private fb: FormBuilder          = inject(FormBuilder);
-  private router: Router           = inject(Router);
-  private authService: AuthService = inject(AuthService);
-  public iconService: IconsService = inject(IconsService);
+  private fb: FormBuilder           = inject(FormBuilder);
+  private router: Router            = inject(Router);
+  private authService: AuthService  = inject(AuthService);
+  public iconService: IconsService  = inject(IconsService);
+  public toasts: ToastService = inject(ToastService);
 
   // Properties
-  public toastSuccessMessage = signal<string>('');
-  public toastFailureMessage = signal<string>('');
-  public toastVisible = signal<boolean>(false);
-  public toastType = signal<'success' | 'failure'>('failure');
   public form: FormGroup = this.fb.group({
     email:    ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
@@ -30,6 +28,12 @@ export class LoginPageComponent {
 
   // Methods
   public login(): void {
+
+    if (this.form.invalid) {
+      this.toasts.displayToast('failure', this.searchForErrorsInForm());
+      return;
+    }
+
     const { email, password } = this.form.value;
 
     this.authService.login(email, password).subscribe({
@@ -48,5 +52,15 @@ export class LoginPageComponent {
         
       }
     });
+  }
+
+  private searchForErrorsInForm(): string {
+    const emailValid:    boolean = this.form.get('email')!.valid;
+    const passwordValid: boolean = this.form.get('password')!.valid;
+
+    if(!emailValid && !passwordValid) return 'Debe completar todos los campos para proceder.';
+    if(!emailValid) return 'El nombre de usuario es incorrecto.';
+    if(!passwordValid) return 'La contrasena es incorrecta.';
+    return 'Hay errores en el formulario.'
   }
 }
