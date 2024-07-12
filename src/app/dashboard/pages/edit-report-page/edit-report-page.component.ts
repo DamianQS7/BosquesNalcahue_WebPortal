@@ -9,6 +9,7 @@ import { Report, EditableReport } from '../../interfaces/index';
 import { ToastComponent } from '../../components/toast/toast.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { ToastService } from '../../../services/toast.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   standalone: true,
@@ -21,15 +22,14 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private reportsService: ReportsService = inject(ReportsService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   public toastService: ToastService = inject(ToastService);
+  public modals: ModalService = inject(ModalService);
   private fb: FormBuilder = inject(FormBuilder);
 
   // Properties
   private getReportSubs?: Subscription;
   private updateReportSubs?: Subscription;
   public reportToSubmit?: Report;
-  public modalVisible = signal<boolean>(false);
   
-
   public form: FormGroup = this.fb.group({
     folio:         ['', [Validators.required]],
     date:          ['', [Validators.required]],
@@ -90,14 +90,6 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
            }
         });
     }
-  }
-
-  public showModal(): void {
-    this.modalVisible.set(true);
-  }
-
-  public hideModal(): void {
-    this.modalVisible.set(false);
   }
 
   private getReportToEdit(id: string): void {
