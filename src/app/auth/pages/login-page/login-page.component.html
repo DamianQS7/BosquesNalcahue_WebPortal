@@ -31,4 +31,9 @@
             <div [innerHTML]="this.iconService.getIcon('login')"></div>             
         </button>
     </form>
+    <dashboard-toast [isVisible]="toasts.toastVisible()"
+                 [failureMessage]="toasts.toastFailureMessage()"
+                 [successMessage]="toasts.toastSuccessMessage()"
+                 [toastType]="toasts.toastType()" 
+                 (toastTimedOut)="toasts.ShowAndHideToast($event)" />
 </div>
