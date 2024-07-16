@@ -20,26 +20,28 @@ export class AuthService {
 
   public currentUser     = computed(() => this._currentUser());
   public accessToken     = computed(() => this._accessToken());
-  public isAuthenticated = computed(() => 
-    typeof this.accessToken === 'string' ? true : false);
+  public isAuthenticated = computed(() => this._accessToken() ? true : false);
 
   // Methods
-  public login(email: string, password: string): Observable<boolean> {
+  public login(email: string, password: string): Observable<AuthResponse> {
     const endpoint: string = `${this.baseUrl}/login`;
     const body: LoginRequest = {email, password};
+    console.log('isAuthenticated Signal ->', this.isAuthenticated());
     
     return this.http.post<AuthResponse>(endpoint, body)
       .pipe(
-        map((response) => response.success 
-                        ? this.createUserSession(response.userInfo, response.token) 
-                        : false),
+        tap((response) => this.createUserSession(response.userInfo, response.token)),
         catchError((error) => throwError(() => error.message))
       )  
   }
 
-  private createUserSession(user: User, token: string): boolean {
+  public closeUserSession(): void {
+    this._currentUser.set(null);
+    this._accessToken.set(null);
+  }
+
+  private createUserSession(user: User, token: string): void {
     this._currentUser.set(user);
     this._accessToken.set(token);
-    return true
   }
 }

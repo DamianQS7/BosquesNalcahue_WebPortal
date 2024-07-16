@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { DashboardLayoutComponent } from './dashboard/layouts/dashboard-layout/dashboard-layout.component';
+import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
+import { notAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
 
 export const routes: Routes = [
     { 
@@ -10,10 +12,12 @@ export const routes: Routes = [
             { 
                 path: 'reportes', 
                 loadComponent: () => import('./dashboard/pages/reports-page/reports-page.component').then(c => c.ReportsPageComponent),
+                canActivate: [isAuthenticatedGuard]
             },
             { 
                 path: 'estadisticas', 
                 loadComponent: () => import('./dashboard/pages/charts-page/charts-page.component').then(c => c.ChartsPageComponent),
+                canActivate: [isAuthenticatedGuard]
             },
             { 
                 path: 'editar-reporte/:id', 
@@ -21,6 +25,6 @@ export const routes: Routes = [
             },
         ]
     },
-    { path: 'login', component: LoginPageComponent },
+    { path: 'login', component: LoginPageComponent, canActivate: [notAuthenticatedGuard]},
     { path: '**', redirectTo: 'dashboard/reportes'}
 ];
