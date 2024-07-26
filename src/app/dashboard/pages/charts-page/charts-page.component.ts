@@ -49,9 +49,9 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
 
     // Calculate the monthlyPercentages
     const percentages: MonthlyPercentages = {
-      lena: (monthlyCount.lena / monthlyTotal) * 100,
-      metroRuma: (monthlyCount.metroRuma / monthlyTotal) * 100,
-      trozoAserrable: (monthlyCount.trozoAserrable / monthlyTotal) * 100,
+      lena: this.calculateMonthlyPercentages(monthlyCount.lena, monthlyTotal),
+      metroRuma: this.calculateMonthlyPercentages(monthlyCount.metroRuma, monthlyTotal),
+      trozoAserrable: this.calculateMonthlyPercentages(monthlyCount.trozoAserrable, monthlyTotal),
     }
     
     return percentages;
@@ -130,5 +130,12 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
         })
       )
       .subscribe(dataset => this.totalReportsChartDataset.set(dataset));
+  }
+
+  private calculateMonthlyPercentages(monthlyProduct: number, monthlyTotal: number): number {
+    if (monthlyProduct === 0 || monthlyTotal === 0)
+      return 0;
+
+    return (monthlyProduct / monthlyTotal) * 100
   }
 }

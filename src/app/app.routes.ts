@@ -3,6 +3,7 @@ import { LoginPageComponent } from './auth/pages/login-page/login-page.component
 import { DashboardLayoutComponent } from './dashboard/layouts/dashboard-layout/dashboard-layout.component';
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { logoutGuard } from './auth/guards/logout.guard';
+import { isAuthorizedGuard } from './auth/guards/is-authorized.guard';
 
 export const routes: Routes = [
     { 
@@ -22,6 +23,7 @@ export const routes: Routes = [
             { 
                 path: 'editar-reporte/:id', 
                 loadComponent: () => import('./dashboard/pages/edit-report-page/edit-report-page.component').then(c => c.EditReportPageComponent),
+                canActivate: [isAuthorizedGuard]
             },
         ]
     },

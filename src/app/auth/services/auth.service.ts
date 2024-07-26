@@ -18,14 +18,16 @@ export class AuthService {
 
   // Properties
   private _baseUrl: string = `${environment.baseUrl}/identity`
-  private _currentUser = signal<User | null>(null);
-  private _accessToken = signal<string | null>(null);
+  private _currentUser  = signal<User | null>(null);
+  private _accessToken  = signal<string | null>(null);
   private _refreshToken = signal<string | null>(null);
 
-  public currentUser     = computed(() => this._currentUser());
-  public accessToken     = computed(() => this._accessToken());
-  public refreshToken    = computed(() => this._refreshToken());
-  public isAuthenticated = computed(() => this._accessToken() ? true : false);
+  public currentUserName  = computed(() => this._currentUser()?.name ?? '');
+  public currentUserEmail = computed(() => this._currentUser()?.email ?? '');
+  public isAuthorized     = computed(() => this._currentUser()?.isAdmin ?? false);
+  public accessToken      = computed(() => this._accessToken());
+  public refreshToken     = computed(() => this._refreshToken());
+  public isAuthenticated  = computed(() => this._accessToken() ? true : false);
 
   // Methods
   constructor() {
@@ -92,6 +94,5 @@ export class AuthService {
     this._currentUser.set(storedUser ? JSON.parse(storedUser) : null);
     this._accessToken.set(storedToken ? storedToken : null);
     this._refreshToken.set(storedRefreshToken ? storedRefreshToken : null);
-  
   }
 }

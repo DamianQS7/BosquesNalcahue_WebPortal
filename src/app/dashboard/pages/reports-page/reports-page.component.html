@@ -45,6 +45,12 @@
                                   (selectedPage)="changePage($event)"
                                   (nextPageEvent)="goToNextPage($event)"
                                   (prevPageEvent)="goToPreviousPage($event)"/>
+
+        <dashboard-toast [isVisible]="toasts.toastVisible()"
+                         [failureMessage]="toasts.toastFailureMessage()"
+                         [successMessage]="toasts.toastSuccessMessage()"
+                         [toastType]="toasts.toastType()" 
+                         (toastTimedOut)="toasts.ShowAndHideToast($event)" />
     } @placeholder {
         <div class="spinner-wrapper">
             <svg aria-hidden="true" class="spinner" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
