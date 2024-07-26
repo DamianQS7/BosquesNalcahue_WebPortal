@@ -18,11 +18,11 @@ export class LoginPageComponent {
   private router: Router            = inject(Router);
   private authService: AuthService  = inject(AuthService);
   public iconService: IconsService  = inject(IconsService);
-  public toasts: ToastService = inject(ToastService);
+  public toasts: ToastService       = inject(ToastService);
 
   // Properties
   public form: FormGroup = this.fb.group({
-    email:    ['test7@gmail.com', [Validators.required, Validators.email]],
+    email:    ['test8@gmail.com', [Validators.required, Validators.email]],
     password: ['Abc123456!', [Validators.required]]
   });
 
