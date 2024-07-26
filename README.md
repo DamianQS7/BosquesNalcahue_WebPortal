@@ -10,11 +10,13 @@
 * Parent-Child Component Communication => Inputs & Outputs
 * Observables
 * HTTP requests
-* Signals => signal, computed, input
+* Signals => signal, computed, input, output, effect
 * DOM Sanitizer
 * Custom Directives
 * Built-in and Custom Pipes
 * Module-less Angular App
 * Lazy Loading with Standalone Components
 * Deferrable Views
-* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError
+* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError, switchMap
+* Route Guards => CanActivate.
+* Interceptors => To handle Jwt and Refresh Token.

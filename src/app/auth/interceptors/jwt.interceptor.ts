@@ -6,7 +6,6 @@ import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 export const jwtInterceptor: HttpInterceptorFn = 
 (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
-  let counts: number = 0;
 
   if (authService.accessToken()) {
     req = req.clone({
@@ -17,9 +16,8 @@ export const jwtInterceptor: HttpInterceptorFn =
   }
 
   return next(req).pipe(
-    tap(() => counts++),
     catchError(err => {
-      if (err.status === 401 && authService.accessToken() && counts < 2) {
+      if (err.status === 401 && authService.accessToken()) {
         console.log('Refreshing Token from Interceptor');
         return authService.refresh().pipe(
           switchMap(res => {

@@ -37,12 +37,12 @@ export class LoginPageComponent {
 
     this.authService.login(email, password).subscribe({
       next: (authResult) => {
-        if(authResult.success === true) {          
+        if(authResult.success === true) {        
           this.router.navigateByUrl('/dashboard/reports')
         }
         else {
           console.log('loginPageComponent:', 'Something went wrong with login method');
-          this.toasts.displayToast('failure', 'Ha ocurrido un error inesperado.')
+          this.toasts.displayToast('failure', 'Ha ocurrido un error inesperado.');
         }
       },
       error: (message: string) => {

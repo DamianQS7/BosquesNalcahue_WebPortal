@@ -24,7 +24,7 @@ export class AuthService {
 
   public currentUser     = computed(() => this._currentUser());
   public accessToken     = computed(() => this._accessToken());
-  public refreshToken     = computed(() => this._refreshToken());
+  public refreshToken    = computed(() => this._refreshToken());
   public isAuthenticated = computed(() => this._accessToken() ? true : false);
 
   // Methods
