@@ -8,16 +8,19 @@ import { DropdownComponent } from '../../components/dropdown/dropdown.component'
 import { PaginationNavComponent } from '../../components/pagination-nav/pagination-nav.component';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
 import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '../../interfaces/index';
+import { ToastComponent } from '../../components/toast/toast.component';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   standalone: true,
-  imports: [DataTableComponent, DropdownComponent, PaginationNavComponent, SearchBoxComponent, CommonModule],
+  imports: [DataTableComponent, DropdownComponent, PaginationNavComponent, SearchBoxComponent, CommonModule, ToastComponent],
   templateUrl: './reports-page.component.html',
   styleUrl: './reports-page.component.css'
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
 
   private reportsService: ReportsService = inject(ReportsService);
+  public toasts: ToastService = inject(ToastService);
 
   private getAllSubs?: Subscription;
   private getByFolioSubs?: Subscription;

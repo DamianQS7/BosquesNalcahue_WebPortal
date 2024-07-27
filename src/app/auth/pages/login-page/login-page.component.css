@@ -63,6 +63,7 @@ h1 {
 
 .btn-submit {
     @apply font-semibold w-[50%] p-3 bg-teal-200/80 rounded-2xl flex items-center justify-center gap-2
+    /* Clicked */ active:bg-slate-800 active:text-teal-200
     /* Mobile => */ text-sm
     /* Normal => */ sm:text-lg
     /* Larger => */ 2xl:text-xl

@@ -18,17 +18,16 @@ export class LoginPageComponent {
   private router: Router            = inject(Router);
   private authService: AuthService  = inject(AuthService);
   public iconService: IconsService  = inject(IconsService);
-  public toasts: ToastService = inject(ToastService);
+  public toasts: ToastService       = inject(ToastService);
 
   // Properties
   public form: FormGroup = this.fb.group({
-    email:    ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+    email:    ['test8@gmail.com', [Validators.required, Validators.email]],
+    password: ['Abc123456!', [Validators.required]]
   });
 
   // Methods
   public login(): void {
-
     if (this.form.invalid) {
       this.toasts.displayToast('failure', this.searchForErrorsInForm());
       return;
@@ -37,19 +36,17 @@ export class LoginPageComponent {
     const { email, password } = this.form.value;
 
     this.authService.login(email, password).subscribe({
-      next: (result) => {
-        console.log(result);
-        
-        if(result === true) {
+      next: (authResult) => {
+        if(authResult.success === true) {        
           this.router.navigateByUrl('/dashboard/reports')
         }
         else {
-          console.log('Something went wrong')
+          console.log('loginPageComponent:', 'Something went wrong with login method');
+          this.toasts.displayToast('failure', 'Ha ocurrido un error inesperado.');
         }
       },
       error: (message: string) => {
-        console.log(message);
-        
+        console.log(message); 
       }
     });
   }

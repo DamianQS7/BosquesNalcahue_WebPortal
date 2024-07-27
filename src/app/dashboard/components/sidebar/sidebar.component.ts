@@ -19,7 +19,6 @@ export class SidebarComponent {
   public mainMenuItems: MenuItem[] = [
     { route: '/dashboard/reportes', icon: 'pdf_file', title: 'Listado'},
     { route: '/dashboard/estadisticas', icon: 'chart', title: 'Estadísticas'},
-    { route: '/dashboard/metro-ruma', icon: 'dashboard', title: 'Leña'}
   ];
 
   public settingsMenuItems: MenuItem[] = [
