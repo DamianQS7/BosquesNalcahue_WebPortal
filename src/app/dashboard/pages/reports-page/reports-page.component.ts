@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { delay, map, Subscription, tap } from 'rxjs';
+import { map, Subscription, tap } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
@@ -9,11 +9,20 @@ import { PaginationNavComponent } from '../../components/pagination-nav/paginati
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
 import { PaginationInfo, ReportsTableRow, Report, ReportsResponse } from '../../interfaces/index';
 import { ToastComponent } from '../../components/toast/toast.component';
-import { ToastService } from '../../../services/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
+import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 
 @Component({
   standalone: true,
-  imports: [DataTableComponent, DropdownComponent, PaginationNavComponent, SearchBoxComponent, CommonModule, ToastComponent],
+  imports: [
+    DataTableComponent, 
+    DropdownComponent, 
+    PaginationNavComponent, 
+    SearchBoxComponent, 
+    CommonModule, 
+    ToastComponent,
+    SpinnerComponent
+  ],
   templateUrl: './reports-page.component.html',
   styleUrl: './reports-page.component.css'
 })

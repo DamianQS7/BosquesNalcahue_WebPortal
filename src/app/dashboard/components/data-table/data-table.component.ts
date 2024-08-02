@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, output } from '@angular/core';
 
-import { IconsService } from '../../../services/icons.service';
+import { IconsService } from '../../../shared/services/icons.service';
 import { ColumnTitles, ReportsTableRow } from '../../interfaces';
-import { FormatSpeciesPipe } from '../../../pipes/format-species.pipe';
+import { FormatSpeciesPipe } from '../../../shared/pipes/format-species.pipe';
 import { RouterModule } from '@angular/router';
 
 @Component({

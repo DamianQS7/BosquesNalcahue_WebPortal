@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MenuItem } from '../../interfaces/menu-item.interface';
-import { IconsService } from '../../../services/icons.service';
+import { IconsService } from '../../../shared/services/icons.service';
 
 @Component({
   selector: 'dashboard-sidebar',

@@ -8,8 +8,8 @@ import { ReportsService } from '../../services/reports.service';
 import { Report, EditableReport } from '../../interfaces/index';
 import { ToastComponent } from '../../components/toast/toast.component';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { ToastService } from '../../../services/toast.service';
-import { ModalService } from '../../../services/modal.service';
+import { ToastService } from '../../../shared/services/toast.service';
+import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
   standalone: true,
