@@ -8,6 +8,7 @@ export interface ReportsResponse {
 
 export interface Report {
     origin?:         null | string;
+    fileId?:         string;
     truckHeight?:    number;
     truckLength?:    number;
     banks?:          number;

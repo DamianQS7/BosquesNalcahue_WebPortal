@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { map, Subscription, tap } from 'rxjs';
+import { delay, map, Subscription, tap } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
@@ -24,6 +24,7 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
 
   private getAllSubs?: Subscription;
   private getByFolioSubs?: Subscription;
+  private getPdfFileUriSubs?: Subscription;
   public pageDate: Date = new Date();
   public currentProductTypeFilter = signal<string>('Sin filtrar'); // Unfiltered by default
   public currentDateFilter = signal<string>('Sin filtrar'); // Unfiltered by default
@@ -40,6 +41,22 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getAllSubs?.unsubscribe();
     this.getByFolioSubs?.unsubscribe();
+    this.getPdfFileUriSubs?.unsubscribe();
+  }
+
+  public applyDateFilter(filter: string): void {
+    this.currentDateFilter.set(filter);
+    this.getAllReports();
+  }
+
+  public applyProductTypeFilter(filter: string): void {
+    this.currentProductTypeFilter.set(filter);
+    this.getAllReports();
+  }
+
+  public changePage(page: number): void {
+    this.currentPage.set(page);
+    this.getAllReports();
   }
 
   public getAllReports(): void {
@@ -59,11 +76,6 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  public changePage(page: number): void {
-    this.currentPage.set(page);
-    this.getAllReports();
-  }
-
   public goToNextPage(hasNextPage: boolean): void {
     if(hasNextPage) {
       this.currentPage.update(value => value + 1)
@@ -78,14 +90,11 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  public applyDateFilter(filter: string): void {
-    this.currentDateFilter.set(filter);
-    this.getAllReports();
-  }
-
-  public applyProductTypeFilter(filter: string): void {
-    this.currentProductTypeFilter.set(filter);
-    this.getAllReports();
+  public openPdfFileInNewTab(fileId: string): void {
+    this.getPdfFileUriSubs = this.reportsService.getPdfFileUri(fileId)
+      .subscribe((response) => {
+        window.open(response.sasUri, '_blank');
+      });
   }
 
   public sortReportsBy(sortBy: string): void {
@@ -124,8 +133,12 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
   }
 
   private mapReportsToRows(items: Report[]): ReportsTableRow[] {
-    return items.map(({id, date, folio, productType, clientName, species, productName}) => 
-      ({id, date, folio, productType, clientName, species, productName})
+    return items.map(({id, fileId, date, folio, productType, clientName, species, productName}) => 
+      ({id, fileId, date, folio, productType, clientName, species, productName})
     );
   }
+}
+
+function takeUntilDestroyed(): import("rxjs").OperatorFunction<string, unknown> {
+  throw new Error('Function not implemented.');
 }

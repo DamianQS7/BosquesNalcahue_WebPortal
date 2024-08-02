@@ -1,8 +1,9 @@
 import { Product, ProductType } from "./reports-response.interface";
 
 export interface EditableReport {
-    productType:     ProductType; //Hidden
+    productType:     ProductType; // Hidden
     id:              string;      // Hidden
+    fileId?:          string       // Hidden
     folio:           string;      // readonly
     date:            Date;        // readonly
     clientId:        null | string;

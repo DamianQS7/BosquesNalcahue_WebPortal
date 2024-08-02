@@ -4,7 +4,7 @@
 * Angular 18
 * Tailwind CSS
 * Flowbite Icons
-* No external component libraries were used; All the components were created from scratch.
+* Ng2-Charts
 
 ## Concepts Applied
 * Parent-Child Component Communication => Inputs & Outputs

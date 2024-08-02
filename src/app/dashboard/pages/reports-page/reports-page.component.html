@@ -35,8 +35,11 @@
             <!-- Search box -->
             <dashboard-search-box (onDebounce)="searchByFolio($event)"/>
         </div>
+        
         <dashboard-data-table [data]="tableReports()"
-                              (onSortColumn)="sortReportsBy($event)" class="h-full"/>
+                              (onSortColumn)="sortReportsBy($event)"
+                              (onViewPdf)="openPdfFileInNewTab($event)" 
+                              class="h-full"/>
     
         <dashboard-pagination-nav [hasNextPage]="paginationInfo()?.hasNextPage!"
                                   [pageSize]="paginationInfo()?.pageSize!" 

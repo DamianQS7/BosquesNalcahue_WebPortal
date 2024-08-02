@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
 
 import { ReportsService } from '../../services/reports.service';
 import { Report, EditableReport } from '../../interfaces/index';
@@ -26,6 +26,7 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private fb: FormBuilder = inject(FormBuilder);
 
   // Properties
+  public isReportDeleted = signal<boolean>(false);
   private getReportSubs?: Subscription;
   private updateReportSubs?: Subscription;
   public reportToSubmit?: Report;
@@ -56,17 +57,28 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
 
   public deleteReport(confirm: boolean): void {
     const id: string | undefined = this.reportToSubmit?.id;
+    
     if (!id) return
 
     if(confirm){
       this.reportsService.deleteById(id)
         .subscribe(isDeleted => {
-          if(isDeleted === false) {
+          if (isDeleted === false) {
             this.toastService.displayToast('failure', 'Hubo un error al eliminar el reporte.');
           } else {
+            this.isReportDeleted.set(true);
+            this.reportsService.deleteFileByFileId(this.reportToSubmit?.fileId ?? '')
+              .pipe(
+                tap(() => console.log('File deleted successfully')),
+                catchError((error) => {
+                  console.log(error);
+                  return of(null);
+                })
+              )
+              .subscribe();
             this.toastService.displayToast('success', 'Reporte eliminado con exito.');
-          }
-        });
+          }    
+        });   
     }
   }
   
@@ -133,6 +145,7 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
     return {
       id: report.id,
       productType: report.productType,
+      fileId: report.fileId,
       folio: report.folio,
       date: report.date,
       clientName: report.clientName,

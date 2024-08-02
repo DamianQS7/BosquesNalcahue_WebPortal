@@ -24,8 +24,6 @@ export class ToastComponent {
   constructor() {
     effect(() => {
       if(this.isVisible()) {
-        console.log(this.isVisible());
-        
         this.triggerTimeOut();
       }
     })
