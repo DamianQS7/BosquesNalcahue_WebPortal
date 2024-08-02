@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, EventEmitter, inject, input, Input, InputSignal, Output, signal } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 
-import { IconsService } from '../../../services/icons.service';
+import { IconsService } from '../../../shared/services/icons.service';
 import { ColumnTitles, ReportsTableRow } from '../../interfaces';
-import { FormatSpeciesPipe } from '../../../pipes/format-species.pipe';
+import { FormatSpeciesPipe } from '../../../shared/pipes/format-species.pipe';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -28,11 +28,15 @@ export class DataTableComponent {
 
   @Input()
   public data: ReportsTableRow[] = []; 
-
-  @Output()
-  public onSortColumn: EventEmitter<string> = new EventEmitter();
+ 
+  public onViewPdf = output<string>();
+  public onSortColumn = output<string>();
 
   public sortColumnEvent(sort: string): void {
     this.onSortColumn.emit(sort);
+  }
+
+  public viewPdfEvent(fileId: string): void {
+    this.onViewPdf.emit(fileId);
   }
 }

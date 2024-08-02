@@ -1,4 +1,4 @@
-import { Icon } from "../../app/interfaces/icon.interface";
+import { Icon } from '../../app/shared/interfaces/icon.interface';
 
 export const icons: Icon = {
     arrow_down: `

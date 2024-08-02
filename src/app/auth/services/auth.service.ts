@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { User } from '../interfaces/user.interface';
 import { LoginRequest } from '../interfaces/login-request.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
-import { BrowserStorageService } from '../../services/browser-storage.service';
+import { BrowserStorageService } from '../../shared/services/browser-storage.service';
 import { RefreshTokenRequest } from '../interfaces/refresh-token-request.interface';
 
 @Injectable({

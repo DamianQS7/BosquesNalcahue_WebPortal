@@ -53,8 +53,13 @@
                             </td>
                         }
                         <td class="data-table-td text-right">
-                            <a [routerLink]="['/dashboard/editar-reporte/', row.id]" class="action-column-link">Editar</a>
-                            | <a href="#" class="action-column-link">Ver PDF</a>
+                            <a [routerLink]="['/dashboard/editar-reporte/', row.id]" class="action-column-link">
+                                Editar
+                            </a>
+                            | 
+                            <a href="#" class="action-column-link" (click)="viewPdfEvent(row.fileId ?? ''); $event.preventDefault();">
+                                Ver PDF
+                            </a>
                         </td>
                     </tr>
                 }

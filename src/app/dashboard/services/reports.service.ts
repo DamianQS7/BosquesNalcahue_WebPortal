@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Report, ReportsResponse } from '../interfaces/reports-response.interface';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { DateTimeService } from './date-time.service';
 import { UpdateReportDto } from '../interfaces';
+import { FileUriResponse } from '../interfaces/file-uri-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,13 @@ export class ReportsService {
 
   // Properties
   private readonly baseUrl:  string = environment.baseUrl;
-  private readonly endpoint: string = `${this.baseUrl}/reports`;
+  private readonly reportsEndpoint: string = `${this.baseUrl}/reports`;
+  private readonly blobEndpoint: string = `${this.baseUrl}/blob`;
+
 
   // Methods
   public deleteById(id: string): Observable<boolean> {
-    const requestUrl: string = `${this.endpoint}/${id}`;
+    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.delete<boolean>(requestUrl).pipe(
       map(() => true),
       catchError(error => {
@@ -31,27 +34,43 @@ export class ReportsService {
     );
   }
 
-  public getAllReports(dateFilter: string, productFilter: string, page: number, sortBy: string): Observable<ReportsResponse> {
+  public deleteFileByFileId(fileId: string) {
+    const requestUrl: string = `${this.blobEndpoint}/${fileId}`;
+    return this.http.delete(requestUrl);
+  }
+
+  public getAllReports(
+    dateFilter: string, 
+    productFilter: string, 
+    page: number, sortBy: 
+    string): Observable<ReportsResponse> {
 
     const dateFilterQuery:    string = this.generateDateFilter(dateFilter);
     const productFilterQuery: string = this.generateProductFilter(productFilter);
-    const requestUrl:         string = `${this.endpoint}?page=${page}${dateFilterQuery}${productFilterQuery}&SortBy=${sortBy}`
+    const requestUrl:         string = `${this.reportsEndpoint}?page=${page}${dateFilterQuery}${productFilterQuery}&SortBy=${sortBy}`
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
+  public getPdfFileUri(fileId: string): Observable<FileUriResponse> {
+    const requestUrl: string = `${this.blobEndpoint}/${fileId}`;
+    return this.http.get<FileUriResponse>(requestUrl).pipe(
+      tap(console.log)
+    ); 
+  }
+
   public getReportsById(id: string): Observable<Report> {
-    const requestUrl: string = `${this.endpoint}/${id}`;
+    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.get<Report>(requestUrl);
   }
 
   public getReportsByFolio(folio: string): Observable<ReportsResponse> {
     const queryParam: string = `folio=${folio}`;
-    const requestUrl: string = `${this.endpoint}?${queryParam}`;
+    const requestUrl: string = `${this.reportsEndpoint}?${queryParam}`;
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
   public updateReport(id: string, report: UpdateReportDto): Observable<Report> {
-    const requestUrl: string = `${this.endpoint}/${id}`;
+    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.put<Report>(requestUrl, report);
   }
 

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, Input, input, output } from '@angular/core';
-import { IconsService } from '../../../services/icons.service';
+import { IconsService } from '../../../shared/services/icons.service';
 
 @Component({
   selector: 'dashboard-toast',
@@ -24,8 +24,6 @@ export class ToastComponent {
   constructor() {
     effect(() => {
       if(this.isVisible()) {
-        console.log(this.isVisible());
-        
         this.triggerTimeOut();
       }
     })

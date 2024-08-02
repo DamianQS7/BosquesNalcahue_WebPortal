@@ -26,10 +26,17 @@
             <div [innerHTML]="this.iconService.getIcon('lock')"></div>  
         </div>
         
-        <button class="btn-submit" type="submit">
-            Ingresar
-            <div [innerHTML]="this.iconService.getIcon('login')"></div>             
-        </button>
+        @if (loginSucces() === false) {
+            <button class="btn-submit" type="submit">
+                Ingresar
+                <div [innerHTML]="this.iconService.getIcon('login')"></div>             
+            </button>
+        }
+        @else {
+            <div>
+                <shared-spinner />
+            </div>
+        }
     </form>
     <dashboard-toast [isVisible]="toasts.toastVisible()"
                  [failureMessage]="toasts.toastFailureMessage()"

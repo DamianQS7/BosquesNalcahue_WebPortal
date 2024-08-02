@@ -8,4 +8,5 @@ export interface ReportsTableRow {
     clientName:  string | null;
     species:     string[] | null;
     productName: string | null;
+    fileId?:     string;
 }

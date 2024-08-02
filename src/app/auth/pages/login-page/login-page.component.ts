@@ -1,14 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IconsService } from '../../../services/icons.service';
+import { IconsService } from '../../../shared/services/icons.service';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastComponent } from '../../../dashboard/components/toast/toast.component';
-import { ToastService } from '../../../services/toast.service';
+import { ToastService } from '../../../shared/services/toast.service';
+import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, ToastComponent],
+  imports: [RouterModule, ReactiveFormsModule, ToastComponent, SpinnerComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
@@ -21,8 +22,9 @@ export class LoginPageComponent {
   public toasts: ToastService       = inject(ToastService);
 
   // Properties
+  public loginSucces = signal<boolean>(false);
   public form: FormGroup = this.fb.group({
-    email:    ['test8@gmail.com', [Validators.required, Validators.email]],
+    email:    ['admin@gmail.com', [Validators.required, Validators.email]],
     password: ['Abc123456!', [Validators.required]]
   });
 
@@ -35,13 +37,15 @@ export class LoginPageComponent {
 
     const { email, password } = this.form.value;
 
+    this.loginSucces.set(true); 
     this.authService.login(email, password).subscribe({
       next: (authResult) => {
-        if(authResult.success === true) {        
+        if(authResult.success === true) {       
           this.router.navigateByUrl('/dashboard/reports')
         }
         else {
           console.log('loginPageComponent:', 'Something went wrong with login method');
+          this.loginSucces.set(false);
           this.toasts.displayToast('failure', 'Ha ocurrido un error inesperado.');
         }
       },
