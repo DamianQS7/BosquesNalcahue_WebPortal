@@ -1,0 +1,7 @@
+.spinner-wrapper {
+    @apply flex flex-col justify-center h-full items-center gap-3
+}
+
+.spinner {
+    @apply w-10 h-10 text-gray-200 animate-spin dark:text-slate-500 fill-teal-300
+}
