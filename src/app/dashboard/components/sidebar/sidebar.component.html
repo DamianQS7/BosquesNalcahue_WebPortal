@@ -6,36 +6,49 @@
  
 <aside aria-label="Sidebar">
     <div class="sidebar-background">
-        <div class="sidebar-header">
-            <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo" class="w-20">
+        <div class="main-content">
+            <div class="sidebar-header">
+                <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo" class="w-20">
+            </div>
+    
+            <span class="separator menu-subtitle">Reportes</span>
+            <ul class="list">
+                @for (item of mainMenuItems; track $index) {
+                    <li>
+                        <a [routerLink]="item.route"
+                           [routerLinkActiveOptions]="{exact: true}" 
+                           routerLinkActive="active" 
+                           class="link group">
+                            <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                            <span class="ms-3">{{item.title}}</span>
+                         </a>
+                    </li>
+                }
+            </ul>
+    
+            <span class="separator menu-subtitle">Administración</span>
+            <ul class="list">
+                @for (item of settingsMenuItems; track $index) {
+                    <li>
+                        <a [routerLink]="item.route" class="link group">
+                            <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                            <span class="ms-3">{{item.title}}</span>
+                         </a>
+                    </li>
+                }
+            </ul>
         </div>
 
-        <span class="separator menu-subtitle">Reportes</span>
-        <ul class="list">
-            @for (item of mainMenuItems; track $index) {
-                <li>
-                    <a [routerLink]="item.route"
-                       [routerLinkActiveOptions]="{exact: true}" 
-                       routerLinkActive="active" 
-                       class="link group">
-                        <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
-                        <span class="ms-3">{{item.title}}</span>
-                     </a>
-                </li>
-            }
-        </ul>
-
-        <span class="separator menu-subtitle">Administración</span>
-        <ul class="list">
-            @for (item of settingsMenuItems; track $index) {
-                <li>
-                    <a [routerLink]="item.route" class="link group">
-                        <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
-                        <span class="ms-3">{{item.title}}</span>
-                     </a>
-                </li>
-            }
-        </ul>
+        <div class="user-info-container">
+            <span class="separator"></span>
+            <div class="flex items-center gap-4">
+                <img class="w-10 h-10 rounded-full" [src]="defaultUserAvatar" alt="User Avatar">
+                <div class="font-normal dark:text-white">
+                    <div>{{authService.currentUserName()}}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{authService.isAuthenticated() ? 'Administrador' : 'Usuario'}}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </aside>
  
