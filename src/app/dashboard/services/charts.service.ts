@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { MonthlyBreakdownResponse } from '../interfaces/monthly-breakdown-response.interface';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { SimpleChartDataset } from '../interfaces/chart-datasets.interface';
 import { ReportsCountResponse } from '../interfaces/reports-count-response.interface';
 

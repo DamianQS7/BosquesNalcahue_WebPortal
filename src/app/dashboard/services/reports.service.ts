@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Report, ReportsResponse } from '../interfaces/reports-response.interface';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { DateTimeService } from './date-time.service';
