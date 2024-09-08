@@ -6,7 +6,8 @@ Single Page Application created using Angular 18 as part of a larger demo projec
 - .NET MAUI Mobile App => https://github.com/DamianQS7/ForestalCasablancaApp
 - ASP.NET Core 8 Web API => https://github.com/DamianQS7/BosquesNalcahueAPI
 
-![image](https://github.com/user-attachments/assets/f744d884-a4c9-4599-9ce5-23a5c489955b)
+![image](https://github.com/user-attachments/assets/b060e418-9528-4bed-bedc-fe632adaded3)
+
 
 
 ### Purpose:
