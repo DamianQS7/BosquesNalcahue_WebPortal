@@ -20,5 +20,6 @@
 }
 
 .active {
-    @apply /* Gradient => */ from-slate-700 via-slate-600 to-teal-200 bg-gradient-to-br from-40%
+    @apply /* Gradient => */ bg-gradient-to-br dark:from-40% from-slate-300 to-teal-100 via-slate-200
+    /* Dark => */ dark:from-slate-700 dark:via-slate-600 dark:to-teal-200
 }

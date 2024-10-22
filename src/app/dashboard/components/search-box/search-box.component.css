@@ -3,10 +3,11 @@
 }
 
 .icon {
-    @apply w-5 h-5 text-gray-500 dark:text-gray-400
+    @apply w-5 h-5 text-slate-600 dark:text-gray-400
 }
 
 .input-box {
-    @apply block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100
-     /* Focus => */ focus:ring-blue-500 focus:border-blue-500  dark:focus:ring-blue-500 dark:focus:border-blue-500 
+    @apply block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-white
+      /*Dark => */ dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-100
+      /*Hover => */ hover:border-teal-300
 }

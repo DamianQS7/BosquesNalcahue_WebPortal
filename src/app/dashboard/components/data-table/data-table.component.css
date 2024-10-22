@@ -8,17 +8,22 @@ table-wrapper {
 }
 
 .data-table-head {
-    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-slate-300 z-50
+    @apply text-xs text-gray-800 uppercase bg-slate-200 dark:bg-gray-700 dark:text-slate-300 z-50
 }
 
 .data-table-row {
-    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700
+    @apply bg-neutral-50 border-b dark:bg-gray-800 dark:border-gray-700
 }
 
 .data-table-td {
-    @apply px-6 py-4 text-slate-300
+    @apply px-6 py-4 dark:text-slate-300 text-slate-800
 }
 
 .action-column-link {
-    @apply font-medium text-teal-500 dark:text-teal-200 hover:underline
+    @apply font-medium text-teal-700 dark:text-teal-200 hover:underline
+}
+
+.placeholder-wrapper {
+    @apply my-4 p-4 w-[50%] m-auto rounded-lg shadow-xl shadow-slate-800
+    /* Gradient => */ bg-gradient-to-br dark:from-slate-700 to-teal-100 dark:via-slate-600 from-40% to-85% from-slate-300 via-slate-200
 }
