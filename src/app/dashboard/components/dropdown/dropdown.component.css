@@ -7,7 +7,7 @@
 
 .options-wrapper {
     @apply z-10 min-w-44 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-xl dark:bg-slate-700 dark:divide-gray-600 absolute 
-    /* Gradient => */ dark:from-slate-800 dark:via-slate-700 dark:to-teal-200 bg-gradient-to-br dark:from-40%  from-slate-300 to-teal-100 via-slate-200
+    /* Gradient => */ dark:from-slate-800 dark:via-slate-700 dark:to-teal-200 bg-gradient-to-br dark:from-40%  from-slate-200 to-teal-100 via-slate-100
 }
 
 .options-list {

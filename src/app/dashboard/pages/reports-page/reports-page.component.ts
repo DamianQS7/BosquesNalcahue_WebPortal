@@ -147,7 +147,3 @@ export class ReportsPageComponent implements OnInit, OnDestroy {
     );
   }
 }
-
-function takeUntilDestroyed(): import("rxjs").OperatorFunction<string, unknown> {
-  throw new Error('Function not implemented.');
-}

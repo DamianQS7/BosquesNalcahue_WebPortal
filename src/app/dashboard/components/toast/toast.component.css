@@ -2,7 +2,7 @@
     opacity: 0; 
     transform: translateY(20px); 
     transition: opacity 1s, transform 1s;
-    @apply items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow fixed bottom-5 right-5 z-[500]
+    @apply items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow fixed bottom-5 right-5 z-[-1] 
     /* Light => */text-gray-500 bg-white
     /* Dark => */ dark:text-gray-300 dark:bg-gray-800
 }
@@ -42,6 +42,7 @@
 }
 
 .show {
+    z-index: 500;
     opacity: 1;
     transform: translateY(0);
 }
