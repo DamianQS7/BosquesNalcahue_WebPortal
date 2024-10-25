@@ -20,6 +20,6 @@
 }
 
 .active {
-    @apply /* Gradient => */ bg-gradient-to-br dark:from-40% from-slate-200 to-teal-50 via-slate-100 font-semibold
+    @apply /* Gradient => */ bg-gradient-to-br dark:from-40% from-slate-200 to-teal-100 via-slate-100 font-semibold text-teal-400
     /* Dark => */ dark:from-slate-700 dark:via-slate-600 dark:to-teal-200
 }
