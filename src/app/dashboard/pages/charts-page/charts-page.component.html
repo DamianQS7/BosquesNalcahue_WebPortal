@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4">
-    <section class="wrapper w-full p-2 flex flex-col">
+    <section class="wrapper w-full p-2 flex flex-col background-img h-60 2xl:h-80">
         <div class="page-header">
             <h1 class="blurred-bg page-title">Analisis Estadistico</h1>
             <div class="blurred-bg page-date">
@@ -9,7 +9,7 @@
                 <h2>{{ currentDate | date:'fullDate' }}</h2>
             </div>
         </div>
-        <div class="flex justify-between mx-5 my-3">
+        <div class="flex justify-between mx-5 my-3 2xl:my-8 2xl:mb-0">
             <dashboard-monthly-percent-card title="Leña" [percent]="monthlyPercent().lena"/>
             <dashboard-monthly-percent-card title="Metro Ruma" [percent]="monthlyPercent().metroRuma"/>
             <dashboard-monthly-percent-card title="Trozo Aserrable" [percent]="monthlyPercent().trozoAserrable"/>

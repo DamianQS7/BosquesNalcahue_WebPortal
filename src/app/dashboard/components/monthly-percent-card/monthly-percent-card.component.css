@@ -1,14 +1,14 @@
 .card-wrapper {
-    @apply flex md:gap-6 p-4  bg-slate-400 border-slate-500 shadow-slate-500 rounded-lg  border shadow-md z-10
+    @apply flex md:gap-6 p-4  bg-neutral-100 dark:border-slate-500 border-slate-900 shadow-slate-500 rounded-lg  border shadow-md z-10
     /* Dark => */ dark:bg-slate-700
 }
 
 .card-title {
-    @apply text-lg font-bold mb-4
+    @apply text-lg 2xl:text-[1.30rem] font-bold mb-4
 }
 
 .card-subtitle {
-    @apply text-sm font-thin text-slate-100
+    @apply text-sm xl:text-lg font-thin dark:text-slate-100 text-slate-700
 }
 
 .card-percent {
@@ -16,9 +16,17 @@
 }
 
 .card-percent-wrapper {
-    @apply relative h-20 w-20 bg-slate-400 border border-slate-200  dark:border-0 dark:bg-slate-500 rounded-full flex items-center justify-center
+    @apply relative h-20 w-20 2xl:h-24 2xl:w-24 bg-slate-300 border border-slate-400  dark:border-0 dark:bg-slate-500 rounded-full flex items-center justify-center
 }
 
 .teal {
-    @apply text-teal-200
+    @apply dark:text-teal-200 text-teal-500/60
+}
+
+.indigo {
+    @apply dark:text-indigo-200 text-indigo-500/60
+}
+
+.sky {
+    @apply dark:text-sky-200 text-sky-500/60
 }

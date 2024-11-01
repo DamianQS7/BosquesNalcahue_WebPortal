@@ -4,7 +4,7 @@
 }
 
 .page-header {
-    @apply w-full h-60
+    @apply w-full h-60 2xl:h-80
 }
 
 .filter-and-search-wrapper {
@@ -20,15 +20,14 @@
 }
 
 .blurred-bg {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(1px);
-    @apply   bg-gradient-to-br from-slate-800/65 to-slate-500/40 border-teal-300/30 border 
+    @apply dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40% from-slate-400 to-teal-100 via-slate-300
 }
 
 .page-title {
-    @apply p-2 rounded-lg text-xl font-semibold m-2 absolute text-slate-100
+    @apply p-3 rounded-lg text-xl font-semibold m-2 absolute dark:text-slate-100 text-slate-600 2xl:m-8 2xl:text-2xl
 }
 
 .page-date {
-    @apply p-2 rounded-lg text-lg font-semibold m-2 absolute right-8 flex gap-2 items-center text-slate-100
+    @apply p-3 rounded-lg text-lg font-semibold m-2 absolute sm:right-12 flex gap-2 items-center dark:text-slate-100 text-slate-600
+    2xl:text-2xl 2xl:m-8
 }

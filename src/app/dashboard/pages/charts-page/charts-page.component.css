@@ -1,5 +1,5 @@
 .wrapper {
-    @apply rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-50 
+    @apply rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-neutral-50
 }
 
 .page-header {
@@ -7,11 +7,11 @@
 }
 
 .page-title {
-    @apply p-3 rounded-lg text-xl font-semibold  dark:text-slate-100 text-slate-500
+    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  dark:text-slate-100 text-slate-600
 }
 
 .page-date {
-    @apply p-3 rounded-lg text-xl font-semibold  flex gap-2 items-center dark:text-slate-100 text-slate-500
+    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  flex gap-2 items-center dark:text-slate-100 text-slate-600
 }
 
 .blurred-bg {
@@ -20,5 +20,10 @@
 }
 
 .section-title {
-    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl text-slate-500
+    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl 2xl:text-2xl text-slate-500
+}
+
+.background-img {
+    background-image: url('https://images.unsplash.com/photo-1631540771383-f0095283db6f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    @apply 2xl:p-10
 }
