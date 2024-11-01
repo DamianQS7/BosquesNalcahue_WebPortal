@@ -4,7 +4,6 @@ import { SimpleChartDataset } from '../../../interfaces/chart-datasets.interface
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartsService } from '../../../services/charts.service';
 
 @Component({
   selector: 'charts-polar-chart',

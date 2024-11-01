@@ -94,6 +94,8 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
           } 
         },
       },
+      responsive: true,
+      maintainAspectRatio: true
     };
   }
 

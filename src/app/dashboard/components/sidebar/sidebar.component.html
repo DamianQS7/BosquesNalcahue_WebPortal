@@ -4,7 +4,9 @@
     </svg>
 </button>
  
-<aside aria-label="Sidebar">
+<aside  aria-label="Sidebar"
+        class="transform transition-transform duration-300 ease-in-out"
+        [ngClass]="{'-translate-x-full': !showMenu(), 'translate-x-0': showMenu()}">
     <div class="sidebar-background">
         <div class="main-content">
             <div class="sidebar-header">
@@ -16,7 +18,8 @@
                 @for (item of mainMenuItems; track $index) {
                     <li>
                         <a [routerLink]="item.route"
-                           [routerLinkActiveOptions]="{exact: true}" 
+                           [routerLinkActiveOptions]="{exact: true}"
+                           (click)="toggleMenu()" 
                            routerLinkActive="active" 
                            class="link group">
                             <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>

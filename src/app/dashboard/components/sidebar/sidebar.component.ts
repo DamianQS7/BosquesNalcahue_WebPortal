@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { AuthService } from '../../../auth/services/auth.service';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
 
@@ -28,13 +28,11 @@ export class SidebarComponent {
     { route: '/login', icon: 'logout', title: 'Cerrar Sesión'}
   ];
 
-  private showMenu: boolean = false;
+  public showMenu = signal<boolean>(false);
 
   public defaultUserAvatar: string = 'assets/icons/user.png';
 
-  public toggleMenu(): void {
-    this.showMenu = !this.showMenu;
-
-    console.log(this.showMenu);
+  toggleMenu(): void {
+    this.showMenu.update(value => !value)
   }
 }
