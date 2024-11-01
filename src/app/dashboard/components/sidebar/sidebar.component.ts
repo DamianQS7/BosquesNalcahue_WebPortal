@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 import { IconsService } from '../../../shared/services/icons.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { ThemeToggleComponent } from "../../../shared/components/theme-toggle/theme-toggle.component";
 
 @Component({
   selector: 'dashboard-sidebar',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, ThemeToggleComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
