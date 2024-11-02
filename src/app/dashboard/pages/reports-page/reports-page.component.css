@@ -1,6 +1,6 @@
 .wrapper {
     @apply w-full h-full rounded-lg shadow-lg z-50 shadow-slate-950
-     /* Gradient => */ bg-gradient-to-br dark:from-slate-700 dark:to-slate-600 p-1  from-teal-50 to-teal-50
+     /* Gradient => */ bg-gradient-to-br dark:from-slate-700 dark:to-slate-600 p-1  bg-teal-100/30
 }
 
 .page-header {

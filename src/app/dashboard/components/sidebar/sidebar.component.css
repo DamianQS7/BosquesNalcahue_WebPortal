@@ -32,7 +32,7 @@ aside {
 }
 
 .sidebar-background {
-    @apply flex flex-col h-full overflow-y-auto bg-slate-200 dark:bg-slate-800
+    @apply flex flex-col h-full overflow-y-auto bg-slate-300 dark:bg-slate-800
 }
 
 .sidebar-header {
