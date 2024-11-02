@@ -18,6 +18,7 @@ export class ChartsService {
   // Properties
   public chartFontColor:              string = 'rgba(255,255,255,0.9)';
   public chartGridColor:              string = 'rgba(255,255,255,0.15)';
+  public chartGridColorDark:              string = 'rgba(0,0,0,0.6)';
   public chartColorGreen:             string = '#99f6e4';
   public chartColorIndigo:            string = '#a5b4fc';
   public chartColorSky:               string = '#7dd3fc';

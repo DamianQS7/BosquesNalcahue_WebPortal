@@ -15,6 +15,7 @@ import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dyn
 import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 import { MonthlyPercentCardComponent } from '../../components/monthly-percent-card/monthly-percent-card.component';
 import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '../../interfaces/index'
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
   
   // Services
   private chartsService: ChartsService = inject(ChartsService);
+  private themeService: ThemeService = inject(ThemeService);
 
   // Properties
   public monthlyBreakdownChartLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -83,7 +85,8 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
           min: 0,
           max: this.monthlyBreakdownChartMaxY(),
           ticks: {color: this.chartsService.chartFontColor},
-          grid: {color: this.chartsService.chartGridColor}
+          grid: {color: this.themeService.isDarkTheme() ? this.chartsService.chartGridColor 
+                                                        : this.chartsService.chartGridColorDark}
         }
       },
       plugins: {

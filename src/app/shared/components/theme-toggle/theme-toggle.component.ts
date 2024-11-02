@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'shared-theme-toggle',
@@ -9,26 +10,18 @@ import { Component, effect, OnInit, signal } from '@angular/core';
   styleUrl: './theme-toggle.component.css',
   host: {
     class: 'flex flex-row w-[35%] 2xl:w-[38%] p-[0.15rem] rounded-3xl border border-slate-300',
-    '[class.bg-teal-100/70]': 'isDarkTheme()',
-    '[class.bg-neutral-200]': '!isDarkTheme()'
+    '[class.bg-teal-100/70]': 'this.themeService.isDarkTheme()',
+    '[class.bg-neutral-200]': '!this.themeService.isDarkTheme()'
   }
 })
 export class ThemeToggleComponent {
-  public isDarkTheme = signal<boolean>(
-    localStorage.getItem('theme') === 'dark' || 
-    (localStorage.getItem('theme') === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  );
+  private themeService = inject(ThemeService);
 
-  constructor() {
-    // Update the class on the document element when theme changes
-    effect(() => {
-      document.documentElement.classList.toggle('dark', this.isDarkTheme());
-      document.documentElement.classList.toggle('bg-slate-800', this.isDarkTheme());
-      localStorage.setItem('theme', this.isDarkTheme() ? 'dark' : 'light');
-    });
+  getTheme():boolean {
+    return this.themeService.isDarkTheme();
   }
-
-  toggleTheme() {
-    this.isDarkTheme.update(value => !value);
+  
+  toggleTheme(): void {
+    this.themeService.isDarkTheme.update(value => !value);
   }
 }
