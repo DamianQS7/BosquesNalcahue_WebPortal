@@ -86,7 +86,7 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
           max: this.monthlyBreakdownChartMaxY(),
           ticks: {color: this.chartsService.chartFontColor},
           grid: {color: this.themeService.isDarkTheme() ? this.chartsService.chartGridColor 
-                                                        : this.chartsService.chartGridColorDark}
+                                                        : this.chartsService.chartGridColorDark }
         }
       },
       plugins: {

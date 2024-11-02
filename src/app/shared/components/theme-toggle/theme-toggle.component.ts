@@ -9,7 +9,8 @@ import { ThemeService } from '../../services/theme.service';
   templateUrl: './theme-toggle.component.html',
   styleUrl: './theme-toggle.component.css',
   host: {
-    class: 'flex flex-row w-[35%] 2xl:w-[38%] p-[0.15rem] rounded-3xl border border-slate-300',
+    class: `flex flex-row w-[35%] 2xl:w-[38%] p-[0.15rem] rounded-3xl border border-slate-300 \
+            hover:bg-yellow-100 dark:hover:bg-sky-200 transition-all duration-500 ease-out`,
     '[class.bg-teal-100/70]': 'this.themeService.isDarkTheme()',
     '[class.bg-neutral-200]': '!this.themeService.isDarkTheme()'
   }
