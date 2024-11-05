@@ -1,5 +1,4 @@
 import { 
-  AfterContentChecked, 
   Component, 
   computed, 
   inject, 
@@ -8,14 +7,11 @@ import {
   signal } from '@angular/core';
 import { map, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
-import { ChartConfiguration } from 'chart.js';
 import { ChartsService } from '../../services/charts.service';
 import { DynamicChartComponent } from '../../components/charts/dynamic-chart/dynamic-chart.component';
 import { PolarChartComponent } from '../../components/charts/polar-chart/polar-chart.component';
 import { MonthlyPercentCardComponent } from '../../components/monthly-percent-card/monthly-percent-card.component';
-import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '../../interfaces/index'
-import { ThemeService } from '../../../shared/services/theme.service';
+import { MonthlyPercentages, SimpleChartDataset, ReportsCountResponse } from '../../interfaces/index';
 
 @Component({
   standalone: true,
@@ -23,18 +19,18 @@ import { ThemeService } from '../../../shared/services/theme.service';
   templateUrl: './charts-page.component.html',
   styleUrl: './charts-page.component.css'
 })
-export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestroy {
+export class ChartsPageComponent implements OnInit, OnDestroy {
   
   // Services
   private chartsService: ChartsService = inject(ChartsService);
-  private themeService: ThemeService = inject(ThemeService);
 
   // Properties
+  // Monthly Breakdown Chart
   public monthlyBreakdownChartLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   public monthlyBreakdownChartDataset = signal<SimpleChartDataset[]>([]);
   public monthlyBreakdownChartMaxY = signal<number>(10);
-  public monthlyBreakdownChartOptions: ChartConfiguration['options'];
 
+  // Total Reports Chart
   public totalReportsChartLabels: string[] = ['Leña', 'Metro Ruma', 'Trozo Aserrable'];
   public totalReportsChartDataset = signal<SimpleChartDataset>({data: [], label: ''});
 
@@ -69,39 +65,6 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
     this.initializeCharts();
   }
 
-  ngAfterContentChecked(): void {
-    this.monthlyBreakdownChartOptions = {
-      elements: {
-        line: {
-          tension: 1,
-        },
-      },
-      scales: {
-        x: {
-          ticks: {color: this.chartsService.chartFontColor},
-          grid: {color: this.chartsService.chartGridColor}
-        },
-        y: {
-          min: 0,
-          max: this.monthlyBreakdownChartMaxY(),
-          ticks: {color: this.chartsService.chartFontColor},
-          grid: {color: this.themeService.isDarkTheme() ? this.chartsService.chartGridColor 
-                                                        : this.chartsService.chartGridColorDark }
-        }
-      },
-      plugins: {
-        legend: { 
-          display: true, 
-          labels: {
-            color: this.chartsService.chartFontColor
-          } 
-        },
-      },
-      responsive: true,
-      maintainAspectRatio: true
-    };
-  }
-
   ngOnDestroy(): void {
     this.monthlyBreakdownChartSubs?.unsubscribe();
     this.totalReportsChartSubs?.unsubscribe();
@@ -127,9 +90,9 @@ export class ChartsPageComponent implements OnInit, AfterContentChecked, OnDestr
             data: [lena, metroRuma, trozoAserrable], 
             label: '', 
             backgroundColor: [
-              this.chartsService.chartTranslucentColorGreen,
-              this.chartsService.chartTranslucentColorIndigo,
-              this.chartsService.chartTranslucentColorSky
+              this.chartsService.chartColors().translucentGreen,
+              this.chartsService.chartColors().translucentIndigo,
+              this.chartsService.chartColors().translucentSky
             ] 
           }
         })
