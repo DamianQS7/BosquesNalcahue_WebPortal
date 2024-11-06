@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="page-header">
+    <div class="page-header relative">
         <h1 class="blurred-bg page-title">Listado de Reportes</h1>
         <div class="blurred-bg page-date">
             <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -7,7 +7,8 @@
             </svg>  
             <h2>{{pageDate | date:'fullDate' }}</h2>
         </div>
-        <img src="assets/img/listado-reportes-bg.jpg" alt="" class="object-cover w-full h-full rounded-lg">
+        <img src="assets/img/listado-reportes-bg.jpg" alt="" class="absolute top-0 left-0 object-cover 2xl:object-none w-full h-full rounded-lg transition-opacity duration-500 ease-out opacity-100 dark:opacity-0">
+        <img src="assets/img/listado-reportes-bg-dark.jpg" alt="" class="absolute top-0 left-0 object-cover 2xl:object-none w-full h-full rounded-lg transition-opacity duration-500 ease-out opacity-0 dark:opacity-100">
     </div>
     @defer (when this.contentLoaded()) {
         <div class="filter-and-search-wrapper">

@@ -10,10 +10,12 @@ import { ToastComponent } from '../../components/toast/toast.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { ToastService } from '../../../shared/services/toast.service';
 import { ModalService } from '../../../shared/services/modal.service';
+import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   standalone: true,
-  imports: [ ReactiveFormsModule, ToastComponent, ModalComponent ],
+  imports: [ ReactiveFormsModule, ToastComponent, ModalComponent, CommonModule ],
   templateUrl: './edit-report-page.component.html',
   styleUrl: './edit-report-page.component.css'
 })
@@ -23,6 +25,7 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   public toastService: ToastService = inject(ToastService);
   public modals: ModalService = inject(ModalService);
+  public themeService: ThemeService = inject(ThemeService);
   private fb: FormBuilder = inject(FormBuilder);
 
   // Properties

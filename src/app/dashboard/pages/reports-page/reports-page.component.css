@@ -24,10 +24,10 @@
 }
 
 .page-title {
-    @apply p-3 rounded-lg text-xl font-semibold m-2 absolute dark:text-slate-100 text-slate-600 2xl:m-8 2xl:text-2xl
+    @apply p-3 rounded-lg text-xl font-semibold m-2 absolute sm:top-1 sm:left-2 z-10 dark:text-slate-100 text-slate-600 2xl:m-8 2xl:text-2xl
 }
 
 .page-date {
-    @apply p-3 rounded-lg text-lg font-semibold m-2 absolute sm:right-12 flex gap-2 items-center dark:text-slate-100 text-slate-600
+    @apply p-3 rounded-lg text-lg font-semibold m-2 absolute sm:right-8 2xl:right-10 z-10 flex gap-2 items-center dark:text-slate-100 text-slate-600
     2xl:text-2xl 2xl:m-8
 }
