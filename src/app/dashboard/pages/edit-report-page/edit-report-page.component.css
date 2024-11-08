@@ -1,5 +1,5 @@
 .wrapper {
-    @apply w-full h-full rounded-lg shadow-xl z-50 shadow-slate-950 flex justify-between p-2 bg-teal-100/30
+    @apply w-full h-full rounded-lg shadow-xl z-50 dark:shadow-slate-950 shadow-slate-600 flex justify-between p-2 bg-teal-100/30
      /* Gradient => */ dark:bg-gradient-to-r dark:from-slate-600 dark:to-slate-500   
 }
 
@@ -8,7 +8,7 @@
 }
 
 .page-title {
-    @apply rounded-lg text-xl font-semibold mt-2 dark:text-slate-100 text-slate-600
+    @apply rounded-lg text-xl font-semibold mt-2 dark:text-slate-100 text-slate-700
 }
 
 .page-subtitle {
@@ -20,19 +20,27 @@
 }
 
 .text-input {
-    @apply border text-sm rounded-lg block w-full p-2.5 
-    /* Light => */ bg-slate-100 border-slate-400 text-slate-800 
-    /* Dark => */ dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white
+    @apply border text-sm rounded-lg block w-full p-2.5 shadow-sm hover:shadow-md
+    /* Light => */ bg-slate-100 border-slate-400 text-slate-800 shadow-slate-700
+    /* Dark => */ dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white dark:shadow-slate-200
 }
 
 .form-btn {
-    @apply inline-flex items-center px-5 py-2.5  sm:mt-8 text-sm font-medium text-center text-white rounded-lg w-44 justify-center
+    @apply inline-flex items-center px-5 py-2.5  sm:mt-8 text-sm font-medium text-center text-white rounded-lg w-44 justify-center border border-slate-400 dark:border-slate-700
+            shadow-sm shadow-slate-700 dark:shadow-slate-200
+    /* Hover => */ hover:shadow-md hover:shadow-slate-800 hover:dark:border-slate-400
 }
 
 .btn-confirm {
-    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 via-slate-600 to-teal-300
+    @apply
+    /* Gradient =>  */ dark:from-slate-500 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br  from-slate-100 to-teal-200/90 via-slate-200
 }
 
 .btn-delete {
-    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-red-500  via-slate-600
+    @apply 
+    /* Gradient =>  */ dark:from-slate-500 dark:via-slate-600 dark:to-red-400 bg-gradient-to-br  from-slate-100 to-red-400/90 via-slate-200
+}
+
+.separator {
+    @apply sm:col-span-2 w-full border-white dark:border-slate-200
 }

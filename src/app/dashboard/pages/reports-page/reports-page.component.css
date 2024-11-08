@@ -1,5 +1,5 @@
 .wrapper {
-    @apply w-full h-full rounded-lg shadow-lg z-50 shadow-slate-950
+    @apply w-full h-full rounded-lg shadow-lg z-50 shadow-slate-950 2xl:p-4
      /* Gradient => */ bg-gradient-to-br dark:from-slate-700 dark:to-slate-600 p-1  bg-teal-100/30
 }
 
@@ -20,7 +20,7 @@
 }
 
 .blurred-bg {
-    @apply dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40% from-slate-400 to-teal-100 via-slate-300
+    @apply dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40% from-slate-100/90 to-teal-200/90 via-slate-200/90
 }
 
 .page-title {

@@ -12,7 +12,7 @@ table-wrapper {
 }
 
 .data-table-row {
-    @apply bg-neutral-50 border-b dark:bg-gray-800 dark:border-gray-700
+    @apply bg-neutral-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-neutral-100 hover:dark:bg-slate-900
 }
 
 .data-table-td {

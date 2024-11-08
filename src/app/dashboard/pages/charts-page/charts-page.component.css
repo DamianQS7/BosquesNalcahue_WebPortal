@@ -15,15 +15,10 @@
 }
 
 .blurred-bg {
-    @apply   from-slate-400 to-teal-100 via-slate-300 
+    @apply   from-slate-100/90 to-teal-200/90 via-slate-200/90 
     /* Gradient => */ dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40%  
 }
 
 .section-title {
     @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl 2xl:text-2xl text-slate-600
-}
-
-.background-img {
-    background-image: url('https://images.unsplash.com/photo-1631540771383-f0095283db6f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    @apply 2xl:p-10
 }
