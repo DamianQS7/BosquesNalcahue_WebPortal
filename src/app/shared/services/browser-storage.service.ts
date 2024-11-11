@@ -40,4 +40,12 @@ export class BrowserStorageService {
   public getRefreshToken(): string | null {
     return localStorage.getItem(this.REFRESH_TOKEN_KEY);
   }
+
+  public getLocalStorage(key: string): string | null {
+    return localStorage.getItem(key)
+  }
+
+  public setLocalStorage(key: string, value: string): void {
+    localStorage.setItem(key, value)
+  }
 }

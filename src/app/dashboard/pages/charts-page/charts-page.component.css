@@ -1,5 +1,5 @@
 .wrapper {
-    @apply rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-50 
+    @apply 2xl:mx-4 rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-100/30 shadow-slate-600 border border-slate-600
 }
 
 .page-header {
@@ -7,18 +7,18 @@
 }
 
 .page-title {
-    @apply p-3 rounded-lg text-xl font-semibold  dark:text-slate-100 text-slate-500
+    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  dark:text-slate-100 text-slate-600
 }
 
 .page-date {
-    @apply p-3 rounded-lg text-xl font-semibold  flex gap-2 items-center dark:text-slate-100 text-slate-500
+    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  flex gap-2 items-center dark:text-slate-100 text-slate-600
 }
 
 .blurred-bg {
-    @apply   from-slate-400 to-teal-100 via-slate-300 
+    @apply from-slate-100/90 to-teal-200/90 via-slate-200/90 
     /* Gradient => */ dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40%  
 }
 
 .section-title {
-    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl text-slate-500
+    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl 2xl:text-2xl text-slate-600
 }

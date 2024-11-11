@@ -36,6 +36,6 @@ export class ToastComponent {
   private triggerTimeOut(): void {
     setTimeout(() => {
       this.toastTimedOut.emit(false);
-    }, 5000)
+    }, 3000)
   }
 }

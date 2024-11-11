@@ -21,7 +21,8 @@
                            [routerLinkActiveOptions]="{exact: true}"
                            (click)="toggleMenu()" 
                            routerLinkActive="active" 
-                           class="link group">
+                           class="link group"
+                        >
                             <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
                             <span class="ms-3">{{item.title}}</span>
                          </a>
@@ -33,7 +34,12 @@
             <ul class="list">
                 @for (item of settingsMenuItems; track $index) {
                     <li>
-                        <a [routerLink]="item.route" class="link group">
+                        <a [routerLink]="item.route"
+                           [routerLinkActiveOptions]="{exact: true}"
+                           (click)="toggleMenu()" 
+                           routerLinkActive="active"  
+                           class="link group"
+                        >
                             <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
                             <span class="ms-3">{{item.title}}</span>
                          </a>
@@ -41,8 +47,8 @@
                 }
             </ul>
         </div>
-
-        <div class="user-info-container">
+        <shared-theme-toggle/>
+        <div class="user-info-container 2xl:mb-4">
             <span class="separator"></span>
             <div class="flex items-center gap-4">
                 <img class="w-10 h-10 rounded-full" [src]="defaultUserAvatar" alt="User Avatar">

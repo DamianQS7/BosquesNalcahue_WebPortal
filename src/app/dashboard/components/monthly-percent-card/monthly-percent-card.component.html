@@ -1,10 +1,10 @@
 <div class="card-wrapper">
-    <div class="w-52">
+    <div class="w-52 2xl:w-72">
         <h3 class="card-title" 
             [ngClass]="{
-                'text-teal-200': title() === 'Leña',
-                'text-indigo-200': title() === 'Metro Ruma',
-                'text-sky-200': title() === 'Trozo Aserrable',
+                'teal': title() === 'Leña',
+                'indigo': title() === 'Metro Ruma',
+                'sky': title() === 'Trozo Aserrable',
             }"
         >
             {{title()}}
@@ -14,9 +14,9 @@
     <div class="card-percent-wrapper">
         <span class="card-percent"
               [ngClass]="{
-                'text-teal-200': title() === 'Leña',
-                'text-indigo-200': title() === 'Metro Ruma',
-                'text-sky-200': title() === 'Trozo Aserrable',
+                'teal': title() === 'Leña',
+                'indigo': title() === 'Metro Ruma',
+                'sky': title() === 'Trozo Aserrable',
                 }"
         >
             {{percent()}}%

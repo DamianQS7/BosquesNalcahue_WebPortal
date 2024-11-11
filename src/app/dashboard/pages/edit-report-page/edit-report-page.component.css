@@ -1,49 +1,46 @@
 .wrapper {
-    @apply w-full h-full rounded-lg shadow-xl z-50 shadow-slate-950 flex justify-between p-2
-     /* Gradient => */ bg-gradient-to-r from-slate-600 to-slate-500   
+    @apply w-full h-full rounded-lg shadow-xl z-50 dark:shadow-slate-950 shadow-slate-600 flex justify-between p-2 bg-teal-100/30
+     /* Gradient => */ dark:bg-gradient-to-r dark:from-slate-600 dark:to-slate-500   
 }
 
 .page-header {
     @apply w-full h-60
 }
 
-.blurred-bg {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(1px);
-    @apply   bg-gradient-to-br from-slate-800/65 to-slate-500/40 border-teal-300/30 border 
-}
-
 .page-title {
-    @apply rounded-lg text-xl font-semibold mt-2 text-slate-100
+    @apply rounded-lg text-xl font-semibold mt-2 dark:text-slate-100 text-slate-700
 }
 
 .page-subtitle {
-    @apply mt-8 text-[1rem] font-medium text-gray-900 dark:text-teal-100 sm:col-span-2
+    @apply mt-8 text-[1rem] font-medium text-slate-600 dark:text-teal-100 sm:col-span-2
 }
-
-.page-date {
-    @apply p-2 rounded-lg text-lg font-semibold m-2 absolute right-8 flex gap-2 items-center text-slate-100
-}
-
 
 .form-label {
-    @apply block my-2 text-sm font-medium text-gray-900 dark:text-slate-100
+    @apply block my-2 text-sm font-medium text-slate-600 dark:text-slate-100
 }
 
 .text-input {
-    @apply border text-sm rounded-lg block w-full p-2.5 
-    /* Light => */ bg-gray-50 border-gray-300 text-gray-900 
-    /* Dark => */ dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white
+    @apply border text-sm rounded-lg block w-full p-2.5 shadow-sm hover:shadow-md
+    /* Light => */ bg-slate-100 border-slate-400 text-slate-800 shadow-slate-700
+    /* Dark => */ dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white dark:shadow-slate-200
 }
 
 .form-btn {
-    @apply inline-flex items-center px-5 py-2.5  sm:mt-8 text-sm font-medium text-center text-white rounded-lg w-44 justify-center
+    @apply inline-flex items-center px-5 py-2.5  sm:mt-8 text-sm font-medium text-center text-white rounded-lg w-44 justify-center border border-slate-400 dark:border-slate-700
+            shadow-sm shadow-slate-700 dark:shadow-slate-200
+    /* Hover => */ hover:shadow-md hover:shadow-slate-800 hover:dark:border-slate-400
 }
 
 .btn-confirm {
-    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 via-slate-600 to-teal-300
+    @apply
+    /* Gradient =>  */ dark:from-slate-500 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br  from-slate-100 to-teal-200/90 via-slate-200
 }
 
 .btn-delete {
-    @apply /* Gradient =>  */ bg-gradient-to-br from-slate-700 to-red-500  via-slate-600
+    @apply 
+    /* Gradient =>  */ dark:from-slate-500 dark:via-slate-600 dark:to-red-400 bg-gradient-to-br  from-slate-100 to-red-400/90 via-slate-200
+}
+
+.separator {
+    @apply sm:col-span-2 w-full border-white dark:border-slate-200
 }

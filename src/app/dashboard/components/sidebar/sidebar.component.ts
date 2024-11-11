@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 import { IconsService } from '../../../shared/services/icons.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { ThemeToggleComponent } from "../../../shared/components/theme-toggle/theme-toggle.component";
 
 @Component({
   selector: 'dashboard-sidebar',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, ThemeToggleComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
@@ -24,7 +25,7 @@ export class SidebarComponent {
   ];
 
   public settingsMenuItems: MenuItem[] = [
-    { route: '/settings', icon: 'gear', title: 'Configuración'},
+    { route: '/dashboard/configuracion', icon: 'gear', title: 'Configuración'},
     { route: '/login', icon: 'logout', title: 'Cerrar Sesión'}
   ];
 
