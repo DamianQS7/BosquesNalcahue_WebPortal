@@ -25,6 +25,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./dashboard/pages/edit-report-page/edit-report-page.component').then(c => c.EditReportPageComponent),
                 canActivate: [isAuthorizedGuard]
             },
+            {
+                path: 'configuracion',
+                loadComponent: () => import('./dashboard/pages/settings-page/settings-page.component').then(c => c.SettingsPageComponent)
+            },
         ]
     },
     { path: 'login', component: LoginPageComponent, canActivate: [logoutGuard]},

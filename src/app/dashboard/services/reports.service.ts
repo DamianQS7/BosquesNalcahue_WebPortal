@@ -23,7 +23,7 @@ export class ReportsService {
 
 
   // Methods
-  public deleteById(id: string): Observable<boolean> {
+  deleteById(id: string): Observable<boolean> {
     const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.delete<boolean>(requestUrl).pipe(
       map(() => true),
@@ -34,12 +34,12 @@ export class ReportsService {
     );
   }
 
-  public deleteFileByFileId(fileId: string) {
-    const requestUrl: string = `${this.blobEndpoint}/${fileId}`;
+  deleteFileByFileId(fileId: string) {
+    const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
     return this.http.delete(requestUrl);
   }
 
-  public getAllReports(
+  getAllReports(
     dateFilter: string, 
     productFilter: string, 
     page: number, sortBy: 
@@ -51,25 +51,25 @@ export class ReportsService {
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
-  public getPdfFileUri(fileId: string): Observable<FileUriResponse> {
-    const requestUrl: string = `${this.blobEndpoint}/${fileId}`;
+  getPdfFileUri(fileId: string): Observable<FileUriResponse> {
+    const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
     return this.http.get<FileUriResponse>(requestUrl).pipe(
       tap(console.log)
     ); 
   }
 
-  public getReportsById(id: string): Observable<Report> {
+  getReportsById(id: string): Observable<Report> {
     const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.get<Report>(requestUrl);
   }
 
-  public getReportsByFolio(folio: string): Observable<ReportsResponse> {
+  getReportsByFolio(folio: string): Observable<ReportsResponse> {
     const queryParam: string = `folio=${folio}`;
     const requestUrl: string = `${this.reportsEndpoint}?${queryParam}`;
     return this.http.get<ReportsResponse>(requestUrl);
   }
 
-  public updateReport(id: string, report: UpdateReportDto): Observable<Report> {
+  updateReport(id: string, report: UpdateReportDto): Observable<Report> {
     const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.put<Report>(requestUrl, report);
   }

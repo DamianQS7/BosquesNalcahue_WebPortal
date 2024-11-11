@@ -1,5 +1,5 @@
 .wrapper {
-    @apply rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-100/30 shadow-slate-600 border border-slate-600
+    @apply 2xl:mx-4 rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-100/30 shadow-slate-600 border border-slate-600
 }
 
 .page-header {
@@ -15,7 +15,7 @@
 }
 
 .blurred-bg {
-    @apply   from-slate-100/90 to-teal-200/90 via-slate-200/90 
+    @apply from-slate-100/90 to-teal-200/90 via-slate-200/90 
     /* Gradient => */ dark:from-slate-700 dark:via-slate-600 dark:to-teal-200 bg-gradient-to-br dark:from-40%  
 }
 

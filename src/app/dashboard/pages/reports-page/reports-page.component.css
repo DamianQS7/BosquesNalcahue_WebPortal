@@ -1,5 +1,5 @@
 .wrapper {
-    @apply w-full h-full rounded-lg shadow-lg z-50 shadow-slate-950 2xl:p-4
+    @apply w-full h-full rounded-lg shadow-lg z-50 shadow-slate-950 2xl:p-4 2xl:mx-4
      /* Gradient => */ bg-gradient-to-br dark:from-slate-700 dark:to-slate-600 p-1  bg-teal-100/30
 }
 

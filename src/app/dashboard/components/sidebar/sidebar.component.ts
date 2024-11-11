@@ -25,7 +25,7 @@ export class SidebarComponent {
   ];
 
   public settingsMenuItems: MenuItem[] = [
-    { route: '/settings', icon: 'gear', title: 'Configuración'},
+    { route: '/dashboard/configuracion', icon: 'gear', title: 'Configuración'},
     { route: '/login', icon: 'logout', title: 'Cerrar Sesión'}
   ];
 
