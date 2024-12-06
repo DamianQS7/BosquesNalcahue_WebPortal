@@ -101,11 +101,11 @@
     </div>
 </div>
 
-<dashboard-toast [isVisible]="toastService.toastVisible()"
-                 [failureMessage]="toastService.toastFailureMessage()"
-                 [successMessage]="toastService.toastSuccessMessage()"
-                 [toastType]="toastService.toastType()" 
-                 (toastTimedOut)="toastService.ShowAndHideToast($event)" />
+<dashboard-toast 
+    [toastMessage]="toastService.toastMessage()" 
+    [toastType]="toastService.toastType()"
+    [toastVisible]="toastService.toastVisible()"
+    (closeToast)="toastService.hideToast(false)"/>
 
 <dashboard-modal [isVisible]="modals.modalVisible()"
                  (modalNotification)="deleteReport($event)" 

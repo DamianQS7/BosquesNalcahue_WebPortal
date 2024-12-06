@@ -24,14 +24,17 @@ export class LoginPageComponent {
   // Properties
   public loginSucces = signal<boolean>(false);
   public form: FormGroup = this.fb.group({
-    email:    ['admin@gmail.com', [Validators.required, Validators.email]],
+    email:    ['user@gmail.com', [Validators.required, Validators.email]], // or user@gmail.com to test authorization.
     password: ['Abc123456!', [Validators.required]]
   });
 
+
   // Methods
-  public login(): void {
+  login(): void {
     if (this.form.invalid) {
-      this.toasts.displayToast('failure', this.searchForErrorsInForm());
+      this.toasts.displayToastWithMessage({
+        toastType: 'failure', 
+        message: this.getErrorsInForm()});
       return;
     }
 
@@ -46,7 +49,10 @@ export class LoginPageComponent {
         else {
           console.log('loginPageComponent:', 'Something went wrong with login method');
           this.loginSucces.set(false);
-          this.toasts.displayToast('failure', 'Ha ocurrido un error inesperado.');
+          this.toasts.displayToastWithMessage({
+            toastType: 'failure', 
+            message: 'Ha ocurrido un error inesperado.'
+          });
         }
       },
       error: (message: string) => {
@@ -55,7 +61,7 @@ export class LoginPageComponent {
     });
   }
 
-  private searchForErrorsInForm(): string {
+  private getErrorsInForm(): string {
     const emailValid:    boolean = this.form.get('email')!.valid;
     const passwordValid: boolean = this.form.get('password')!.valid;
 

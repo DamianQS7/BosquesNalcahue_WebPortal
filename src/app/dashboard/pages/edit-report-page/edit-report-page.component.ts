@@ -67,7 +67,10 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
       this.reportsService.deleteById(id)
         .subscribe(isDeleted => {
           if (isDeleted === false) {
-            this.toastService.displayToast('failure', 'Hubo un error al eliminar el reporte.');
+            this.toastService.displayToastWithMessage({
+              toastType: 'failure', 
+              message:'Hubo un error al eliminar el reporte.'
+            });
           } else {
             this.isReportDeleted.set(true);
             this.reportsService.deleteFileByFileId(this.reportToSubmit?.fileId ?? '')
@@ -79,7 +82,10 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
                 })
               )
               .subscribe();
-            this.toastService.displayToast('success', 'Reporte eliminado con exito.');
+            this.toastService.displayToastWithMessage({
+              toastType: 'success', 
+              message: 'Reporte eliminado con exito.'
+            });
           }    
         });   
     }
@@ -98,10 +104,16 @@ export class EditReportPageComponent implements OnInit, OnDestroy {
         .updateReport(id, report)
         .subscribe((report) => {
           if(report !== undefined) {
-            this.toastService.displayToast('success', 'Reporte actualizado con exito.')
+            this.toastService.displayToastWithMessage({
+              toastType: 'success',
+              message: 'Reporte actualizado con exito.'
+            })
             this.form.markAsPristine();
            } else {
-            this.toastService.displayToast('failure', 'No se pudo actualizar el reporte.')
+            this.toastService.displayToastWithMessage({
+              toastType: 'failure', 
+              message: 'No se pudo actualizar el reporte.'
+            })
            }
         });
     }

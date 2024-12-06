@@ -38,9 +38,9 @@
             </div>
         }
     </form>
-    <dashboard-toast [isVisible]="toasts.toastVisible()"
-                 [failureMessage]="toasts.toastFailureMessage()"
-                 [successMessage]="toasts.toastSuccessMessage()"
-                 [toastType]="toasts.toastType()" 
-                 (toastTimedOut)="toasts.ShowAndHideToast($event)" />
+    <dashboard-toast 
+        [toastVisible]="toasts.toastVisible()"
+        [toastType]="toasts.toastType()"
+        [toastMessage]="toasts.toastMessage()"  
+        (closeToast)="toasts.hideToast(false)"/>
 </div>

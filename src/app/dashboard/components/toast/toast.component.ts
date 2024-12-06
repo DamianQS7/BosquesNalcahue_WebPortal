@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, Input, input, output } from '@angular/core';
 import { IconsService } from '../../../shared/services/icons.service';
+import { ToastType } from '../../../shared/interfaces/toast.interface';
+
 
 @Component({
   selector: 'dashboard-toast',
@@ -11,31 +13,25 @@ import { IconsService } from '../../../shared/services/icons.service';
 })
 export class ToastComponent {
   // Services
-  public iconsService: IconsService = inject(IconsService);
+  iconsService: IconsService = inject(IconsService);
 
   // Properties
-  public toastType = input<'success' | 'failure'>('success');
-  public isVisible = input<boolean>(false);
-  public toastTimedOut = output<boolean>();
-  @Input() public failureMessage: string = 'No se pudo enviar el reporte.';
-  @Input() public successMessage: string = 'Reporte actualizado con exito.';
-
+  toastVisible = input.required<boolean>();
+  toastType = input.required<ToastType>();
+  toastMessage = input.required<string | null>();
+  closeToast = output<void>();
 
   constructor() {
     effect(() => {
-      if(this.isVisible()) {
-        this.triggerTimeOut();
+      if(this.toastVisible()) {
+        this.triggerTimeOut(3000);
       }
     })
   } 
 
-  public closeToast(): void {
-    this.toastTimedOut.emit(false);
-  }
-
-  private triggerTimeOut(): void {
+  private triggerTimeOut(duration: number): void {
     setTimeout(() => {
-      this.toastTimedOut.emit(false);
-    }, 3000)
+      this.closeToast.emit();
+    }, duration)
   }
 }

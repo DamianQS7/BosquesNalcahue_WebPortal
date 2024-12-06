@@ -12,6 +12,9 @@ export const isAuthorizedGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  toastService.displayToast('failure', 'El acceso a esta ruta esta restringido.');
+  toastService.displayToastWithMessage({
+    toastType: 'failure', 
+    message: 'El acceso a esta ruta esta restringido.'
+  });
   return false;
 };

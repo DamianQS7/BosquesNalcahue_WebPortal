@@ -1,28 +1,50 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
+import { ToastState, ToastContent } from '../interfaces/toast.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
 
-  public toastSuccessMessage = signal<string>('');
-  public toastFailureMessage = signal<string>('');
-  public toastVisible = signal<boolean>(false);
-  public toastType = signal<'success' | 'failure'>('failure');
+  // state
+  private state = signal<ToastState>({
+    toastType: 'success',
+    message: null,
+    visible: false
+  });
 
-  public displayToast(type: 'success' | 'failure', message: string): void {
-    this.toastType.set(type);
+  // selectors
+  toastType = computed(() => this.state().toastType);
+  toastVisible = computed(() => this.state().visible);
+  toastMessage = computed(() => this.state().message);
 
-    if (type === 'success') {
-      this.toastSuccessMessage.set(message);
-    } else {
-      this.toastFailureMessage.set(message);
-    }
+  // sources
+  private hideToast$ = new Subject<boolean>();
+  private displayToast$ = new Subject<ToastContent>()
 
-    this.ShowAndHideToast(true);
+  constructor() {
+    // reducers
+    this.displayToast$.pipe(takeUntilDestroyed()).subscribe(toastContent => 
+      this.state.update(() => ({
+        message: toastContent.message,
+        visible: true,
+        toastType: toastContent.toastType
+      }))
+    );
+
+    this.hideToast$.pipe(takeUntilDestroyed()).subscribe(hide => 
+      this.state.update(state => ({ ...state, visible: hide }))
+    );
   }
 
-  public ShowAndHideToast(showToast: boolean): void {
-    this.toastVisible.set(showToast);
+  // actions
+  displayToastWithMessage(toastContent: ToastContent): void {
+    this.displayToast$.next(toastContent);
+  }
+
+  hideToast(hide: boolean): void {
+    this.hideToast$.next(hide);
   }
 }
