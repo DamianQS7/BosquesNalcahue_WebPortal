@@ -1,5 +1,29 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, InjectionToken, PLATFORM_ID } from '@angular/core';
 import { User } from '../../auth/interfaces/user.interface';
+import { isPlatformBrowser } from '@angular/common';
+
+export const STORAGE_TOKENS = {
+  LOCAL: new InjectionToken<Storage>(
+    'window local storage object',
+    {
+      providedIn: 'root',
+      factory: () => 
+        isPlatformBrowser(inject(PLATFORM_ID))
+        ? window.localStorage
+        : ({} as Storage)
+    }
+  ),
+  SESSION: new InjectionToken<Storage>(
+    'window session storage object',
+    {
+      providedIn: 'root',
+      factory: () =>
+        isPlatformBrowser(inject(PLATFORM_ID))
+        ? window.sessionStorage
+        : ({} as Storage)
+    }
+  )
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,42 +34,45 @@ export class BrowserStorageService {
   private readonly ACCESS_TOKEN_KEY: string = 'accessToken';
   private readonly REFRESH_TOKEN_KEY: string = 'refreshToken';
 
-  public getCurrentUser(): string | null {
-    return sessionStorage.getItem(this.USER_KEY);
+  private localStorage = inject(STORAGE_TOKENS.LOCAL);
+  private sessionStorage = inject(STORAGE_TOKENS.SESSION);
+
+  getCurrentUser(): string | null {
+    return this.sessionStorage.getItem(this.USER_KEY);
   }
 
-  public storeCurrentUser(user: User): void {
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+  storeCurrentUser(user: User): void {
+    this.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
-  public removeUserSession(): void {
-    sessionStorage.clear();
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+  removeUserSession(): void {
+    this.sessionStorage.clear();
+    this.localStorage.removeItem(this.REFRESH_TOKEN_KEY);
   }
 
-  public storeUserSession(accessToken: string, user: User, refreshToken: string): void {
-    sessionStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+  storeUserSession(accessToken: string, user: User, refreshToken: string): void {
+    this.sessionStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
+    this.localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+    this.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
-  public storeAccessToken(token: string): void {
-    sessionStorage.setItem(this.ACCESS_TOKEN_KEY, token);
+  storeAccessToken(token: string): void {
+    this.sessionStorage.setItem(this.ACCESS_TOKEN_KEY, token);
   }
 
-  public getAccessToken(): string | null {
-    return sessionStorage.getItem(this.ACCESS_TOKEN_KEY);;
+  getAccessToken(): string | null {
+    return this.sessionStorage.getItem(this.ACCESS_TOKEN_KEY);;
   }
 
-  public getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
+  getRefreshToken(): string | null {
+    return this.localStorage.getItem(this.REFRESH_TOKEN_KEY);
   }
 
-  public getLocalStorage(key: string): string | null {
-    return localStorage.getItem(key)
+  getLocalStorage(key: string): string | null {
+    return this.localStorage.getItem(key)
   }
 
-  public setLocalStorage(key: string, value: string): void {
-    localStorage.setItem(key, value)
+  setLocalStorage(key: string, value: string): void {
+    this.localStorage.setItem(key, value)
   }
 }
