@@ -30,49 +30,26 @@ export const STORAGE_TOKENS = {
 })
 export class BrowserStorageService {
 
-  private readonly USER_KEY: string = 'currentUser';
-  private readonly ACCESS_TOKEN_KEY: string = 'accessToken';
-  private readonly REFRESH_TOKEN_KEY: string = 'refreshToken';
-
   private localStorage = inject(STORAGE_TOKENS.LOCAL);
   private sessionStorage = inject(STORAGE_TOKENS.SESSION);
 
-  getCurrentUser(): string | null {
-    return this.sessionStorage.getItem(this.USER_KEY);
-  }
-
-  storeCurrentUser(user: User): void {
-    this.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
-  }
-
-  removeUserSession(): void {
+  removeUserSession(refreshTokenKey: string): void {
     this.sessionStorage.clear();
-    this.localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    this.localStorage.removeItem(refreshTokenKey);
   }
-
-  storeUserSession(accessToken: string, user: User, refreshToken: string): void {
-    this.sessionStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
-    this.localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-    this.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
-  }
-
-  storeAccessToken(token: string): void {
-    this.sessionStorage.setItem(this.ACCESS_TOKEN_KEY, token);
-  }
-
-  getAccessToken(): string | null {
-    return this.sessionStorage.getItem(this.ACCESS_TOKEN_KEY);;
-  }
-
-  getRefreshToken(): string | null {
-    return this.localStorage.getItem(this.REFRESH_TOKEN_KEY);
-  }
-
-  getLocalStorage(key: string): string | null {
+  getFromLocalStorage(key: string): string | null {
     return this.localStorage.getItem(key)
   }
 
-  setLocalStorage(key: string, value: string): void {
+  setToLocalStorage(key: string, value: string): void {
     this.localStorage.setItem(key, value)
+  }
+
+  getFromSessionStorage(key: string): string | null {
+    return this.sessionStorage.getItem(key);
+  }
+
+  setToSessionStorage(key: string, value: string): void {
+    this.sessionStorage.setItem(key, value);
   }
 }
