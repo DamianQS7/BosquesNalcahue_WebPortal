@@ -50,11 +50,7 @@
                                   (nextPageEvent)="goToNextPage($event)"
                                   (prevPageEvent)="goToPreviousPage($event)"/>
 
-        <dashboard-toast 
-            [toastVisible]="toasts.toastVisible()"
-            [toastType]="toasts.toastType()"
-            [toastMessage]="toasts.toastMessage()" 
-            (closeToast)="toasts.hideToast(false)"/>
+        <dashboard-toast (closeToast)="toasts.hideToast(false)"/>
     } @placeholder {
         <div class="h-80">
             <shared-spinner />

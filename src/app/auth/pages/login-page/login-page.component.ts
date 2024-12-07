@@ -24,7 +24,7 @@ export class LoginPageComponent {
   // Properties
   public loginSucces = signal<boolean>(false);
   public form: FormGroup = this.fb.group({
-    email:    ['user@gmail.com', [Validators.required, Validators.email]], // or user@gmail.com to test authorization.
+    email:    ['admin@gmail.com', [Validators.required, Validators.email]], // or user@gmail.com to test authorization.
     password: ['Abc123456!', [Validators.required]]
   });
 

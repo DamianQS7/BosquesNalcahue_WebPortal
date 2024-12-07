@@ -101,12 +101,14 @@
     </div>
 </div>
 
-<dashboard-toast 
-    [toastMessage]="toastService.toastMessage()" 
-    [toastType]="toastService.toastType()"
-    [toastVisible]="toastService.toastVisible()"
-    (closeToast)="toastService.hideToast(false)"/>
+<dashboard-toast (closeToast)="toastService.hideToast(false)"/>
 
-<dashboard-modal [isVisible]="modals.modalVisible()"
-                 (modalNotification)="deleteReport($event)" 
-                 (closeModalEvent)="modals.hideModal()"/>
+
+<dashboard-modal 
+    (actionTrigger)="deleteReport($event)"
+    (closeTrigger)="modals.hideModal()"
+>
+    <p ngProjectAs="main-content">Esta a punto de eliminar un reporte de manera permanente. Confirma?</p>
+    <p ngProjectAs="first-option">Si, confirmo</p>             
+    <p ngProjectAs="second-option">No, regresar</p>             
+</dashboard-modal>

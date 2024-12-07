@@ -1,17 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
-  public modalVisible = signal<boolean>(false);
-  
-  public showModal(): void {
-    this.modalVisible.set(true);
-  }
+  // state
+  private isVisible = signal<boolean>(false);
 
-  public hideModal(): void {
-    this.modalVisible.set(false);
-  }
+  // selector
+  visible = computed(() => this.isVisible());
+
+  // actions  
+  showModal(): void { this.isVisible.set(true); }
+  hideModal(): void { this.isVisible.set(false); }
 }

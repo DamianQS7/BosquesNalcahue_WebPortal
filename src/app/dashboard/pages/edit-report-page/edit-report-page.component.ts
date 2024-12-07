@@ -1,8 +1,9 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 import { ReportsService } from '../../services/reports.service';
 import { Report, EditableReport } from '../../interfaces/index';
@@ -10,7 +11,6 @@ import { ToastComponent } from '../../components/toast/toast.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { ToastService } from '../../../shared/services/toast.service';
 import { ModalService } from '../../../shared/services/modal.service';
-import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
@@ -21,12 +21,12 @@ import { ThemeService } from '../../../shared/services/theme.service';
 })
 export class EditReportPageComponent implements OnInit, OnDestroy {
   // Services
-  private reportsService: ReportsService = inject(ReportsService);
-  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  public toastService: ToastService = inject(ToastService);
-  public modals: ModalService = inject(ModalService);
-  public themeService: ThemeService = inject(ThemeService);
-  private fb: FormBuilder = inject(FormBuilder);
+  private reportsService = inject(ReportsService);
+  private activatedRoute = inject(ActivatedRoute);
+  public toastService = inject(ToastService);
+  public modals = inject(ModalService);
+  public themeService = inject(ThemeService);
+  private fb = inject(FormBuilder);
 
   // Properties
   public isReportDeleted = signal<boolean>(false);

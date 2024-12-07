@@ -38,9 +38,5 @@
             </div>
         }
     </form>
-    <dashboard-toast 
-        [toastVisible]="toasts.toastVisible()"
-        [toastType]="toasts.toastType()"
-        [toastMessage]="toasts.toastMessage()"  
-        (closeToast)="toasts.hideToast(false)"/>
+    <dashboard-toast (closeToast)="toasts.hideToast(false)"/>
 </div>
