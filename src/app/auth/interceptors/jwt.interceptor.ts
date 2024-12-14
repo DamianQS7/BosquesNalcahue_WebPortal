@@ -5,6 +5,7 @@ import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 
 export const jwtInterceptor: HttpInterceptorFn = 
 (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+  
   const authService = inject(AuthService);
 
   if (authService.accessToken()) {
@@ -30,7 +31,8 @@ export const jwtInterceptor: HttpInterceptorFn =
             return next(newReq);
           }),
           catchError(refreshError => {
-            authService.closeUserSession();
+            authService.logout();
+            authService.error$.next(refreshError);
             return throwError(() => refreshError);
           })
         );

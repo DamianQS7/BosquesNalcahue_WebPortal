@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, map, merge, Observable, Subject, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.interface';
 import { LoginRequest } from '../interfaces/login-request.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { BrowserStorageService } from '../../shared/services/browser-storage.service';
-import { RefreshTokenRequest } from '../interfaces/refresh-token-request.interface';
+import { connect } from 'ngxtension/connect';
+
+export type LoginStatus = 'pending' | 'authenticating' | 'authenticated' | 'error';
 
 export interface AuthServiceState {
   currentUser: User | null;
   accessToken: string | null;
   refreshToken: string | null;
+  status: LoginStatus;
 }
 
 export const STORAGE_KEYS = {
@@ -29,78 +32,89 @@ export class AuthService {
   private storageService = inject(BrowserStorageService);
 
   // Properties
-  private readonly _baseUrl: string = `${environment.baseUrl}/identity`
+  private readonly _baseUrl: string = `${environment.baseUrl}/identity`;
+  private readonly loginEndpoint: string  = `${this._baseUrl}/login`; 
+  private readonly refreshEndpoint: string  = `${this._baseUrl}/refresh`;
 
   // state
   private state = signal<AuthServiceState>({
     currentUser: null,
     accessToken: null,
-    refreshToken: null
+    refreshToken: null,
+    status: 'pending'
   });
 
   // Selectors
-  public currentUserName  = computed(() => this.state().currentUser?.name ?? '');
-  public currentUserEmail = computed(() => this.state().currentUser?.email ?? '');
-  public isAuthorized     = computed(() => this.state().currentUser?.isAdmin ?? false);
-  public accessToken      = computed(() => this.state().accessToken);
-  public refreshToken     = computed(() => this.state().refreshToken);
-  public isAuthenticated  = computed(() => this.state().accessToken ? true : false);
-
-  // Effects
-  storeSessionEffect = effect(() => {
-    if (this.accessToken() && this.currentUserName() && this.refreshToken()) {
-      this.storageService.setToSessionStorage(STORAGE_KEYS.USER, JSON.stringify(this.state().currentUser));
-      this.storageService.setToSessionStorage(STORAGE_KEYS.ACCESS_TOKEN, this.accessToken()!);
-      this.storageService.setToLocalStorage(STORAGE_KEYS.REFRESH_TOKEN, this.refreshToken()!);
-    }
-  });
-
-  removeSessionEffect = effect(() => {
-    if(!this.accessToken() && !this.currentUserName()) {
-      this.storageService.removeUserSession(STORAGE_KEYS.REFRESH_TOKEN);
-    }
-  });
-
+  currentUser  = computed(() => this.state().currentUser);
+  accessToken  = computed(() => this.state().accessToken);
+  refreshToken = computed(() => this.state().refreshToken);
+  status       = computed(() => this.state().status);
+  isAuthorized = computed(() => this.state().currentUser?.isAdmin ?? false);
+  
+  // Sources
+  error$  = new Subject<any>();
+  private logout$ = new Subject<void>();
+  private loginCredentials$ = new Subject<LoginRequest>();
+  private loginRequest$  = this.loginCredentials$.pipe(
+    switchMap(credentials => 
+      this.http.post<AuthResponse>(this.loginEndpoint, credentials).pipe(
+        catchError(error => {
+          this.error$.next(error);
+          return EMPTY;
+        })
+      )
+    )
+  );
+  private refresh$ = this.http
+    .post<AuthResponse>(this.refreshEndpoint, {accessToken: this.accessToken()!, refreshToken: this.refreshToken()!})
+    .pipe(
+      tap((response) => this.state.update(() => ({
+        currentUser: response.userInfo,
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+        status: 'authenticated' as const
+      })))
+    );
+  
+  
   // Methods
   constructor() {
     this.initializeAuthStateFromSessionStorage();
+
+    // reducers
+    const updatedState$ = merge(
+      this.loginCredentials$.pipe(map(() => ({status: 'authenticating' as const}))),
+      this.error$.pipe(map((error) => ({status: 'error' as const}))),
+      this.loginRequest$.pipe(map((response) => ({
+        currentUser: response.userInfo,
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+        status: 'authenticated' as const
+      }))),
+      this.logout$.pipe(map(() => ({
+        currentUser: null,
+        accessToken: null,
+        refreshToken: null,
+        status: 'pending' as const
+      }))),
+    );
+
+    connect(this.state).with(updatedState$);
   }
 
-  closeUserSession(): void {
-    this.state.update(() => ({
-      currentUser: null,
-      accessToken: null,
-      refreshToken: null
-    }));
+  login(credentials: LoginRequest): void {
+    this.loginCredentials$.next(credentials);
   }
 
-  login(email: string, password: string): Observable<AuthResponse> {
-    const endpoint: string = `${this._baseUrl}/login`;
-    const body: LoginRequest = {email, password};
-    console.log('isAuthenticated Signal ->', this.isAuthenticated());
-    
-    return this.http.post<AuthResponse>(endpoint, body)
-      .pipe(
-        tap((response) => this.createUserSession(response.userInfo, response.accessToken, response.refreshToken)),
-        catchError((error) => throwError(() => error.message))
-      )  
+  logout(): void {
+    this.logout$.next();
   }
 
   refresh(): Observable<AuthResponse> {
-    const endpoint: string = `${this._baseUrl}/refresh`;
-    const body: RefreshTokenRequest = { accessToken: this.accessToken()!, refreshToken: this.refreshToken()!};
-
-    return this.http.post<AuthResponse>(endpoint, body)
-    .pipe(
-      tap((response) => this.state.update(state => ({...state, accessToken: response.accessToken}))),
-      catchError((error) => throwError(() => error.message))
-    ) 
+    return this.refresh$;
   }
 
-  private createUserSession(user: User, accessToken: string, refreshToken: string): void {
-    this.state.update(() => ({ currentUser: user, accessToken, refreshToken }));
-  }
-
+  // To prevent losing the state when page is refreshed.
   private initializeAuthStateFromSessionStorage(): void {
     const storedUser = this.storageService.getFromSessionStorage(STORAGE_KEYS.USER);
     const storedToken = this.storageService.getFromSessionStorage(STORAGE_KEYS.ACCESS_TOKEN);
@@ -109,7 +123,23 @@ export class AuthService {
     this.state.update(() => ({
       currentUser: storedUser ? JSON.parse(storedUser) : null,
       accessToken: storedToken ?? null,
-      refreshToken: storedRefreshToken ?? null
+      refreshToken: storedRefreshToken ?? null,
+      status: storedToken ? 'authenticated' as const : 'pending' as const
     }));
   }
+
+  // Effects
+  private storeSessionEffect = effect(() => {
+    if (this.accessToken() && this.currentUser() && this.refreshToken()) {
+      this.storageService.setToSessionStorage(STORAGE_KEYS.USER, JSON.stringify(this.state().currentUser));
+      this.storageService.setToSessionStorage(STORAGE_KEYS.ACCESS_TOKEN, this.accessToken()!);
+      this.storageService.setToLocalStorage(STORAGE_KEYS.REFRESH_TOKEN, this.refreshToken()!);
+    }
+  });
+
+  private removeSessionEffect = effect(() => {
+    if(!this.accessToken() && !this.currentUser()) {
+      this.storageService.removeUserSession(STORAGE_KEYS.REFRESH_TOKEN);
+    }
+  });
 }

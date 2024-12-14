@@ -1,12 +1,14 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { ToastState, ToastContent } from '../interfaces/toast.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Subject } from 'rxjs';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
+  private authService = inject(AuthService);
 
   // state
   private state = signal<ToastState>({
@@ -23,6 +25,7 @@ export class ToastService {
   // sources
   private hideToast$ = new Subject<boolean>();
   private displayToast$ = new Subject<ToastContent>()
+  private authError$ = this.authService.error$;
 
   constructor() {
     // reducers
@@ -36,6 +39,14 @@ export class ToastService {
 
     this.hideToast$.pipe(takeUntilDestroyed()).subscribe(hide => 
       this.state.update(state => ({ ...state, visible: hide }))
+    );
+
+    this.authError$.pipe(takeUntilDestroyed()).subscribe(error => 
+      this.state.update(() => ({
+        message: 'Hay un error con las credenciales introducidas.',
+        visible: true,
+        toastType: 'failure' as const
+      }))
     );
   }
 

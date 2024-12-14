@@ -8,7 +8,7 @@ export const isAuthorizedGuard: CanActivateFn = (route, state) => {
   const authService  = inject(AuthService);
   const toastService = inject(ToastService);
   
-  if (authService.isAuthenticated() && authService.isAuthorized()) {
+  if (authService.status() === 'authenticated' && authService.isAuthorized()) {
     return true;
   }
 

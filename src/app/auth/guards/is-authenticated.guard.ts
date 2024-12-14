@@ -3,10 +3,10 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
-  const userAuthenticated = inject(AuthService).isAuthenticated();
+  const userAuthStatus = inject(AuthService).status();
   const router = inject(Router);
   
-  if (userAuthenticated) {
+  if (userAuthStatus === 'authenticated') {
     return true;
   }
 

@@ -38,7 +38,7 @@
 }
 
 .icon-failure {
-    @apply dark:bg-red-400 dark:text-slate-700
+    @apply bg-red-400 text-slate-700 dark:bg-red-400 dark:text-slate-700
 }
 
 .show {

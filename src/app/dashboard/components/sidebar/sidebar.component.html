@@ -53,8 +53,8 @@
             <div class="flex items-center gap-4">
                 <img class="w-10 h-10 rounded-full" [src]="defaultUserAvatar" alt="User Avatar">
                 <div class="font-normal dark:text-white">
-                    <div>{{authService.currentUserName()}}</div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">{{authService.isAuthenticated() ? 'Administrador' : 'Usuario'}}</div>
+                    <div>{{authService.currentUser()?.name}}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{authService.status() === 'authenticated' ? 'Administrador' : 'Usuario'}}</div>
                 </div>
             </div>
         </div>

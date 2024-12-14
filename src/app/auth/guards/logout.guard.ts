@@ -6,8 +6,8 @@ export const logoutGuard: CanActivateFn = (route, state) => {
   
   const authService = inject(AuthService);
 
-  if (authService.isAuthenticated()) {
-    authService.closeUserSession();
+  if (authService.status() === 'authenticated') {
+    authService.logout();
     return true;
   }
 
