@@ -2,8 +2,8 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IconsService } from '../../../shared/services/icons.service';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { ToastComponent } from '../../../dashboard/components/toast/toast.component';
+import { AuthService } from '../../data-access/auth.service';
+import { ToastComponent } from '../../../shared/components/toast/toast.component';
 import { ToastService } from '../../../shared/services/toast.service';
 import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 

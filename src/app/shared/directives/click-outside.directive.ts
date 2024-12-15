@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, inject, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, OnDestroy, output, Output } from '@angular/core';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
 @Directive({
@@ -8,8 +8,7 @@ import { filter, fromEvent, Subscription } from 'rxjs';
 })
 export class ClickOutsideDirective implements AfterViewInit, OnDestroy {
 
-  @Output()
-  notifyClickOutside: EventEmitter<void> = new EventEmitter();
+  notifyClickOutside = output<void>();
 
   private documentClickEventSubscription?: Subscription;
 
@@ -35,7 +34,7 @@ export class ClickOutsideDirective implements AfterViewInit, OnDestroy {
     this.documentClickEventSubscription?.unsubscribe();
   }
 
-  public isClickInside(element: HTMLElement): boolean {
+  private isClickInside(element: HTMLElement): boolean {
     return element === this.element.nativeElement || this.element.nativeElement.contains(element)
   }
 

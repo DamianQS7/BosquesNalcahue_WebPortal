@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { ToastState, ToastContent } from '../interfaces/toast.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Subject } from 'rxjs';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '../../auth/data-access/auth.service';
 
 @Injectable({
   providedIn: 'root'
