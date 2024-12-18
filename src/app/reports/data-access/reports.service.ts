@@ -92,17 +92,19 @@ export class ReportsService {
   setDateFilter(filter: string): void { 
     this.state.update((state) => ({
       ...state, dateFilter: filter, contentLoaded: false
-    }))
+    }));
   }
   setProductFilter(filter: string): void { 
     this.state.update((state) => ({
       ...state, productTypeFilter: filter, contentLoaded: false
-    }))
+    }));
   }
-  setSortingOrder(sortBy: string): void { 
-    this.state.update((state) => ({
-      ...state, sortBy, contentLoaded: false
-    }))
+  setSortingOrder(): void { 
+    this.state.update(({sortBy, ...state}) => ({
+      ...state, 
+      sortBy: sortBy.startsWith('-') ? 'Date' : '-Date', 
+      contentLoaded: false
+    }));
   }
   changePage(filter: string): void { 
     this.state.update((state) => ({

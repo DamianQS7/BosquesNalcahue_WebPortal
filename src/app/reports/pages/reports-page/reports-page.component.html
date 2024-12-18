@@ -13,34 +13,44 @@
     @defer (when reportsService.contentLoaded()) {
         <div class="filter-and-search-wrapper">
             <!-- Dropdown Menus for Filter Options -->
-            <dashboard-dropdown (optionChanged)="reportsService.setDateFilter($event)" 
-                                [initialDisplayName]="'Por Fecha'" 
-                                [iconName]="'clock'"
-                                [dropdownOptions]="[
-                                    { title: dateFilterOptions.noFilter},
-                                    { title: dateFilterOptions.today },
-                                    { title: dateFilterOptions.lastWeek},
-                                    { title: dateFilterOptions.lastMonth},
-                                    { title: dateFilterOptions.lastSixMonths}]"
-                                />
+            <dashboard-dropdown 
+                (optionChanged)="reportsService.setDateFilter($event)" 
+                [initialDisplayName]="'Por Fecha'" 
+                [iconName]="'clock'"
+                [dropdownOptions]="[
+                    { title: dateFilterOptions.noFilter},
+                    { title: dateFilterOptions.today },
+                    { title: dateFilterOptions.lastWeek},
+                    { title: dateFilterOptions.lastMonth},
+                    { title: dateFilterOptions.lastSixMonths}]"
+                />
 
-            <dashboard-dropdown (optionChanged)="reportsService.setProductFilter($event)" 
-                                [initialDisplayName]="'Por Tipo de Producto'" 
-                                [iconName]="'truck'"
-                                [dropdownOptions]="[
-                                    { title: productFilterOptions.noFilter},
-                                    { title: productFilterOptions.lena},
-                                    { title: productFilterOptions.metroRuma},
-                                    { title: productFilterOptions.trozo }]"
-                                />
+            <dashboard-dropdown 
+                (optionChanged)="reportsService.setProductFilter($event)" 
+                [initialDisplayName]="'Por Tipo de Producto'" 
+                [iconName]="'truck'"
+                [dropdownOptions]="[
+                    { title: productFilterOptions.noFilter},
+                    { title: productFilterOptions.lena},
+                    { title: productFilterOptions.metroRuma},
+                    { title: productFilterOptions.trozo }]"
+                />
             <!-- Search box -->
             <dashboard-search-box (onDebounce)="($event)"/>
         </div>
         
-        <dashboard-data-table [data]="tableReports()"
-                              (onSortColumn)="($event)"
-                              (onViewPdf)="openPdfFileInNewTab($event)" 
-                              class="h-full"/>
+        <dashboard-data-table 
+            class="h-full"
+            (onSortColumn)="reportsService.setSortingOrder()"
+            (onViewPdf)="openPdfFileInNewTab($event)" 
+            [tableData]="tableReports()"
+            [columnTitles]="[
+                { title: 'Fecha', sortable: true },
+                { title: 'Folio', sortable: false },
+                { title: 'Tipo de Producto', sortable: false },
+                { title: 'Nombre del Cliente', sortable: false },
+                { title: 'Productos', sortable: false },
+            ]"/>
     
         <dashboard-pagination-nav [hasNextPage]="paginationInfo()?.hasNextPage!"
                                   [pageSize]="paginationInfo()?.pageSize!" 

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, output } from '@angular/core';
-
+import { Component, inject, input, output } from '@angular/core';
 import { IconsService } from '../../../shared/services/icons.service';
 import { FormatSpeciesPipe } from '../../../shared/pipes/format-species.pipe';
 import { RouterModule } from '@angular/router';
@@ -15,29 +14,12 @@ import { ReportsTableRow } from '../../interfaces';
   styleUrl: './data-table.component.css'
 })
 export class DataTableComponent {
+  // Dependencies
+  iconsService = inject(IconsService);
 
-  public iconsService: IconsService = inject(IconsService);
-
-  @Input()
-  public columnTitles: ColumnTitles[] = [
-    { title: 'Fecha', sortable: true },
-    { title: 'Folio', sortable: false },
-    { title: 'Tipo de Producto', sortable: false },
-    { title: 'Nombre del Cliente', sortable: false },
-    { title: 'Productos', sortable: false },
-  ];
-
-  @Input()
-  public data: ReportsTableRow[] = []; 
- 
-  public onViewPdf = output<string>();
-  public onSortColumn = output<string>();
-
-  public sortColumnEvent(sort: string): void {
-    this.onSortColumn.emit(sort);
-  }
-
-  public viewPdfEvent(fileId: string): void {
-    this.onViewPdf.emit(fileId);
-  }
+  // Properties
+  columnTitles = input.required<ColumnTitles[]>();
+  tableData    = input.required<ReportsTableRow[]>(); 
+  onViewPdf    = output<string>();
+  onSortColumn = output<string>();
 }

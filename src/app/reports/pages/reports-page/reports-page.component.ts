@@ -11,6 +11,7 @@ import { ToastComponent } from '../../../shared/components/toast/toast.component
 import { ToastService } from '../../../shared/services/toast.service';
 import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 import { GetReportsResponse, PaginationInfo, ReportsTableRow, Report, DateFilterOptions, ProductFilterOptions } from '../../interfaces/index'
+import { ColumnTitles } from '../../../shared/interfaces';
 
 @Component({
   standalone: true,
@@ -40,11 +41,9 @@ export default class ReportsPageComponent implements OnDestroy {
   
   
   public currentPage = signal<number>(1); // Page 1 by default
-  public sortBy = signal<string>('-Date'); // Descending by default
   tableReports = computed(() => this.mapReportsToRows(this.reportsService.reports()))
   public paginationInfo = signal<PaginationInfo | undefined>(undefined);
   
-
 
   ngOnDestroy(): void {
     this.getAllSubs?.unsubscribe();
@@ -80,18 +79,6 @@ export default class ReportsPageComponent implements OnDestroy {
       });
   }
 
-  // public sortReportsBy(sortBy: string): void {
-  //   this.sortBy.update(value => {
-      
-  //     if(value.startsWith('-')) {
-  //       return 'Date';
-  //     } else {
-  //       return '-Date';
-  //     }
-  //   });
-
-  //   this.getAllReports();
-  // }
 
   // public searchByFolio(folio: string): void {
   //   folio === '' ? this.getAllReports() 
