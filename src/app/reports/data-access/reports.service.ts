@@ -1,23 +1,114 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, EMPTY, map, merge, Observable, of, switchMap, tap } from 'rxjs';
 import { DateTimeFormatService } from '../../shared/services/date-time-format.service';
-import { FileUriResponse, GetReportsResponse, UpdateReportRequest, Report } from '../interfaces';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { connect } from 'ngxtension/connect';
+import { FileUriResponse, GetReportsResponse, UpdateReportRequest, Report, PaginationInfo } from '../interfaces';
+
+export interface ReportsServiceState {
+  reports: Report[];
+  paginationInfo: PaginationInfo | null;
+  sortBy: string;
+  currentPage: number;
+  dateFilter: string;
+  productTypeFilter: string;
+  contentLoaded: boolean;
+  errorMessage: string | null;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportsService {
   // Services
-  private http: HttpClient = inject(HttpClient);
-  private dateTime = inject(DateTimeFormatService);
+  private http = inject(HttpClient);
+  private dateTimeFormat = inject(DateTimeFormatService);
 
   // Properties
   private readonly baseUrl:  string = environment.baseUrl;
   private readonly reportsEndpoint: string = `${this.baseUrl}/reports`;
   private readonly blobEndpoint: string = `${this.baseUrl}/blob`;
 
+  // State
+  private state = signal<ReportsServiceState>({
+    reports: [],
+    paginationInfo: null,
+    sortBy: '-Date',
+    currentPage: 1,
+    dateFilter: 'Sin filtrar',
+    productTypeFilter: 'Sin filtrar',
+    contentLoaded: false,
+    errorMessage: null
+  });
+
+  // Selectors
+  reports = computed(() => this.state().reports);
+  paginationInfo = computed(() => this.state().paginationInfo);
+  sortBy = computed(() => this.state().sortBy);
+  currentPage = computed(() => this.state().currentPage);
+  dateFilter = computed(() => this.state().dateFilter);
+  productTypeFilter = computed(() => this.state().productTypeFilter);
+  contentLoaded = computed(() => this.state().contentLoaded);
+  
+
+  // Computed properties
+  private dateFilterQuery = computed(() => this.generateDateFilter(this.state().dateFilter));
+  private productFilterQuery = computed(() => this.generateProductFilter(this.state().productTypeFilter));
+  private sortyByQuery = computed(() => {});
+  private getAllReportsEndpoint = computed(() => 
+    `${this.reportsEndpoint}?page=${this.currentPage()}${this.dateFilterQuery()}${this.productFilterQuery()}&SortBy=${this.sortBy()}`
+  )
+
+  // Sources
+  private getAllReportsEndpoint$ = toObservable(this.getAllReportsEndpoint);
+  private getAllReportsRequest$ = this.getAllReportsEndpoint$.pipe(
+    switchMap(endpoint => this.http.get<GetReportsResponse>(endpoint).pipe(
+      catchError(error => {
+        this.state.update(state => ({
+          ...state, 
+          errorMessage: error,
+          contentLoaded: true
+        }))
+        return EMPTY;
+      })
+    ))
+  );
+
+  constructor() {
+    const updatedState$ = merge(
+      this.getAllReportsRequest$.pipe(map(({items, ...paginationInfo}) => ({
+        reports: items,
+        paginationInfo: paginationInfo,
+        contentLoaded: true
+      })))
+    );
+
+    connect(this.state).with(updatedState$)
+  }
+
+  // Actions - Reducers
+  setDateFilter(filter: string): void { 
+    this.state.update((state) => ({
+      ...state, dateFilter: filter, contentLoaded: false
+    }))
+  }
+  setProductFilter(filter: string): void { 
+    this.state.update((state) => ({
+      ...state, productTypeFilter: filter, contentLoaded: false
+    }))
+  }
+  setSortingOrder(sortBy: string): void { 
+    this.state.update((state) => ({
+      ...state, sortBy, contentLoaded: false
+    }))
+  }
+  changePage(filter: string): void { 
+    this.state.update((state) => ({
+      ...state, dateFilter: filter, contentLoaded: false
+    }))
+  }
 
   // Methods
   deleteById(id: string): Observable<boolean> {
@@ -36,17 +127,7 @@ export class ReportsService {
     return this.http.delete(requestUrl);
   }
 
-  getAllReports(
-    dateFilter: string, 
-    productFilter: string, 
-    page: number, sortBy: 
-    string): Observable<GetReportsResponse> {
-
-    const dateFilterQuery:    string = this.generateDateFilter(dateFilter);
-    const productFilterQuery: string = this.generateProductFilter(productFilter);
-    const requestUrl:         string = `${this.reportsEndpoint}?page=${page}${dateFilterQuery}${productFilterQuery}&SortBy=${sortBy}`
-    return this.http.get<GetReportsResponse>(requestUrl);
-  }
+  
 
   getPdfFileUri(fileId: string): Observable<FileUriResponse> {
     const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
@@ -73,37 +154,25 @@ export class ReportsService {
 
   // Helpers
   private generateDateFilter(filter: string): string {
-    const currentDate: string = this.dateTime.formatDate(new Date());
+    const currentDate: string = this.dateTimeFormat.formatDate(new Date());
   
     switch (filter) {
       case 'Sin filtrar':
         return '';
       case 'Hoy':
-        return `&startDate=${currentDate + this.dateTime.startTime}&endDate=${currentDate + this.dateTime.endTime}`;
+        return `&startDate=${currentDate + this.dateTimeFormat.startTime}&endDate=${currentDate + this.dateTimeFormat.endTime}`;
       case 'Semana Pasada':
-        return `&startDate=${this.dateTime.getLastWeekStartDate()}&endDate=${currentDate}`;
+        return `&startDate=${this.dateTimeFormat.getLastWeekStartDate()}&endDate=${currentDate}`;
       case 'Mes Pasado':
-        return `&startDate=${this.dateTime.getLastMonthStartDate()}&endDate=${currentDate}`;
+        return `&startDate=${this.dateTimeFormat.getLastMonthStartDate()}&endDate=${currentDate}`;
       case 'Últimos 6 Meses':
-        return `&startDate=${this.dateTime.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
+        return `&startDate=${this.dateTimeFormat.getLastSixMonthsStartDate()}&endDate=${currentDate}`;
       default:
         return '';
     }
   }
 
   private generateProductFilter(filter: string): string {
-    switch (filter) {
-      case 'Sin filtrar':
-        return '';
-      case 'Leña':
-        return `&ProductType=Leña`;
-      case 'Metro Ruma':
-        return `&ProductType=Metro Ruma`;
-      case 'Trozo Aserrable':
-        return `&ProductType=Trozo Aserrable`;
-      default:
-        return '';
-    }
+    return filter === 'Sin filtrar' ? '' : `&ProductType=${filter}`;
   }
-
 }

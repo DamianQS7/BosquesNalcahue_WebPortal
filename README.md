@@ -34,16 +34,15 @@ This project works in combination with an ASP.NET Core 8 Web API to create a cen
 * Ng2-Charts
 
 ## Concepts Applied
-* Parent-Child Component Communication => Inputs & Outputs
-* Observables
-* HTTP requests
-* Signals => signal, computed, input, output, effect
+* Redux-like pattern for state management.
+* Signals => signal, computed, input, output, effect.
+* RxJS Interop => toObservable.
 * DOM Sanitizer
 * Custom Directives
 * Built-in and Custom Pipes
 * Module-less Angular App
 * Lazy Loading with Standalone Components
 * Deferrable Views
-* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError, switchMap
+* RxJS Operators => tap, map, debounceTime, distinctUntilChanged, takeUntil, of, catchError, switchMap, takeUntilDestroyed
 * Route Guards => CanActivate.
 * Interceptors => To handle Jwt and Refresh Token.

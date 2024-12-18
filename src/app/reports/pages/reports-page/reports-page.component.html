@@ -10,35 +10,35 @@
         <img src="assets/img/listado-reportes-bg.jpg" alt="" class="2xl:object-none light-dark-bg-img opacity-100 dark:opacity-0">
         <img src="assets/img/listado-reportes-bg-dark.jpg" alt="" class="2xl:object-none light-dark-bg-img opacity-0 dark:opacity-100">
     </div>
-    @defer (when this.contentLoaded()) {
+    @defer (when reportsService.contentLoaded()) {
         <div class="filter-and-search-wrapper">
             <!-- Dropdown Menus for Filter Options -->
-            <dashboard-dropdown (optionChanged)="applyDateFilter($event)" 
+            <dashboard-dropdown (optionChanged)="reportsService.setDateFilter($event)" 
                                 [initialDisplayName]="'Por Fecha'" 
                                 [iconName]="'clock'"
                                 [dropdownOptions]="[
-                                    { title: 'Sin Filtrar' },
-                                    { title: 'Hoy' },
-                                    { title: 'Semana Pasada' },
-                                    { title: 'Mes Pasado' },
-                                    { title: 'Últimos 6 Meses' }]"
+                                    { title: dateFilterOptions.noFilter},
+                                    { title: dateFilterOptions.today },
+                                    { title: dateFilterOptions.lastWeek},
+                                    { title: dateFilterOptions.lastMonth},
+                                    { title: dateFilterOptions.lastSixMonths}]"
                                 />
 
-            <dashboard-dropdown (optionChanged)="applyProductTypeFilter($event)" 
+            <dashboard-dropdown (optionChanged)="reportsService.setProductFilter($event)" 
                                 [initialDisplayName]="'Por Tipo de Producto'" 
                                 [iconName]="'truck'"
                                 [dropdownOptions]="[
-                                    { title: 'Sin Filtrar' },
-                                    { title: 'Leña' },
-                                    { title: 'Metro Ruma' },
-                                    { title: 'Trozo Aserrable' }]"
+                                    { title: productFilterOptions.noFilter},
+                                    { title: productFilterOptions.lena},
+                                    { title: productFilterOptions.metroRuma},
+                                    { title: productFilterOptions.trozo }]"
                                 />
             <!-- Search box -->
-            <dashboard-search-box (onDebounce)="searchByFolio($event)"/>
+            <dashboard-search-box (onDebounce)="($event)"/>
         </div>
         
         <dashboard-data-table [data]="tableReports()"
-                              (onSortColumn)="sortReportsBy($event)"
+                              (onSortColumn)="($event)"
                               (onViewPdf)="openPdfFileInNewTab($event)" 
                               class="h-full"/>
     
@@ -46,9 +46,9 @@
                                   [pageSize]="paginationInfo()?.pageSize!" 
                                   [totalItems]="paginationInfo()?.totalCount!"
                                   [currentPage]="currentPage()"
-                                  (selectedPage)="changePage($event)"
-                                  (nextPageEvent)="goToNextPage($event)"
-                                  (prevPageEvent)="goToPreviousPage($event)"/>
+                                  (selectedPage)="($event)"
+                                  (nextPageEvent)="($event)"
+                                  (prevPageEvent)="($event)"/>
 
         <dashboard-toast (closeToast)="toasts.hideToast(false)"/>
     } @placeholder {
