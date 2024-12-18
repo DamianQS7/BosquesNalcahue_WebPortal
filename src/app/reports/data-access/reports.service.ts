@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { catchError, EMPTY, map, merge, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
 import { DateTimeFormatService } from '../../shared/services/date-time-format.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { connect } from 'ngxtension/connect';
@@ -53,10 +53,9 @@ export class ReportsService {
   contentLoaded = computed(() => this.state().contentLoaded);
   
 
-  // Computed properties
+  // Computed State
   private dateFilterQuery = computed(() => this.generateDateFilter(this.state().dateFilter));
   private productFilterQuery = computed(() => this.generateProductFilter(this.state().productTypeFilter));
-  private sortyByQuery = computed(() => {});
   private getAllReportsEndpoint = computed(() => 
     `${this.reportsEndpoint}?page=${this.currentPage()}${this.dateFilterQuery()}${this.productFilterQuery()}&SortBy=${this.sortBy()}`
   )
@@ -90,14 +89,10 @@ export class ReportsService {
 
   // Actions - Reducers
   setDateFilter(filter: string): void { 
-    this.state.update((state) => ({
-      ...state, dateFilter: filter, contentLoaded: false
-    }));
+    this.state.update((state) => ({ ...state, dateFilter: filter, contentLoaded: false }));
   }
   setProductFilter(filter: string): void { 
-    this.state.update((state) => ({
-      ...state, productTypeFilter: filter, contentLoaded: false
-    }));
+    this.state.update((state) => ({ ...state, productTypeFilter: filter, contentLoaded: false }));
   }
   setSortingOrder(): void { 
     this.state.update(({sortBy, ...state}) => ({
@@ -106,9 +101,12 @@ export class ReportsService {
       contentLoaded: false
     }));
   }
-  changePage(filter: string): void { 
-    this.state.update((state) => ({
-      ...state, dateFilter: filter, contentLoaded: false
+  toSelectedPage(page: number): void { 
+    this.state.update((state) => ({ ...state, currentPage: page, contentLoaded: false }))
+  }
+  toNextOrPrevPage(page: number): void { 
+    this.state.update(({currentPage, ...state}) => ({ 
+      ...state, currentPage: currentPage + page, contentLoaded: false 
     }))
   }
 

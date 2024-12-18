@@ -1,56 +1,55 @@
-import { Component, computed, EventEmitter, input, InputSignal, Output, Signal} from '@angular/core';
+import { Component, computed, EventEmitter, input, InputSignal, output, Output, Signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PaginationInfo } from '../../interfaces';
 
 @Component({
   selector: 'dashboard-pagination-nav',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './pagination-nav.component.html',
-  styleUrl: './pagination-nav.component.css'
+  styleUrl: './pagination-nav.component.css',
+  template: `
+    <nav class="pagination-wrapper" aria-label="Pagination">
+      <span class="pagination-info">
+          Mostrando 
+          <span class="pagination-info-span">{{startIndex()}}-{{endIndex()}}</span> 
+          de 
+          <span class="pagination-info-span">{{paginationInfo().totalCount}}</span>
+      </span>
+      <ul class="pagination-list">
+          <li class="pagination-item rounded-s-lg"
+              (click)="toNextOrPrevPage.emit(hasPreviousPage())">
+              Anterior
+          </li>
+          @for (page of totalPages(); track $index) {
+              <li class="pagination-item" 
+                  (click)="toSelectedPage.emit(page)"
+                  [ngClass]="{'active': currentPage() === page}">
+                  {{page}}
+              </li>
+          }
+          <li class="pagination-item rounded-e-lg"
+              (click)="toNextOrPrevPage.emit(hasNextPage())">
+            Siguiente
+          </li>
+      </ul>
+  </nav>
+  `,
 })
 export class PaginationNavComponent {
   // Properties
-  public totalItems: InputSignal<number>   = input.required<number>();
-  public pageSize: InputSignal<number>     = input.required<number>();
-  public hasNextPage: InputSignal<boolean> = input.required<boolean>();
-  public currentPage: InputSignal<number>  = input.required<number>();
+  paginationInfo   = input.required<PaginationInfo>();
+  currentPage      = input.required<number>();
+  toSelectedPage   = output<number>();
+  toNextOrPrevPage = output<number>();
 
-  public startIndex: Signal<number> = computed(() => {
-    return (this.currentPage() - 1) * this.pageSize() + 1;
-  });
-
-  public endIndex: Signal<number> = computed(() => {
-    return Math.min(this.currentPage() * this.pageSize(), this.totalItems());
-  }); 
-
-  public hasPreviousPage: Signal<boolean> = computed(() => {
-    return this.currentPage() > 1;
-  });
-  
-  public totalPages: Signal<number[]> = computed(() => {
-
-    const pagesNumber = Math.ceil(this.totalItems() / this.pageSize());
+  // Computed State
+  startIndex = computed(() => (this.currentPage() - 1) * this.paginationInfo().pageSize + 1);
+  endIndex = computed(() => Math.min(this.currentPage() * this.paginationInfo().pageSize, this.paginationInfo().totalCount));
+  hasPreviousPage = computed<number>(() => this.currentPage() > 1 ? -1 : 0);
+  hasNextPage = computed<number>(() => this.paginationInfo().hasNextPage ? 1 : 0);
+  totalPages = computed(() => {
+    let pagesNumber = Math.ceil(this.paginationInfo().totalCount / this.paginationInfo().pageSize);
     const pagesArray = Array.from({length: pagesNumber}, (_, i) => i + 1);
     return pagesArray;
   });
-  
-  @Output()
-  public selectedPage: EventEmitter<number> = new EventEmitter();
-  @Output()
-  public nextPageEvent: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  public prevPageEvent: EventEmitter<boolean> = new EventEmitter();
-
-  // Methods
-  public onPageChanged(page: number): void {
-    this.selectedPage.emit(page);
-  }
-
-  public nextPage(): void {
-    this.nextPageEvent.emit(this.hasNextPage());
-  }
-
-  public previousPage(): void {
-    this.prevPageEvent.emit(this.hasPreviousPage());
-  }
 }

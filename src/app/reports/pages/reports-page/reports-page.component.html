@@ -52,13 +52,11 @@
                 { title: 'Productos', sortable: false },
             ]"/>
     
-        <dashboard-pagination-nav [hasNextPage]="paginationInfo()?.hasNextPage!"
-                                  [pageSize]="paginationInfo()?.pageSize!" 
-                                  [totalItems]="paginationInfo()?.totalCount!"
-                                  [currentPage]="currentPage()"
-                                  (selectedPage)="($event)"
-                                  (nextPageEvent)="($event)"
-                                  (prevPageEvent)="($event)"/>
+        <dashboard-pagination-nav 
+            [paginationInfo]="reportsService.paginationInfo()!"
+            [currentPage]="reportsService.currentPage()"
+            (toSelectedPage)="reportsService.toSelectedPage($event)"
+            (toNextOrPrevPage)="reportsService.toNextOrPrevPage($event)"/>
 
         <dashboard-toast (closeToast)="toasts.hideToast(false)"/>
     } @placeholder {
