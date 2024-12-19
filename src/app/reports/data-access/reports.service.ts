@@ -16,11 +16,10 @@ export interface ReportsServiceState {
   productTypeFilter: string;
   contentLoaded: boolean;
   errorMessage: string | null;
+  folioFilter: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ReportsService {
   // Services
   private http = inject(HttpClient);
@@ -40,7 +39,8 @@ export class ReportsService {
     dateFilter: 'Sin filtrar',
     productTypeFilter: 'Sin filtrar',
     contentLoaded: false,
-    errorMessage: null
+    errorMessage: null,
+    folioFilter: ''
   });
 
   // Selectors
@@ -51,13 +51,15 @@ export class ReportsService {
   dateFilter = computed(() => this.state().dateFilter);
   productTypeFilter = computed(() => this.state().productTypeFilter);
   contentLoaded = computed(() => this.state().contentLoaded);
-  
+  errorMessage = computed(() => this.state().errorMessage);
+  folioFilter = computed(() => this.state().folioFilter);
 
   // Computed State
-  private dateFilterQuery = computed(() => this.generateDateFilter(this.state().dateFilter));
-  private productFilterQuery = computed(() => this.generateProductFilter(this.state().productTypeFilter));
+  private folioFilterQuery = computed(() => this.folioFilter() === '' ? '' : `&Folio=${this.folioFilter()}`);
+  private dateFilterQuery = computed(() => this.generateDateFilter(this.dateFilter()));
+  private productFilterQuery = computed(() => this.productTypeFilter() === 'Sin filtrar' ? '' : `&ProductType=${this.productTypeFilter()}`);
   private getAllReportsEndpoint = computed(() => 
-    `${this.reportsEndpoint}?page=${this.currentPage()}${this.dateFilterQuery()}${this.productFilterQuery()}&SortBy=${this.sortBy()}`
+    `${this.reportsEndpoint}?page=${this.currentPage()}${this.dateFilterQuery()}${this.productFilterQuery()}${this.folioFilterQuery()}&SortBy=${this.sortBy()}`
   )
 
   // Sources
@@ -84,10 +86,13 @@ export class ReportsService {
       })))
     );
 
-    connect(this.state).with(updatedState$)
+    connect(this.state).with(updatedState$);
   }
 
   // Actions - Reducers
+  searchReportByFolio(folio: string): void {
+    this.state.update((state) => ({ ...state, folioFilter: folio, contentLoaded: false}));
+  }
   setDateFilter(filter: string): void { 
     this.state.update((state) => ({ ...state, dateFilter: filter, contentLoaded: false }));
   }
@@ -96,9 +101,7 @@ export class ReportsService {
   }
   setSortingOrder(): void { 
     this.state.update(({sortBy, ...state}) => ({
-      ...state, 
-      sortBy: sortBy.startsWith('-') ? 'Date' : '-Date', 
-      contentLoaded: false
+      ...state, sortBy: sortBy.startsWith('-') ? 'Date' : '-Date', contentLoaded: false
     }));
   }
   toSelectedPage(page: number): void { 
@@ -111,6 +114,11 @@ export class ReportsService {
   }
 
   // Methods
+  getPdfFileUri(fileId: string): Observable<FileUriResponse> {
+    const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
+    return this.http.get<FileUriResponse>(requestUrl); 
+  }
+
   deleteById(id: string): Observable<boolean> {
     const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.delete<boolean>(requestUrl).pipe(
@@ -127,24 +135,9 @@ export class ReportsService {
     return this.http.delete(requestUrl);
   }
 
-  
-
-  getPdfFileUri(fileId: string): Observable<FileUriResponse> {
-    const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
-    return this.http.get<FileUriResponse>(requestUrl).pipe(
-      tap(console.log)
-    ); 
-  }
-
   getReportsById(id: string): Observable<Report> {
     const requestUrl: string = `${this.reportsEndpoint}/${id}`;
     return this.http.get<Report>(requestUrl);
-  }
-
-  getReportsByFolio(folio: string): Observable<GetReportsResponse> {
-    const queryParam: string = `folio=${folio}`;
-    const requestUrl: string = `${this.reportsEndpoint}?${queryParam}`;
-    return this.http.get<GetReportsResponse>(requestUrl);
   }
 
   updateReport(id: string, report: UpdateReportRequest): Observable<Report> {
@@ -170,9 +163,5 @@ export class ReportsService {
       default:
         return '';
     }
-  }
-
-  private generateProductFilter(filter: string): string {
-    return filter === 'Sin filtrar' ? '' : `&ProductType=${filter}`;
   }
 }

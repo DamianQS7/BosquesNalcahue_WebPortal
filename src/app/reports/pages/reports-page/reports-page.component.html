@@ -36,7 +36,9 @@
                     { title: productFilterOptions.trozo }]"
                 />
             <!-- Search box -->
-            <dashboard-search-box (onDebounce)="($event)"/>
+            <dashboard-search-box 
+                [placeholder]="'Buscar por Folio'"
+                (onDebounce)="reportsService.searchReportByFolio($event)"/>
         </div>
         
         <dashboard-data-table 
