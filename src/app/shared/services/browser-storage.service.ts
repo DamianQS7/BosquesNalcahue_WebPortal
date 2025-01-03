@@ -1,29 +1,5 @@
-import { inject, Injectable, InjectionToken, PLATFORM_ID } from '@angular/core';
-import { User } from '../../auth/interfaces/user.interface';
-import { isPlatformBrowser } from '@angular/common';
-
-export const STORAGE_TOKENS = {
-  LOCAL: new InjectionToken<Storage>(
-    'window local storage object',
-    {
-      providedIn: 'root',
-      factory: () => 
-        isPlatformBrowser(inject(PLATFORM_ID))
-        ? window.localStorage
-        : ({} as Storage)
-    }
-  ),
-  SESSION: new InjectionToken<Storage>(
-    'window session storage object',
-    {
-      providedIn: 'root',
-      factory: () =>
-        isPlatformBrowser(inject(PLATFORM_ID))
-        ? window.sessionStorage
-        : ({} as Storage)
-    }
-  )
-};
+import { inject, Injectable } from '@angular/core';
+import { STORAGE_TOKENS } from '../utils/injection-tokens';
 
 @Injectable({
   providedIn: 'root'

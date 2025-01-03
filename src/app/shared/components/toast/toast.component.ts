@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, output } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, output } from '@angular/core';
 import { IconsService } from '../../../shared/services/icons.service';
 import { ToastType } from '../../../shared/interfaces/toast.interface';
 import { ToastService } from '../../../shared/services/toast.service';
+import { Subject, takeUntil, tap, timeout, timer } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dashboard-toast',
@@ -12,8 +14,10 @@ import { ToastService } from '../../../shared/services/toast.service';
   template: `
     <div 
       class="toast-wrapper flex"
-      [class.show]="toastVisible()"
-      [ngClass]="toastType() === 'success'? 'wrapper-success': 'wrapper-failure'"
+      [ngClass]="[
+        toastType() === 'success' ? 'wrapper-success': 'wrapper-failure',
+        toastVisible() === true ? 'show' : 'hide'
+      ]"
     >
       <div 
         class="icon-wrapper"
@@ -34,7 +38,7 @@ import { ToastService } from '../../../shared/services/toast.service';
     </div>
   `,
 })
-export class ToastComponent {
+export class ToastComponent implements OnDestroy{
   // Services
   iconsService = inject(IconsService);
   toastService = inject(ToastService)
@@ -44,18 +48,20 @@ export class ToastComponent {
   toastType = computed<ToastType>(() => this.toastService.toastType());
   toastMessage = computed<string | null>(() => this.toastService.toastMessage());
   closeToast = output<void>();
+  private destroyRef$ = new Subject<void>();
 
   constructor() {
     effect(() => {
       if(this.toastVisible()) {
-        this.triggerTimeOut(3000);
+        timer(5000)
+          .pipe(takeUntil(this.destroyRef$))
+          .subscribe(() => this.closeToast.emit());
       }
     })
-  } 
+  }
 
-  private triggerTimeOut(duration: number): void {
-    setTimeout(() => {
-      this.closeToast.emit();
-    }, duration)
+  ngOnDestroy(): void {
+    this.destroyRef$.next();
+    this.destroyRef$.complete();
   }
 }

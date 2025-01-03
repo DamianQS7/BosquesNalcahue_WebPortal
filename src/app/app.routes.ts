@@ -12,7 +12,7 @@ export const routes: Routes = [
         children: [
             { 
                 path: 'reportes', 
-                loadComponent: () => import('./reports/pages/reports-page/reports-page.component'),
+                loadComponent: () => import('./reports/reports-page/reports-page.component'),
                 canActivate: [isAuthenticatedGuard]
             },
             { 
@@ -22,7 +22,7 @@ export const routes: Routes = [
             },
             { 
                 path: 'editar-reporte/:id', 
-                loadComponent: () => import('./reports/pages/edit-report-page/edit-report-page.component').then(c => c.EditReportPageComponent),
+                loadComponent: () => import('./edit-reports/edit-report-page/edit-report-page.component'),
                 canActivate: [isAuthorizedGuard]
             },
             {

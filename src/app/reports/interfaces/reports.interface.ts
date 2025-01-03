@@ -29,9 +29,13 @@ export interface Report {
     products?:       Product[];
 }
 
-type NonEditableProperties = 'truckHeight' | 'truckLength' | 'banks' | 'palomeraHeight' | 
-    'palomeraWidth' | 'finalQuantity' | 'reportType' | 'operatorName' | 'species' | 'finalVolume';
-
-export type EditableReport = Omit<Report, NonEditableProperties>;
+export interface EditableReport {
+    clientName: Report['clientName'],
+    clientId: Report['clientId'],
+    truckCompany: Report['truckCompany'],
+    truckDriver: Report['truckDriver'],
+    truckDriverId: Report['truckDriverId'],
+    truckPlate: Report['truckPlate'],
+}
 
 

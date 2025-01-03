@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="p-4 2xl:p-8 mr-4 ml-2 w-[65%]">
         <h1 class="page-title">Editar Reporte: 
-            <span class="font-normal">Despacho de {{reportToSubmit?.productType}}</span>
+            <span class="font-normal">Despacho de {{reportToEdit()?.productType}}</span>
         </h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-3 2xl:gap-8">
@@ -105,7 +105,7 @@
 
 
 <dashboard-modal 
-    (actionTrigger)="deleteReport($event)"
+    (actionTrigger)="this.editReportService.deleteReport()"
     (closeTrigger)="modals.hideModal()"
 >
     <p ngProjectAs="main-content">Esta a punto de eliminar un reporte de manera permanente. Confirma?</p>

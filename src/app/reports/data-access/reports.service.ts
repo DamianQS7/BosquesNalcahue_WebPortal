@@ -5,7 +5,7 @@ import { catchError, EMPTY, map, merge, Observable, of, Subject, switchMap, tap 
 import { DateTimeFormatService } from '../../shared/services/date-time-format.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { connect } from 'ngxtension/connect';
-import { FileUriResponse, GetReportsResponse, UpdateReportRequest, Report, PaginationInfo } from '../interfaces';
+import { FileUriResponse, GetReportsResponse, Report, PaginationInfo } from '../interfaces';
 
 export interface ReportsServiceState {
   reports: Report[];
@@ -117,32 +117,6 @@ export class ReportsService {
   getPdfFileUri(fileId: string): Observable<FileUriResponse> {
     const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
     return this.http.get<FileUriResponse>(requestUrl); 
-  }
-
-  deleteById(id: string): Observable<boolean> {
-    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
-    return this.http.delete<boolean>(requestUrl).pipe(
-      map(() => true),
-      catchError(error => {
-        console.log('Error deleting the report', error);
-        return of(false);
-      })
-    );
-  }
-
-  deleteFileByFileId(fileId: string) {
-    const requestUrl: string = `${this.blobEndpoint}/reports/${fileId}`;
-    return this.http.delete(requestUrl);
-  }
-
-  getReportsById(id: string): Observable<Report> {
-    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
-    return this.http.get<Report>(requestUrl);
-  }
-
-  updateReport(id: string, report: UpdateReportRequest): Observable<Report> {
-    const requestUrl: string = `${this.reportsEndpoint}/${id}`;
-    return this.http.put<Report>(requestUrl, report);
   }
 
   // Helpers

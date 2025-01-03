@@ -1,15 +1,12 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { ToastState, ToastContent } from '../interfaces/toast.interface';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { Subject } from 'rxjs';
-import { AuthService } from '../../auth/data-access/auth.service';
+import { map, merge, Subject } from 'rxjs';
+import { connect } from 'ngxtension/connect';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
-  private authService = inject(AuthService);
-
   // state
   private state = signal<ToastState>({
     toastType: 'success',
@@ -24,38 +21,23 @@ export class ToastService {
 
   // sources
   private hideToast$ = new Subject<boolean>();
-  private displayToast$ = new Subject<ToastContent>()
-  private authError$ = this.authService.error$;
+  private displayToast$ = new Subject<ToastContent>();
 
   constructor() {
     // reducers
-    this.displayToast$.pipe(takeUntilDestroyed()).subscribe(toastContent => 
-      this.state.update(() => ({
-        message: toastContent.message,
+    const updatedState$ = merge(
+      this.hideToast$.pipe(map((hide) => ({ visible: hide }))),
+      this.displayToast$.pipe(map((content) => ({
+        message: content.message,
         visible: true,
-        toastType: toastContent.toastType
-      }))
+        toastType: content.toastType
+      }))),
     );
-
-    this.hideToast$.pipe(takeUntilDestroyed()).subscribe(hide => 
-      this.state.update(state => ({ ...state, visible: hide }))
-    );
-
-    this.authError$.pipe(takeUntilDestroyed()).subscribe(error => 
-      this.state.update(() => ({
-        message: 'Hay un error con las credenciales introducidas.',
-        visible: true,
-        toastType: 'failure' as const
-      }))
-    );
+    
+    connect(this.state).with(updatedState$);
   }
 
-  // actions
-  displayToastWithMessage(toastContent: ToastContent): void {
-    this.displayToast$.next(toastContent);
-  }
-
-  hideToast(hide: boolean): void {
-    this.hideToast$.next(hide);
-  }
+  // Actions
+  displayToastWithMessage = (toastContent: ToastContent): void => this.displayToast$.next(toastContent);
+  hideToast = (hide: boolean): void => this.hideToast$.next(hide);
 }

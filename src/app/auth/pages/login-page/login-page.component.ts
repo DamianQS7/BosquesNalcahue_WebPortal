@@ -1,5 +1,5 @@
-import { Component, effect, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, effect, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IconsService } from '../../../shared/services/icons.service';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../data-access/auth.service';
@@ -15,17 +15,19 @@ import { SpinnerComponent } from '../../../shared/components/spinner/spinner.com
 })
 export class LoginPageComponent {
   // Services
-  private fb         = inject(FormBuilder);
-  private router     = inject(Router);
-  public authService = inject(AuthService);
-  public iconService = inject(IconsService);
-  public toasts      = inject(ToastService);
+  private fb     = inject(FormBuilder);
+  private router = inject(Router);
+  authService = inject(AuthService);
+  iconService = inject(IconsService);
+  toasts      = inject(ToastService);
 
   // Properties
-  public loginForm: FormGroup = this.fb.group({
+  loginForm: FormGroup = this.fb.nonNullable.group({
     email:    ['admin@gmail.com', [Validators.required, Validators.email]], // or user@gmail.com to test authorization.
     password: ['Abc123456!', [Validators.required]]
   });
+  errorMessage = computed(() => this.authService.errorMessage());
+  status = computed(() => this.authService.status());
 
   // Methods
   login(): void {
@@ -37,9 +39,7 @@ export class LoginPageComponent {
       return;
     }
 
-    const credentials = this.loginForm.getRawValue();
-
-    this.authService.login(credentials);
+    this.authService.login(this.loginForm.getRawValue());
   }
 
   private getErrorsInForm(): string {
@@ -53,8 +53,19 @@ export class LoginPageComponent {
   }
 
   // Effects
-  private loginSuccessEffect = effect(() => {
-    if(this.authService.status() === 'authenticated')
-      this.router.navigate(['dashboard', 'reports'])
-  });
+  #loginOperationEffect = effect(() => {
+    switch(this.status()) {
+
+      case 'authenticated':
+        this.router.navigate(['dashboard', 'reports']);
+        break;
+
+      case 'error':
+        this.toasts.displayToastWithMessage({
+          toastType: 'failure', 
+          message: this.errorMessage()
+        });
+
+    }
+  }, { allowSignalWrites: true });
 }

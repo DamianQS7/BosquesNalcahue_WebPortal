@@ -13,6 +13,7 @@ export interface AuthServiceState {
   accessToken: string | null;
   refreshToken: string | null;
   status: LoginStatus;
+  errorMessage: string | null;
 }
 
 export const STORAGE_KEYS = {
@@ -39,7 +40,8 @@ export class AuthService {
     currentUser: null,
     accessToken: null,
     refreshToken: null,
-    status: 'pending'
+    status: 'pending',
+    errorMessage: null
   });
 
   // Selectors
@@ -47,17 +49,20 @@ export class AuthService {
   accessToken  = computed(() => this.state().accessToken);
   refreshToken = computed(() => this.state().refreshToken);
   status       = computed(() => this.state().status);
+  errorMessage = computed(() => this.state().errorMessage);
+
+  // Computed State
   isAuthorized = computed(() => this.state().currentUser?.isAdmin ?? false);
   
   // Sources
-  error$  = new Subject<any>();
   private logout$ = new Subject<void>();
   private loginCredentials$ = new Subject<LoginRequest>();
   private loginRequest$  = this.loginCredentials$.pipe(
     switchMap(credentials => 
       this.http.post<AuthResponse>(this.loginEndpoint, credentials).pipe(
-        catchError(error => {
-          this.error$.next(error);
+        catchError(() => {
+          this.state.update((state) => ({
+            ...state, errorMessage: 'Hay un error con las credenciales introducidas.', status: 'error'}));
           return EMPTY;
         })
       )
@@ -70,7 +75,8 @@ export class AuthService {
         currentUser: response.userInfo,
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
-        status: 'authenticated' as const
+        status: 'authenticated' as const,
+        errorMessage: null
       })))
     );
   
@@ -82,35 +88,29 @@ export class AuthService {
     // reducers
     const updatedState$ = merge(
       this.loginCredentials$.pipe(map(() => ({status: 'authenticating' as const}))),
-      this.error$.pipe(map((error) => ({status: 'error' as const}))),
       this.loginRequest$.pipe(map((response) => ({
         currentUser: response.userInfo,
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
-        status: 'authenticated' as const
+        status: 'authenticated' as const,
+        errorMesssage: null
       }))),
       this.logout$.pipe(map(() => ({
         currentUser: null,
         accessToken: null,
         refreshToken: null,
-        status: 'pending' as const
+        status: 'pending' as const,
+        errorMesssage: null
       }))),
     );
 
     connect(this.state).with(updatedState$);
   }
 
-  login(credentials: LoginRequest): void {
-    this.loginCredentials$.next(credentials);
-  }
-
-  logout(): void {
-    this.logout$.next();
-  }
-
-  refresh(): Observable<AuthResponse> {
-    return this.refresh$;
-  }
+  // Actions
+  login  = (credentials: LoginRequest): void => this.loginCredentials$.next(credentials);
+  logout = (): void => this.logout$.next();
+  refresh = (): Observable<AuthResponse> => this.refresh$;
 
   // To prevent losing the state when page is refreshed.
   private initializeAuthStateFromSessionStorage(): void {
@@ -122,12 +122,13 @@ export class AuthService {
       currentUser: storedUser ? JSON.parse(storedUser) : null,
       accessToken: storedToken ?? null,
       refreshToken: storedRefreshToken ?? null,
-      status: storedToken ? 'authenticated' as const : 'pending' as const
+      status: storedToken ? 'authenticated' as const : 'pending' as const,
+      errorMessage: null,
     }));
   }
 
   // Effects
-  private storeSessionEffect = effect(() => {
+  #storeSessionEffect = effect(() => {
     if (this.accessToken() && this.currentUser() && this.refreshToken()) {
       this.storageService.setToSessionStorage(STORAGE_KEYS.USER, JSON.stringify(this.state().currentUser));
       this.storageService.setToSessionStorage(STORAGE_KEYS.ACCESS_TOKEN, this.accessToken()!);
@@ -135,7 +136,7 @@ export class AuthService {
     }
   });
 
-  private removeSessionEffect = effect(() => {
+  #removeSessionEffect = effect(() => {
     if(!this.accessToken() && !this.currentUser()) {
       this.storageService.removeUserSession(STORAGE_KEYS.REFRESH_TOKEN);
     }
