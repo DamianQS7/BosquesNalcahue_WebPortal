@@ -16,24 +16,23 @@ import { ThemeToggleComponent } from "../../../shared/components/theme-toggle/th
 })
 export class SidebarComponent {
 
-  public iconService: IconsService = inject(IconsService);
-  public authService: AuthService = inject(AuthService);
+  iconService: IconsService = inject(IconsService);
+  authService: AuthService = inject(AuthService);
 
-  public mainMenuItems: MenuItem[] = [
+  mainMenuItems: MenuItem[] = [
     { route: '/dashboard/reportes', icon: 'pdf_file', title: 'Listado'},
     { route: '/dashboard/estadisticas', icon: 'chart', title: 'Estadísticas'},
   ];
 
-  public settingsMenuItems: MenuItem[] = [
+  settingsMenuItems: MenuItem[] = [
     { route: '/dashboard/configuracion', icon: 'gear', title: 'Configuración'},
     { route: '/login', icon: 'logout', title: 'Cerrar Sesión'}
   ];
 
-  public showMenu = signal<boolean>(false);
+  showMenu = signal<boolean>(false);
 
-  public defaultUserAvatar: string = 'assets/icons/user.png';
+  defaultUserAvatar: string = 'assets/icons/user.png';
 
-  toggleMenu(): void {
-    this.showMenu.update(value => !value)
-  }
+  toggleMenu = (): void => this.showMenu.update(value => !value);
+  
 }

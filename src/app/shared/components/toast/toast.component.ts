@@ -3,7 +3,7 @@ import { Component, computed, effect, inject, OnDestroy, output } from '@angular
 import { IconsService } from '../../../shared/services/icons.service';
 import { ToastType } from '../../../shared/interfaces/toast.interface';
 import { ToastService } from '../../../shared/services/toast.service';
-import { Subject, takeUntil, tap, timeout, timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'dashboard-toast',
