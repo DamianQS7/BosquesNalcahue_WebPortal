@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { catchError, EMPTY, map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, map, merge, Subject, switchMap, tap } from 'rxjs';
 import { DeleteReportRequest, EditableReport, GetReportByIdRequest, Report } from '../../reports/interfaces';
 import { environment } from '../../../environments/environment';
 import { connect } from 'ngxtension/connect';
 
-export type ReportStatus = 'pending' | 'loaded' | 'updated' | 'deleted' | 'error' | 'success';
+export type ReportStatus = 'pending' | 'loaded' | 'updated' | 'deleted' | 'error';
 export interface EditReportServiceState {
   reportToEdit: Report | null;
   errorMessage: string | null;
@@ -18,9 +18,8 @@ export class EditReportService {
   private http = inject(HttpClient);
 
   // Properties
-  private readonly baseUrl:  string = environment.baseUrl;
-  private readonly reportsEndpoint: string = `${this.baseUrl}/reports`;
-  private readonly blobEndpoint: string = `${this.baseUrl}/blob`;
+  private readonly reportsEndpoint: string = `${environment.baseUrl}/reports`;
+  private readonly blobEndpoint: string = `${environment.baseUrl}/blob`;
   
   // State
   private state = signal<EditReportServiceState>({

@@ -5,14 +5,40 @@ import { Component, input } from '@angular/core';
   selector: 'dashboard-monthly-percent-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './monthly-percent-card.component.html',
-  styleUrl: './monthly-percent-card.component.css'
+  styleUrl: './monthly-percent-card.component.css',
+  template: `
+  <div class="card-wrapper">
+    <div class="w-52 2xl:w-72">
+      <h3 class="card-title" 
+        [ngClass]="{
+            'teal': title() === 'Leña',
+            'indigo': title() === 'Metro Ruma',
+            'sky': title() === 'Trozo Aserrable',
+        }"
+      >
+          {{title()}}
+      </h3>
+      <span class="card-subtitle">{{subtitle()}}</span>
+    </div>
+    <div class="card-percent-wrapper">
+      <span class="card-percent"
+        [ngClass]="{
+          'teal': title() === 'Leña',
+          'indigo': title() === 'Metro Ruma',
+          'sky': title() === 'Trozo Aserrable',
+          }"
+      >
+        {{percent()}}%
+      </span>
+    </div>
+  </div>
+  `,
 })
 export class MonthlyPercentCardComponent {
   
   // Properties
-  public title = input<string>('');
-  public subtitle = input<string>('Porcentaje de despachos realizados en este mes');
-  public percent = input<number>(0);
+  title = input.required<string>();
+  percent = input.required<number>();
+  subtitle = input<string>('Porcentaje de despachos realizados en este mes');
 
 }

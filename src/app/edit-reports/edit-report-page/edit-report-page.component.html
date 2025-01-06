@@ -1,99 +1,105 @@
 <div class="wrapper">
-    <div class="p-4 2xl:p-8 mr-4 ml-2 w-[65%]">
-        <h1 class="page-title">Editar Reporte: 
-            <span class="font-normal">Despacho de {{reportToEdit()?.productType}}</span>
-        </h1>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="grid gap-4 sm:grid-cols-2 sm:gap-3 2xl:gap-8">
-
-                <!-- Datos del Documento -->
-                <h3 class="page-subtitle">Datos del Documento</h3>
-                <hr class="separator">
-                <div class="w-full">
-                    <label class="form-label">Folio</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Folio del Reporte"
-                           formControlName="folio"
-                           readonly>
+    @if(editReportService.status() !== 'pending') {
+        <div class="p-4 2xl:p-8 mr-4 ml-2 w-[65%]">
+            <h1 class="page-title">Editar Reporte: 
+                <span class="font-normal">Despacho de {{reportToEdit()?.productType}}</span>
+            </h1>
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()" #form="ngForm">
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-3 2xl:gap-8">
+    
+                    <!-- Datos del Documento -->
+                    <h3 class="page-subtitle">Datos del Documento</h3>
+                    <hr class="separator">
+                    <div class="w-full">
+                        <label class="form-label">Folio</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Folio del Reporte"
+                               formControlName="folio"
+                               readonly>
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">Fecha del Reporte</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Fecha del Reporte"
+                               formControlName="date"
+                               readonly>
+                    </div>
+    
+                    <!-- Client's Data -->
+                    <h3 class="page-subtitle">Datos del Cliente</h3>
+                    <hr class="separator">
+                    <div class="w-full">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Nombre Cliente"
+                               formControlName="clientName">
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">Rut</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Rut Cliente"
+                               formControlName="clientId">
+                    </div>
+    
+                    <!-- Truck's Data -->
+                    <h3 class="page-subtitle">Datos del Camion</h3>
+                    <hr class="separator">
+                    <div class="w-full">
+                        <label class="form-label">Empresa de Transporte</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Nombre Empresa"
+                               formControlName="truckCompany">
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">Chofer</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Nombre Chofer"
+                               formControlName="truckDriver">
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">RUT</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="RUT Chofer"
+                               formControlName="truckDriverId">
+                    </div>
+                    <div class="w-full">
+                        <label class="form-label">Patentes</label>
+                        <input type="text" 
+                               class="text-input" 
+                               placeholder="Patentes"
+                               formControlName="truckPlate">
+                    </div>
                 </div>
-                <div class="w-full">
-                    <label class="form-label">Fecha del Reporte</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Fecha del Reporte"
-                           formControlName="date"
-                           readonly>
+                <div class="flex justify-between mt-5">
+                    <button type="submit" class="form-btn btn-confirm" [disabled]="editReportService.status() === 'deleted'">
+                        <svg class="w-5 h-5 mr-1 text-slate-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                          
+                        <span class="ml-1 text-slate-700 dark:text-white">Guardar</span>
+                    </button>
+                    <button type="button" class="form-btn btn-delete" (click)="modals.showModal()" [disabled]="editReportService.status() === 'deleted'">
+                        <svg class="w-5 h-5 mr-1 text-slate-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                        </svg>
+                          
+                        <span class="ml-1 text-slate-700 dark:text-white">Borrar Reporte</span>
+                    </button>
                 </div>
-
-                <!-- Client's Data -->
-                <h3 class="page-subtitle">Datos del Cliente</h3>
-                <hr class="separator">
-                <div class="w-full">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Nombre Cliente"
-                           formControlName="clientName">
-                </div>
-                <div class="w-full">
-                    <label class="form-label">Rut</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Rut Cliente"
-                           formControlName="clientId">
-                </div>
-
-                <!-- Truck's Data -->
-                <h3 class="page-subtitle">Datos del Camion</h3>
-                <hr class="separator">
-                <div class="w-full">
-                    <label class="form-label">Empresa de Transporte</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Nombre Empresa"
-                           formControlName="truckCompany">
-                </div>
-                <div class="w-full">
-                    <label class="form-label">Chofer</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Nombre Chofer"
-                           formControlName="truckDriver">
-                </div>
-                <div class="w-full">
-                    <label class="form-label">RUT</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="RUT Chofer"
-                           formControlName="truckDriverId">
-                </div>
-                <div class="w-full">
-                    <label class="form-label">Patentes</label>
-                    <input type="text" 
-                           class="text-input" 
-                           placeholder="Patentes"
-                           formControlName="truckPlate">
-                </div>
-            </div>
-            <div class="flex justify-between mt-5">
-                <button type="submit" class="form-btn btn-confirm" [disabled]="isReportDeleted()">
-                    <svg class="w-5 h-5 mr-1 text-slate-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                      
-                    <span class="ml-1 text-slate-700 dark:text-white">Guardar</span>
-                </button>
-                <button type="button" class="form-btn btn-delete" (click)="modals.showModal()" [disabled]="isReportDeleted()">
-                    <svg class="w-5 h-5 mr-1 text-slate-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                    </svg>
-                      
-                    <span class="ml-1 text-slate-700 dark:text-white">Borrar Reporte</span>
-                </button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    } @else {
+        <div class="flex items-center justify-center w-full h-full">
+            <shared-spinner></shared-spinner>
+        </div>
+    }
 
     <div class="w-[35%] relative">
         <img src="assets/img/edit-report-img.jpg" alt="Foto de Jessica Furtney en Unsplash" class="light-dark-bg-img opacity-100 dark:opacity-0">

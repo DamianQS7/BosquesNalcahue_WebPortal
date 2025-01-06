@@ -8,7 +8,7 @@ export class ThemeService {
 
   private storageService = inject(BrowserStorageService);
 
-  public isDarkTheme = signal<boolean>(
+  isDarkTheme = signal<boolean>(
     this.storageService.getFromLocalStorage('theme') === 'dark' || 
     (this.storageService.getFromLocalStorage('theme') === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
   );

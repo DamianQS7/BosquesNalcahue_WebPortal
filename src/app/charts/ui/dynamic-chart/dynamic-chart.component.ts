@@ -1,34 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input, Signal, viewChild } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { Component, computed, input, Signal, viewChild } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartsService } from '../../data-access/charts.service';
-import { SimpleChartDataset } from '../../interfaces';
+import { ChartColors, ChartsEventsArgs, SimpleChartDataset } from '../../interfaces';
 
 @Component({
   selector: 'charts-dynamic-chart',
   standalone: true,
   imports: [CommonModule, BaseChartDirective],
-  templateUrl: './dynamic-chart.component.html',
+  template: `
+    <canvas 
+      class="transition hover:shadow-slate-800 dark:hover:shadow-slate-200 hover:shadow-md z-10 m-0.5 p-3 bordered-card"
+      baseChart
+      [data]="barChartData()"
+      [options]="barChartOptions()"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    >
+    </canvas>
+  `,
   styles: ``
 })
 export class DynamicChartComponent {
-
-  // Services
-  private chartsService = inject(ChartsService);
-
+  
   // Properties
-  public barChartType: ChartType = 'bar';
-  public chart = viewChild(BaseChartDirective);
-  public maxY = input<number>(10);
-  public barChartLabels = input<string[]>(['No data to display']);
-  public barChartDatasets = input<SimpleChartDataset[]>([
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Lena' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Metro Ruma' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Trozo Aserrable' },
-  ]);
+  private chart = viewChild(BaseChartDirective);
+  barChartType: ChartType = 'bar';
+  maxY = input.required<number>();
+  chartColors = input.required<ChartColors>();
+  barChartLabels = input<string[]>(['No data to display']);
+  barChartDatasets = input.required<SimpleChartDataset[]>();
 
-  public barChartOptions: Signal<ChartConfiguration['options']> = computed(() => {
+  barChartOptions: Signal<ChartConfiguration['options']> = computed(() => {
     return {
       elements: {
         line: {
@@ -37,21 +41,21 @@ export class DynamicChartComponent {
       },
       scales: {
         x: {
-          ticks: {color: this.chartsService.chartColors().fontColor},
-          grid: {color: this.chartsService.chartColors().gridColor}
+          ticks: {color: this.chartColors().fontColor},
+          grid: {color: this.chartColors().gridColor}
         },
         y: {
           min: 0,
           max: this.maxY(),
-          ticks: {color: this.chartsService.chartColors().fontColor},
-          grid: {color: this.chartsService.chartColors().gridColor}
+          ticks: {color: this.chartColors().fontColor},
+          grid: {color: this.chartColors().gridColor}
         }
       },
       plugins: {
         legend: { 
           display: true, 
           labels: {
-            color: this.chartsService.chartColors().fontColor
+            color: this.chartColors().fontColor
           } 
         },
       },
@@ -60,35 +64,19 @@ export class DynamicChartComponent {
     }; 
   });
   
-  public barChartData = computed<ChartData<'bar'>>(() => {
-    return {
-      labels: this.barChartLabels(),
-      datasets: this.barChartDatasets(),
-    };
-  })
+  barChartData = computed<ChartData<'bar'>>(() => ({
+    labels: this.barChartLabels(),
+    datasets: this.barChartDatasets(),
+  }));
 
-  // events
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
+  // Events
+  chartClicked({ event, active, }: ChartsEventsArgs): void {
     //console.log(event, active);
   }
-
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
+  chartHovered({ event, active,}: ChartsEventsArgs): void {
     //console.log(event, active);
   }
-
-  public changeChartType(): void {
-    this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
-  }
+  changeChartType = (): void  => { this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar' };
 }
+
+

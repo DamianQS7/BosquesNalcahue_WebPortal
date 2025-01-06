@@ -4,7 +4,6 @@ import { IconsService } from '../../../shared/services/icons.service';
 import { ToastType } from '../../../shared/interfaces/toast.interface';
 import { ToastService } from '../../../shared/services/toast.service';
 import { Subject, takeUntil, tap, timeout, timer } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dashboard-toast',
@@ -53,6 +52,7 @@ export class ToastComponent implements OnDestroy{
   constructor() {
     effect(() => {
       if(this.toastVisible()) {
+        // Going for an observable instead of a signal so that we can handle the user navigating away.
         timer(5000)
           .pipe(takeUntil(this.destroyRef$))
           .subscribe(() => this.closeToast.emit());

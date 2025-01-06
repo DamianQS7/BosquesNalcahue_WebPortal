@@ -13,19 +13,11 @@ export class BrowserStorageService {
     this.sessionStorage.clear();
     this.localStorage.removeItem(refreshTokenKey);
   }
-  getFromLocalStorage(key: string): string | null {
-    return this.localStorage.getItem(key)
-  }
+  getFromLocalStorage = (key: string): string | null => this.localStorage.getItem(key);
 
-  setToLocalStorage(key: string, value: string): void {
-    this.localStorage.setItem(key, value)
-  }
+  setToLocalStorage = (key: string, value: string): void => this.localStorage.setItem(key, value);
 
-  getFromSessionStorage(key: string): string | null {
-    return this.sessionStorage.getItem(key);
-  }
+  getFromSessionStorage = (key: string): string | null => this.sessionStorage.getItem(key);
 
-  setToSessionStorage(key: string, value: string): void {
-    this.sessionStorage.setItem(key, value);
-  }
+  setToSessionStorage = (key: string, value: string): void => this.sessionStorage.setItem(key, value);
 }

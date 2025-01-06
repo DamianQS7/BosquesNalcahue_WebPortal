@@ -52,7 +52,7 @@ export class LoginPageComponent {
     return 'Hay errores en el formulario.'
   }
 
-  // Effects
+  // Reacting to state changes
   #loginOperationEffect = effect(() => {
     switch(this.status()) {
 
