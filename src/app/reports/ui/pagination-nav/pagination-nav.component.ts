@@ -39,8 +39,6 @@ export class PaginationNavComponent {
   // Properties
   paginationInfo   = input.required<PaginationInfo>();
   currentPage      = input.required<number>();
-  toSelectedPage   = output<number>();
-  toNextOrPrevPage = output<number>();
 
   // Computed State
   startIndex = computed(() => (this.currentPage() - 1) * this.paginationInfo().pageSize + 1);
@@ -52,4 +50,8 @@ export class PaginationNavComponent {
     const pagesArray = Array.from({length: pagesNumber}, (_, i) => i + 1);
     return pagesArray;
   });
+
+  // Events
+  toSelectedPage   = output<number>();
+  toNextOrPrevPage = output<number>();
 }

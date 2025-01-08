@@ -52,9 +52,8 @@ export default class ReportsPageComponent implements OnDestroy {
       });
   }
 
-  private mapReportsToRows(items: Report[]): ReportsTableRow[] {
-    return items.map(({id, fileId, date, folio, productType, clientName, species, productName}) => 
+  private mapReportsToRows = (items: Report[]): ReportsTableRow[] =>
+    items.map(({id, fileId, date, folio, productType, clientName, species, productName}) => 
       ({id, fileId, date, folio, productType, clientName, species, productName})
     );
-  }
 }

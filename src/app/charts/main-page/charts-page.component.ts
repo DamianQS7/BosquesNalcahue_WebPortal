@@ -4,10 +4,11 @@ import { MonthlyPercentCardComponent } from '../ui/monthly-percent-card/monthly-
 import { ChartsService } from '../data-access/charts.service';
 import { DynamicChartComponent } from '../ui/dynamic-chart/dynamic-chart.component';
 import { PolarChartComponent } from '../ui/polar-chart/polar-chart.component';
+import { YearSelectorComponent } from '../ui/year-selector/year-selector.component';
 
 @Component({
   standalone: true,
-  imports: [ DynamicChartComponent, CommonModule, PolarChartComponent, MonthlyPercentCardComponent ],
+  imports: [ DynamicChartComponent, CommonModule, PolarChartComponent, MonthlyPercentCardComponent, YearSelectorComponent ],
   providers: [ ChartsService ],
   styleUrl: './charts-page.component.css',
   template: `
@@ -40,21 +41,27 @@ import { PolarChartComponent } from '../ui/polar-chart/polar-chart.component';
       </section>
       
       <section class="flex gap-3">
-          <div class="wrapper w-[65%] p-4 2xl:p-8">
-              <h1 class="section-title">Reportes por mes en el presente año</h1>
-              <charts-dynamic-chart
-                  [chartColors]="chartsService.chartColors()"
-                  [barChartLabels]="monthlyBreakdownChartLabels"
-                  [barChartDatasets]="chartsService.monthlyBreakdownData()"
-                  [maxY]="chartsService.monthlyBreakdownMaxYAxis()"/>
-          </div>
-          <div class="wrapper w-[34%] py-4 px-1 2xl:p-8">
-              <h1 class="section-title px-2 ">Total de reportes en el presente año</h1>
-              <charts-polar-chart
-                  [chartColors]="chartsService.chartColors()" 
-                  [polarAreaChartLabels]="totalReportsChartLabels"
-                  [polarChartDatasets]="chartsService.yearlyReportsCountData()"/>
-          </div>
+        <div class="wrapper w-[63%] p-3 2xl:p-8">
+            <div class="flex justify-between">
+                <h1 class="section-title">Desglose de reportes por mes</h1>
+                <charts-year-selector (yearChanged)="chartsService.getMonthlyBreakdownByYear($event)"/>
+            </div>
+            <charts-dynamic-chart
+                [chartColors]="chartsService.chartColors()"
+                [barChartLabels]="monthlyBreakdownChartLabels"
+                [barChartDatasets]="chartsService.monthlyBreakdownData()"
+                [maxY]="chartsService.monthlyBreakdownMaxYAxis()"/>
+        </div>
+        <div class="wrapper w-[36%] py-3 px-2 2xl:p-8">
+            <div class="flex justify-between">
+                <h1 class="section-title px-2 ">Total anual de reportes</h1>
+                <charts-year-selector (yearChanged)="chartsService.getYearlyReportsByYear($event)" />
+            </div>
+            <charts-polar-chart
+                [chartColors]="chartsService.chartColors()" 
+                [polarAreaChartLabels]="totalReportsChartLabels"
+                [polarChartDatasets]="chartsService.yearlyReportsCountData()"/>
+        </div>
       </section>
   </div>
   `,

@@ -35,7 +35,7 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside.
 })
 export class DropdownComponent implements OnInit {
   // Services
-  public iconsService: IconsService = inject(IconsService);
+  iconsService: IconsService = inject(IconsService);
   
   // Properties
   dropdownOpened = signal<boolean>(false);
@@ -51,9 +51,8 @@ export class DropdownComponent implements OnInit {
     this.selectedOption.set(this.initialDisplayName());
   }
 
-  toggleDropdown(): void {
-    this.dropdownOpened.update(value => !value)
-  }
+  toggleDropdown = (): void => this.dropdownOpened.update(value => !value);
+  clickedOutside = (): void => this.dropdownOpened.set(false);
 
   selectOption(option: string): void {
     this.selectedOption.set(option);
@@ -61,7 +60,4 @@ export class DropdownComponent implements OnInit {
     this.dropdownOpened.set(false);
   }
 
-  clickedOutside(): void {
-    this.dropdownOpened.set(false);
-  }
 }

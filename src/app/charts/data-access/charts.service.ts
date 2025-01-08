@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, EMPTY, map, merge, startWith, Subject, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, merge, Subject, switchMap } from 'rxjs';
 
 import { MonthlyBreakdownResponse } from '../interfaces/monthly-breakdown-response.interface';
 import { environment } from '../../../environments/environment';
@@ -79,19 +79,21 @@ export class ChartsService {
   });
 
   // Sources
-  private getMonthlyBreakdownData$ = this.http.get<MonthlyBreakdownResponse>(this.monthlyBreakdownEndpoint).pipe(
-    catchError(error => {
-      this.state.update(state => ({...state, status: 'error', monthlyBreakdownData: []}));
-      return EMPTY;
-    }),
-    map(response => this.mapToSimpleChartDatasetArray(response)),
+  private monthlyBreakdownYear$ = new Subject<number>();
+  private getMonthlyBreakdownData$ = this.monthlyBreakdownYear$.pipe(
+    switchMap(year => this.http.get<MonthlyBreakdownResponse>(`${this.monthlyBreakdownEndpoint}?year=${year}`).pipe(
+      catchError(error => {
+        this.state.update(state => ({...state, status: 'error', monthlyBreakdownData: []}));
+        return EMPTY;
+      }),
+      map(response => this.mapToSimpleChartDatasetArray(response)),
+    ))
   );
-  private queryParamByYear$ = new Subject<number>().pipe(
-    startWith(new Date().getFullYear()),
+  
+  private yearlyReportsYear$ = new Subject<number>();
+  private getyearlyReportsCountData$ = this.yearlyReportsYear$.pipe(
     map(year => `startDate=${year}/01/01&endDate=${year}/12/31`),
-  );
-  private getyearlyReportsCountData$ = this.queryParamByYear$.pipe(
-    switchMap(period => this.http.get<ReportsCountResponse>(`${this.yearlyReportsCountEndpoint}?${period}`).pipe(
+    switchMap(queryParam => this.http.get<ReportsCountResponse>(`${this.yearlyReportsCountEndpoint}?${queryParam}`).pipe(
       catchError(error => {
         this.state.update(state => ({ 
           ...state, 
@@ -103,15 +105,20 @@ export class ChartsService {
     map(response => this.mapToSimpleChartDataset(response)),
   );
 
-
   constructor() {
     const updatedState$ = merge(
+      this.monthlyBreakdownYear$.pipe(map(() => ({ status: 'loading' as const }))),
+      this.yearlyReportsYear$.pipe(map(() => ({ status: 'loading' as const }))),
       this.getMonthlyBreakdownData$.pipe(map(data => ({ monthlyBreakdownData: data, status: 'loaded' as const }))),
       this.getyearlyReportsCountData$.pipe(map(data => ({ yearlyReportsCountData: data, status: 'loaded' as const }))),
     );
 
     connect(this.state).with(updatedState$);
   }
+
+  // Actions
+  getYearlyReportsByYear = (year: number) => this.yearlyReportsYear$.next(year);
+  getMonthlyBreakdownByYear = (year: number) => this.monthlyBreakdownYear$.next(year);
 
   // Methods
   private mapToSimpleChartDatasetArray = (response: MonthlyBreakdownResponse ): SimpleChartDataset[] =>

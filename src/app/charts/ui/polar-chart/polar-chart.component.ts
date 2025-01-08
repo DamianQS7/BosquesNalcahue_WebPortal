@@ -10,7 +10,7 @@ import { ChartColors, ChartsEventsArgs, SimpleChartDataset } from '../../interfa
   imports: [ CommonModule, BaseChartDirective ],
   styles: ``,
   template: `
-  <canvas class="transition hover:shadow-slate-800 dark:hover:shadow-slate-200 hover:shadow-md z-10 mx-1 my-0.5 p-3 bordered-card"
+  <canvas class="transition hover:shadow-slate-800 dark:hover:shadow-slate-200 hover:shadow-md z-10 mx-1 p-4 bordered-card"
     baseChart
     [data]="polarAreaChartData()"
     [legend]="polarAreaLegend"
