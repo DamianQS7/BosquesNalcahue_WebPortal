@@ -68,17 +68,21 @@ export class AuthService {
       )
     )
   );
-  private refresh$ = this.http
-    .post<AuthResponse>(this.refreshEndpoint, {accessToken: this.accessToken()!, refreshToken: this.refreshToken()!})
-    .pipe(
-      tap((response) => this.state.update(() => ({
-        currentUser: response.userInfo,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-        status: 'authenticated' as const,
-        errorMessage: null
-      })))
-    );
+  private refresh$ = new Subject<void>();
+  private refreshRequest$ = this.refresh$.pipe(
+    switchMap(() => 
+      this.http.post<AuthResponse>(this.refreshEndpoint, {
+        accessToken: this.accessToken()!, 
+        refreshToken: this.refreshToken()!
+      }).pipe(
+        catchError(() => {
+          this.state.update((state) => ({
+            ...state, errorMessage: 'No se pudo refrescar la sesion.', status: 'error'}));
+          return EMPTY;
+        })
+      )
+    )
+  );
   
   
   // Methods
@@ -102,6 +106,12 @@ export class AuthService {
         status: 'pending' as const,
         errorMesssage: null
       }))),
+      this.refreshRequest$.pipe(map((response) => ({
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+        status: 'authenticated' as const,
+        errorMessage: null
+      })))
     );
 
     connect(this.state).with(updatedState$);
@@ -110,7 +120,7 @@ export class AuthService {
   // Actions
   login  = (credentials: LoginRequest): void => this.loginCredentials$.next(credentials);
   logout = (): void => this.logout$.next();
-  refresh = (): Observable<AuthResponse> => this.refresh$;
+  refresh = (): void => this.refresh$.next();
 
   // To prevent losing the state when page is refreshed.
   private initializeAuthStateFromSessionStorage(): void {
