@@ -7,8 +7,9 @@ aside {
 }
 
 .hamburguer-btn {
-    @apply fixed top-4 left-4 inset-0 z-50 items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100
-    dark:text-gray-400 dark:hover:bg-gray-700
+    @apply fixed top-4 left-4 inset-0 z-50 items-center  mt-2 ms-3 text-sm w-8 h-8 rounded-lg sm:hidden 
+    /* Colors => */ dark:text-gray-400 text-gray-500
+    /* Hover => */ dark:hover:bg-gray-700 hover:bg-gray-100
 }
 
 .link {
