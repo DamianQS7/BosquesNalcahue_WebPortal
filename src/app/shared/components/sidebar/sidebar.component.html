@@ -1,0 +1,63 @@
+<button type="button" class="hamburguer-btn" (click)="toggleMenu()">
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+    </svg>
+</button>
+ 
+<aside  aria-label="Sidebar"
+        class="transform transition-transform duration-300 ease-in-out"
+        [ngClass]="{'-translate-x-full': !showMenu(), 'translate-x-0': showMenu()}">
+    <div class="sidebar-background">
+        <div class="main-content">
+            <div class="sidebar-header">
+                <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo" class="w-20">
+            </div>
+    
+            <span class="separator menu-subtitle">Reportes</span>
+            <ul class="list">
+                @for (item of mainMenuItems; track $index) {
+                    <li>
+                        <a [routerLink]="item.route"
+                           [routerLinkActiveOptions]="{exact: true}"
+                           (click)="toggleMenu()" 
+                           routerLinkActive="active" 
+                           class="link group"
+                        >
+                            <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                            <span class="ms-3">{{item.title}}</span>
+                         </a>
+                    </li>
+                }
+            </ul>
+    
+            <span class="separator menu-subtitle">Administración</span>
+            <ul class="list">
+                @for (item of settingsMenuItems; track $index) {
+                    <li>
+                        <a [routerLink]="item.route"
+                           [routerLinkActiveOptions]="{exact: true}"
+                           (click)="toggleMenu()" 
+                           routerLinkActive="active"  
+                           class="link group"
+                        >
+                            <div [innerHTML]="this.iconService.getIcon(item.icon)"></div>
+                            <span class="ms-3">{{item.title}}</span>
+                         </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <shared-theme-toggle/>
+        <div class="user-info-container 2xl:mb-4">
+            <span class="separator"></span>
+            <div class="flex items-center gap-4">
+                <img class="w-10 h-10 rounded-full" [src]="defaultUserAvatar" alt="User Avatar">
+                <div class="font-normal dark:text-white">
+                    <div>{{authService.currentUser()?.name}}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{authService.status() === 'authenticated' ? 'Administrador' : 'Usuario'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+ 

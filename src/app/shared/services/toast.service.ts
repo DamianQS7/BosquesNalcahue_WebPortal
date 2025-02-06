@@ -1,28 +1,43 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
+import { ToastState, ToastContent } from '../interfaces/toast.interface';
+import { map, merge, Subject } from 'rxjs';
+import { connect } from 'ngxtension/connect';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
+  // state
+  private state = signal<ToastState>({
+    toastType: 'success',
+    message: null,
+    visible: false
+  });
 
-  public toastSuccessMessage = signal<string>('');
-  public toastFailureMessage = signal<string>('');
-  public toastVisible = signal<boolean>(false);
-  public toastType = signal<'success' | 'failure'>('failure');
+  // selectors
+  toastType = computed(() => this.state().toastType);
+  toastVisible = computed(() => this.state().visible);
+  toastMessage = computed(() => this.state().message);
 
-  public displayToast(type: 'success' | 'failure', message: string): void {
-    this.toastType.set(type);
+  // sources
+  private hideToast$ = new Subject<boolean>();
+  private displayToast$ = new Subject<ToastContent>();
 
-    if (type === 'success') {
-      this.toastSuccessMessage.set(message);
-    } else {
-      this.toastFailureMessage.set(message);
-    }
-
-    this.ShowAndHideToast(true);
+  constructor() {
+    // reducers
+    const updatedState$ = merge(
+      this.hideToast$.pipe(map((hide) => ({ visible: hide }))),
+      this.displayToast$.pipe(map((content) => ({
+        message: content.message,
+        visible: true,
+        toastType: content.toastType
+      }))),
+    );
+    
+    connect(this.state).with(updatedState$);
   }
 
-  public ShowAndHideToast(showToast: boolean): void {
-    this.toastVisible.set(showToast);
-  }
+  // Actions
+  displayToastWithMessage = (toastContent: ToastContent): void => this.displayToast$.next(toastContent);
+  hideToast = (hide: boolean): void => this.hideToast$.next(hide);
 }

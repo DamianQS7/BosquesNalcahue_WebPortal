@@ -1,0 +1,45 @@
+aside {
+    @apply w-56 h-screen transition-transform sm:translate-x-0 fixed z-50
+}
+
+.active {
+    @apply border dark:border-green-200 border-emerald-400/80
+}
+
+.hamburguer-btn {
+    @apply fixed top-4 left-4 inset-0 z-50 items-center  mt-2 ms-3 text-sm w-8 h-8 rounded-lg sm:hidden 
+    /* Colors => */ dark:text-gray-400 text-gray-500
+    /* Hover => */ dark:hover:bg-gray-700 hover:bg-gray-100
+}
+
+.link {
+    @apply flex items-center p-2 font-light text-black rounded-lg dark:text-white hover:bg-teal-50 dark:hover:bg-gray-700 
+}
+
+.list {
+    @apply space-y-2 font-light
+}
+
+.main-content {
+    @apply flex flex-col h-full px-3 py-4
+}
+
+.menu-subtitle {
+    @apply py-4 px-2 text-gray-800 dark:text-gray-400 text-sm
+}
+
+.separator {
+    @apply pt-4 mt-4 border-t border-slate-500
+}
+
+.sidebar-background {
+    @apply flex flex-col h-full overflow-y-auto bg-slate-300 dark:bg-slate-800
+}
+
+.sidebar-header {
+    @apply flex justify-center items-center dark:bg-slate-300 bg-neutral-50 rounded-lg
+}
+
+.user-info-container {
+    @apply flex flex-col px-3 py-5
+}

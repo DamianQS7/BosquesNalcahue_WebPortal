@@ -2,7 +2,8 @@
     <form 
         class="form-wrapper" 
         (ngSubmit)="login()" 
-        [formGroup]="form">
+        [formGroup]="loginForm"
+        #form="ngForm">
         
         <img src="assets/logos/bosques-nalcahue-logo.png" alt="Company Logo">
         <h1>Iniciar Sesion</h1>
@@ -26,7 +27,7 @@
             <div [innerHTML]="this.iconService.getIcon('lock')"></div>  
         </div>
         
-        @if (loginSucces() === false) {
+        @if (this.authService.status() !== 'authenticating') {
             <button class="btn-submit" type="submit">
                 Ingresar
                 <div [innerHTML]="this.iconService.getIcon('login')"></div>             
@@ -38,9 +39,5 @@
             </div>
         }
     </form>
-    <dashboard-toast [isVisible]="toasts.toastVisible()"
-                 [failureMessage]="toasts.toastFailureMessage()"
-                 [successMessage]="toasts.toastSuccessMessage()"
-                 [toastType]="toasts.toastType()" 
-                 (toastTimedOut)="toasts.ShowAndHideToast($event)" />
+    <dashboard-toast (closeToast)="toasts.hideToast(false)"/>
 </div>

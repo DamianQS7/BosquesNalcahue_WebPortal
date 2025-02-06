@@ -1,0 +1,53 @@
+.toast-wrapper {
+    @apply items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow fixed bottom-5 right-5 z-[-1] opacity-0
+    /* Light => */text-slate-600 bg-neutral-100
+    /* Dark => */ dark:text-slate-300 dark:bg-slate-700
+}
+
+.icon-wrapper {
+    @apply inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg
+    /* Light => */ text-slate-800 bg-green-100
+    /* Dark => */  dark:bg-teal-200 dark:text-slate-700
+}
+
+.message {
+    @apply ms-3 text-sm font-medium
+}
+
+.btn {
+    @apply ms-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8
+    /* Light => */bg-white border border-neutral-200 text-gray-400 hover:text-gray-900 hover:bg-neutral-200
+    /* Dark => */ dark:text-slate-400 dark:hover:text-slate-800 dark:bg-slate-600 dark:hover:bg-slate-300 dark:border-slate-800
+}
+
+/* Success styles */
+.wrapper-success {
+    @apply border-t-4 border-teal-200/90
+}
+
+.icon-success {
+    @apply dark:bg-teal-200/90 dark:text-slate-700
+}
+
+/* Failure styles */
+.wrapper-failure {
+    @apply border-t-4 border-red-400
+}
+
+.icon-failure {
+    @apply bg-red-400 text-slate-700 dark:bg-red-400 dark:text-slate-700
+}
+
+.show {
+    z-index: 500;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s, transform 1s;
+}
+
+.hide {
+    z-index: -1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s, transform 1s;
+}

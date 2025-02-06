@@ -1,51 +1,23 @@
-import { Injectable } from '@angular/core';
-import { User } from '../../auth/interfaces/user.interface';
+import { inject, Injectable } from '@angular/core';
+import { STORAGE_TOKENS } from '../utils/injection-tokens';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrowserStorageService {
 
-  private readonly USER_KEY: string = 'currentUser';
-  private readonly ACCESS_TOKEN_KEY: string = 'accessToken';
-  private readonly REFRESH_TOKEN_KEY: string = 'refreshToken';
+  private localStorage = inject(STORAGE_TOKENS.LOCAL);
+  private sessionStorage = inject(STORAGE_TOKENS.SESSION);
 
-  public getCurrentUser(): string | null {
-    return sessionStorage.getItem(this.USER_KEY);
+  removeUserSession(refreshTokenKey: string): void {
+    this.sessionStorage.clear();
+    this.localStorage.removeItem(refreshTokenKey);
   }
+  getFromLocalStorage = (key: string): string | null => this.localStorage.getItem(key);
 
-  public storeCurrentUser(user: User): void {
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
-  }
+  setToLocalStorage = (key: string, value: string): void => this.localStorage.setItem(key, value);
 
-  public removeUserSession(): void {
-    sessionStorage.clear();
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
-  }
+  getFromSessionStorage = (key: string): string | null => this.sessionStorage.getItem(key);
 
-  public storeUserSession(accessToken: string, user: User, refreshToken: string): void {
-    sessionStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
-  }
-
-  public storeAccessToken(token: string): void {
-    sessionStorage.setItem(this.ACCESS_TOKEN_KEY, token);
-  }
-
-  public getAccessToken(): string | null {
-    return sessionStorage.getItem(this.ACCESS_TOKEN_KEY);;
-  }
-
-  public getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
-  }
-
-  public getLocalStorage(key: string): string | null {
-    return localStorage.getItem(key)
-  }
-
-  public setLocalStorage(key: string, value: string): void {
-    localStorage.setItem(key, value)
-  }
+  setToSessionStorage = (key: string, value: string): void => this.sessionStorage.setItem(key, value);
 }
