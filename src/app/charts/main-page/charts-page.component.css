@@ -3,15 +3,17 @@
 }
 
 .page-header {
-    @apply px-4 py-2 w-full flex justify-between mb-2
+    @apply px-4 py-2 w-full flex justify-between mb-2 
 }
 
 .page-title {
-    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  dark:text-slate-100 text-slate-600
+    @apply absolute px-1 top-3 left-[110px] rounded-lg text-sm font-semibold dark:text-slate-100 text-slate-600
+    /* Non Mobile */ sm:p-3 sm:text-xl sm:top-1 sm:left-2 2xl:m-8 2xl:text-2xl sm:static
 }
 
 .page-date {
-    @apply p-3 rounded-lg text-xl 2xl:text-2xl font-semibold  flex gap-2 items-center dark:text-slate-100 text-slate-600
+    @apply rounded-lg px-1 top-44 right-32 text-sm font-semibold m-2 absolute z-10 flex gap-2 items-center dark:text-slate-100 text-slate-600
+    /* Non-mobile */ 2xl:text-2xl 2xl:m-8 sm:p-3 2xl:right-10 sm:right-8 sm:text-lg sm:top-1
 }
 
 .blurred-bg {
@@ -20,5 +22,5 @@
 }
 
 .section-title {
-    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-xl 2xl:text-2xl text-slate-600
+    @apply dark:text-white font-medium mx-1 mt-1 mb-4 text-sm sm:text-xl 2xl:text-2xl text-slate-600
 }

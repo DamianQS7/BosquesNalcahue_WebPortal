@@ -10,7 +10,7 @@ import { ChartColors, ChartsEventsArgs, SimpleChartDataset } from '../../interfa
   imports: [CommonModule, BaseChartDirective],
   template: `
     <canvas 
-      class="transition hover:shadow-slate-800 dark:hover:shadow-slate-200 hover:shadow-md z-10 m-0.5 p-3 bordered-card"
+      class="transition hover:shadow-slate-800 dark:hover:shadow-slate-200 hover:shadow-md z-10 m-0.5 overflow-x-auto p-3 bordered-card"
       baseChart
       [data]="barChartData()"
       [options]="barChartOptions()"

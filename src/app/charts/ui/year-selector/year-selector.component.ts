@@ -10,7 +10,7 @@ import { Component, effect, input, output, signal } from '@angular/core';
   <button class="basic-style" (click)="goToNextYear()">+</button>
   `,
   styles: `
-    .basic-style { @apply dark:text-white mx-1 mt-1 mb-4  text-slate-600 rounded-md px-3 flex items-center }
+    .basic-style { @apply dark:text-white mx-1 mt-1 mb-4 text-slate-600 rounded-md px-3 flex items-center }
     span { @apply bg-slate-200 dark:bg-slate-500 font-normal border border-slate-500 text-sm 2xl:text-xl  }
     button {
       @apply bg-slate-100 dark:shadow-sm shadow-md shadow-slate-600 font-semibold transition px-4 text-xl 2xl:text-2xl z-10 border-slate-500 border
@@ -18,7 +18,7 @@ import { Component, effect, input, output, signal } from '@angular/core';
     }
 
   `,
-  host: { class: `flex justify-between` }
+  host: { class: `flex sm:justify-between` }
 })
 export class YearSelectorComponent {
   // Properties

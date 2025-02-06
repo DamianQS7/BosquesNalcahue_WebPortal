@@ -8,7 +8,7 @@ import { Component, input } from '@angular/core';
   styleUrl: './monthly-percent-card.component.css',
   template: `
   <div class="card-wrapper">
-    <div class="w-52 2xl:w-72">
+    <div class="sm:w-52 2xl:w-72">
       <h3 class="card-title" 
         [ngClass]="{
             'teal': title() === 'Leña',

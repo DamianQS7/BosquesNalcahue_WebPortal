@@ -24,7 +24,7 @@ import { YearSelectorComponent } from '../ui/year-selector/year-selector.compone
                     <h2>{{ currentDate | date:'fullDate' }}</h2>
                 </div>
             </div>
-            <div class="flex justify-between mx-5 my-3 2xl:my-8 2xl:mb-0 z-10">
+            <div class="hidden sm:flex justify-between mx-5 my-3 2xl:my-8 2xl:mb-0 z-10">
                 <dashboard-monthly-percent-card 
                     title="Leña" 
                     [percent]="chartsService.monthlyPercentages().lena"/>
@@ -40,9 +40,9 @@ import { YearSelectorComponent } from '../ui/year-selector/year-selector.compone
           <img src="assets/img/charts-page-bg-dark.jpg" alt="Photo by Thirdman at Pelexs.com" class="p-1 2xl:object-cover light-dark-bg-img opacity-0 dark:opacity-100">
       </section>
       
-      <section class="flex gap-3">
-        <div class="wrapper w-[63%] p-3 2xl:p-8">
-            <div class="flex justify-between">
+      <section class="sm:flex gap-3">
+        <div class="wrapper sm:w-[63%] p-3 mb-2 sm:mb-0 2xl:p-8">
+            <div class="sm:flex justify-between">
                 <h1 class="section-title">Desglose de reportes por mes</h1>
                 <charts-year-selector (yearChanged)="chartsService.getMonthlyBreakdownByYear($event)"/>
             </div>
@@ -52,8 +52,8 @@ import { YearSelectorComponent } from '../ui/year-selector/year-selector.compone
                 [barChartDatasets]="chartsService.monthlyBreakdownData()"
                 [maxY]="chartsService.monthlyBreakdownMaxYAxis()"/>
         </div>
-        <div class="wrapper w-[36%] py-3 px-2 2xl:p-8">
-            <div class="flex justify-between">
+        <div class="wrapper sm:w-[36%] py-3 px-2 2xl:p-8">
+            <div class="sm:flex justify-between">
                 <h1 class="section-title px-2 ">Total anual de reportes</h1>
                 <charts-year-selector (yearChanged)="chartsService.getYearlyReportsByYear($event)" />
             </div>
