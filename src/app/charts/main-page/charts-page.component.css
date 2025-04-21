@@ -1,5 +1,5 @@
 .wrapper {
-    @apply 2xl:mx-4 rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-100/30 shadow-slate-600 border border-slate-600
+    @apply rounded-lg shadow-lg z-50 dark:shadow-slate-900 dark:bg-slate-600 bg-teal-100/30 shadow-slate-600 border border-slate-600
 }
 
 .page-header {
@@ -8,12 +8,12 @@
 
 .page-title {
     @apply absolute px-1 top-3 left-[110px] rounded-lg text-sm font-semibold dark:text-slate-100 text-slate-600
-    /* Non Mobile */ sm:p-3 sm:text-xl sm:top-1 sm:left-2 2xl:m-8 2xl:text-2xl sm:static
+    /* Non Mobile */ sm:p-3 sm:text-xl sm:top-1 sm:left-2 sm:static
 }
 
 .page-date {
     @apply rounded-lg px-1 top-44 right-32 text-sm font-semibold m-2 absolute z-10 flex gap-2 items-center dark:text-slate-100 text-slate-600
-    /* Non-mobile */ 2xl:text-2xl 2xl:m-8 sm:p-3 2xl:right-10 sm:right-8 sm:text-lg sm:top-1
+    /* Non-mobile */  sm:p-3 sm:right-8 sm:text-lg sm:top-1
 }
 
 .blurred-bg {

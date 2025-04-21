@@ -13,8 +13,8 @@ import { YearSelectorComponent } from '../ui/year-selector/year-selector.compone
   styleUrl: './charts-page.component.css',
   template: `
   <div class="flex flex-col gap-4">
-    <section class="wrapper p-1 2xl:px-4 2xl:pt-4 relative">
-        <div class="wrapper w-full p-2 flex flex-col h-60 2xl:h-80">
+    <section class="wrapper p-1 relative">
+        <div class="wrapper w-full p-2 flex flex-col h-60 2xl:h-72">
             <div class="page-header z-10">
                 <h1 class="blurred-bg page-title">Analisis Estadistico</h1>
                 <div class="blurred-bg page-date">
